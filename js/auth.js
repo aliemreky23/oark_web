@@ -50,9 +50,15 @@ class AuthManager {
     const isLoginPage = path.includes('login.html');
     const isProfilePage = path.includes('profile.html');
 
+    // Check if we are potentially handling an OAuth redirect
+    // If so, we shouldn't redirect away, because Supabase needs to process the hash/query
+    const hasAuthParams = window.location.hash.includes('access_token') ||
+      window.location.hash.includes('error') ||
+      window.location.search.includes('code');
+
     if (this.user && isLoginPage) {
       window.location.href = 'profile.html';
-    } else if (!this.user && isProfilePage) {
+    } else if (!this.user && isProfilePage && !hasAuthParams) {
       window.location.href = 'login.html';
     }
   }
