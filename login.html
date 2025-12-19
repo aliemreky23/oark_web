@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giriş Yap - OARK</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <style>
+        /* Refined Login Styles */
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow: hidden;
+            /* Prevent scroll on login page */
+        }
+
+        .auth-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding: 1rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .auth-card {
+            background: rgba(10, 10, 16, 0.6);
+            /* Darker, more premium tint */
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 32px;
+            /* More rounded */
+            padding: 3rem 2.5rem;
+            width: 100%;
+            max-width: 420px;
+            /* Tighter width for better proportion */
+            box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.7);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Subtle shine effect */
+        .auth-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .auth-logo {
+            width: 72px;
+            height: 72px;
+            margin-bottom: 1.5rem;
+            filter: drop-shadow(0 0 15px rgba(139, 92, 246, 0.3));
+        }
+
+        .auth-title {
+            font-size: 1.75rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .auth-subtitle {
+            color: var(--color-text-muted);
+            font-size: 0.95rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+            position: relative;
+        }
+
+        .form-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 1.1rem;
+            color: white;
+            font-size: 0.95rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .form-input:focus {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: var(--color-primary);
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.15);
+            transform: translateY(-1px);
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        .form-input:focus+.input-icon,
+        .form-group:focus-within .input-icon {
+            color: var(--color-primary);
+        }
+
+        .btn-auth {
+            width: 100%;
+            padding: 1.1rem;
+            border-radius: 16px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            letter-spacing: 0.01em;
+        }
+
+        .btn-primary-auth {
+            background: var(--gradient-main);
+            color: white;
+            border: none;
+            box-shadow: 0 10px 25px -5px rgba(139, 92, 246, 0.4);
+            margin-bottom: 1rem;
+        }
+
+        .btn-primary-auth:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px -5px rgba(139, 92, 246, 0.5);
+        }
+
+        .btn-primary-auth:active {
+            transform: translateY(0);
+        }
+
+        .btn-google {
+            background: white;
+            color: #1f1f1f;
+            border: none;
+        }
+
+        .btn-google:hover {
+            background: #f8f9fa;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 1.75rem 0;
+            color: rgba(255, 255, 255, 0.2);
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .divider:not(:empty)::before {
+            margin-right: 1rem;
+        }
+
+        .divider:not(:empty)::after {
+            margin-left: 1rem;
+        }
+
+        .auth-footer {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .auth-link {
+            transition: color 0.2s;
+        }
+
+        .auth-link:hover {
+            color: var(--color-primary);
+        }
+
+        .navbar-minimal {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            z-index: 20;
+        }
+
+        .back-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 99px;
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            padding-right: 1.25rem;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 480px) {
+            .auth-card {
+                padding: 2.5rem 1.5rem;
+                background: rgba(10, 10, 16, 0.75);
+            }
+
+            .navbar-minimal {
+                top: 1.5rem;
+                left: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background-globes">
+        <div class="globe globe-1"></div>
+        <div class="globe globe-2"></div>
+        <div class="globe globe-3"></div>
+    </div>
+
+    <div class="navbar-minimal">
+        <a href="index.html" class="back-link">
+            <i class="fas fa-arrow-left"></i>
+            <span>OARK</span>
+        </a>
+    </div>
+
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <img src="assets/logo.png" alt="OARK" class="auth-logo">
+                <h1 class="auth-title">Tekrar Hoş Geldin</h1>
+                <p class="auth-subtitle">Sohbete kaldığın yerden devam et.</p>
+            </div>
+
+            <form onsubmit="window.handleLogin(event)">
+                <div class="form-group">
+                    <input type="email" id="email" class="form-input" placeholder="E-posta Adresi" required>
+                </div>
+
+                <div class="form-group">
+                    <input type="password" id="password" class="form-input" placeholder="Şifre" required>
+                </div>
+
+                <div style="text-align: right; margin-bottom: 2rem; margin-top: -0.5rem;">
+                    <a href="#" class="auth-link" style="font-size: 0.85rem; opacity: 0.7;">Şifremi Unuttum</a>
+                </div>
+
+                <button type="submit" class="btn-auth btn-primary-auth">
+                    Giriş Yap
+                </button>
+            </form>
+
+            <div class="divider">veya</div>
+
+            <button onclick="window.handleGoogleLogin()" class="btn-auth btn-google">
+                <img src="https://www.google.com/favicon.ico" alt="Google" width="20">
+                Google ile Devam Et
+            </button>
+
+            <div class="auth-footer">
+                Hesabın yok mu? <a href="#" onclick="alert('Lütfen OARK mobil uygulamasını indirerek kayıt olun.')"
+                    class="auth-link" style="color: var(--color-primary); font-weight: 600; margin-left: 0.3rem;">Kayıt
+                    Ol</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script>
+        // Simple globe animation simulation to match main site feel
+        // This keeps the background alive
+    </script>
+</body>
+
+</html>

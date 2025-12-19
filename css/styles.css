@@ -165,62 +165,88 @@ a {
 /* --- Components --- */
 
 /* Buttons */
+/* Buttons */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem 2rem;
+  padding: 0.75rem 1.5rem;
+  /* Reduced padding */
   font-weight: 600;
-  border-radius: var(--radius-full);
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
+  border-radius: 12px;
+  /* Slightly less rounded than full pill for modern look, or keep pill if preferred but smaller */
+  letter-spacing: 0.02em;
   font-size: 0.9rem;
-  transition: var(--trans-fast);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
-  gap: 0.75rem;
+  gap: 0.5rem;
   position: relative;
   overflow: hidden;
-  z-index: 1;
+  text-decoration: none;
+  border: 1px solid transparent;
+  /* Prevent layout shift */
+  height: 44px;
+  /* Fixed height for consistency */
+}
+
+.btn-sm {
+  padding: 0.5rem 1.25rem;
+  height: 36px;
+  font-size: 0.85rem;
 }
 
 .btn-primary {
   background: var(--color-primary);
   color: #fff;
-  box-shadow: 0 0 20px var(--color-primary-glow);
-  border: 1px solid transparent;
-}
-
-.btn-primary::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(45deg, var(--color-primary), var(--color-accent));
-  z-index: -1;
-  transition: opacity var(--trans-fast);
-  opacity: 0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
 }
 
 .btn-primary:hover {
+  background: #7c3aed;
+  /* Slightly darker violet */
   transform: translateY(-2px);
-  box-shadow: 0 0 30px var(--color-primary-glow);
-}
-
-.btn-primary:hover::before {
-  opacity: 1;
+  box-shadow: 0 8px 20px rgba(139, 92, 246, 0.4);
 }
 
 .btn-secondary {
-  background: transparent;
+  background: rgba(255, 255, 255, 0.05);
   color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  background: transparent;
+  color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-outline:hover {
+  color: #fff;
   border-color: #fff;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Specific Auth Buttons in Navbar */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.nav-actions .btn {
+  font-size: 0.85rem;
+  padding: 0 1.25rem;
+  height: 40px;
+  border-radius: 99px;
+  /* Pill shape for navbar buttons */
 }
 
 /* Navbar */
@@ -240,18 +266,23 @@ a {
   border-bottom: 1px solid transparent;
 }
 
+.navbar .container {
+  display: flex;
+  align-items: center;
+  position: relative;
+  /* For absolute centering of links */
+  justify-content: space-between;
+  /* Fallback */
+  height: 100%;
+}
+
 .navbar.scrolled {
   background: rgba(5, 5, 5, 0.85);
   backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--glass-border);
 }
 
-.nav-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-}
+/* Removed unused .nav-container style and replaced with .navbar .container logic implicitly or explicitly above */
 
 .logo {
   font-size: 1.8rem;
@@ -260,6 +291,8 @@ a {
   align-items: center;
   gap: 0.5rem;
   letter-spacing: -0.03em;
+  z-index: 2;
+  /* Ensure logo is clickable above centered links if overlap occurs (rare) */
 }
 
 .logo img {
@@ -268,9 +301,22 @@ a {
 }
 
 .nav-links {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   gap: 2.5rem;
   list-style: none;
+  white-space: nowrap;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-left: auto;
+  /* Ensures it stays to the right if we weren't using absolute centering for the middle, but redundant with justify-between + absolute center method, safe to keep */
+  z-index: 2;
 }
 
 .nav-links a {
@@ -307,6 +353,55 @@ a {
   background: none;
   border: none;
   color: #fff;
+}
+
+.nav-user-profile {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.35rem 0.5rem 0.35rem 0.35rem;
+  /* Tight padding */
+  background: rgba(255, 255, 255, 0.1);
+  /* More visible background */
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 99px;
+  /* Pill shape */
+  text-decoration: none;
+  transition: all 0.2s ease;
+  margin-right: 0.5rem;
+  cursor: pointer;
+}
+
+.nav-user-profile:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.nav-user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.nav-user-name {
+  color: white;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding-right: 0.5rem;
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 /* Hero Section */
@@ -597,6 +692,73 @@ footer {
   margin-bottom: 1.5rem;
 }
 
+/* Verification Status Styles */
+.verify-status-box {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.status-loading {
+  background: rgba(59, 130, 246, 0.1);
+  border-color: rgba(59, 130, 246, 0.4);
+  color: #60a5fa;
+}
+
+.status-success {
+  background: rgba(16, 185, 129, 0.1);
+  border-color: rgba(16, 185, 129, 0.4);
+  color: #34d399;
+}
+
+.status-error {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #fca5a5;
+}
+
+.code-display {
+  background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+}
+
+.code-label {
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 0.5rem;
+}
+
+.campus-code {
+  font-size: 3rem;
+  font-weight: 800;
+  font-family: monospace;
+  color: var(--color-secondary);
+  letter-spacing: 0.2em;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 0 20px rgba(6, 182, 212, 0.5);
+}
+
+.code-info {
+  font-size: 1.1rem;
+  color: white;
+  margin-bottom: 1rem;
+}
+
+.code-instruction {
+  font-size: 0.9rem;
+  background: rgba(255, 255, 255, 0.1);
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 99px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
 /* --- Delete Account Page Specifics --- */
 .delete-account-page {
   display: flex;
@@ -709,6 +871,15 @@ footer {
 @media (max-width: 768px) {
   .nav-links {
     display: none;
+  }
+
+  .nav-actions {
+    display: none;
+    /* Hide buttons on mobile for now, or move to menu */
+  }
+
+  .nav-container .hamburger {
+    margin-left: auto;
   }
 
   /* Simplified for now */

@@ -6,37 +6,104 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>OARK - Oyun Arkadaşı Bul | Next Gen Gaming</title>
   <meta name="description"
-    content="Oyun arkadaşı bulmanın en modern yolu. Rankına uygun takım arkadaşını bul, sohbete başla.">
+    content="OARK ile oyun stilinize, rankınıza ve dilinize uygun takım arkadaşını anında bulun. Toksiklikten uzak, eğlence odaklı yeni nesil oyuncu platformu.">
+  <meta name="keywords"
+    content="oyun arkadaşı bul, duo bul, lfg, takım arkadaşı, oyuncu bulma, valorant duo, lol duo, cs2 takım, oark, gaming, oyuncu platformu">
+  <meta name="author" content="OARK Inc.">
+  <meta name="theme-color" content="#0f172a">
+  <link rel="canonical" href="https://oark.app/">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://oark.app/">
+  <meta property="og:title" content="OARK - Oyun Arkadaşı Bul | Next Gen Gaming">
+  <meta property="og:description"
+    content="Oyun stilinize uygun takım arkadaşını saniyeler içinde bulun. Discord'a gerek kalmadan sesli ve yazılı iletişim kurun.">
+  <meta property="og:image" content="https://oark.app/assets/og-image.jpg">
+  <meta property="og:site_name" content="OARK">
+  <meta property="og:locale" content="tr_TR">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://oark.app/">
+  <meta property="twitter:title" content="OARK - Oyun Arkadaşı Bul | Next Gen Gaming">
+  <meta property="twitter:description"
+    content="Oyun stilinize uygun takım arkadaşını saniyeler içinde bulun. Discord'a gerek kalmadan sesli ve yazılı iletişim kurun.">
+  <meta property="twitter:image" content="https://oark.app/assets/og-image.jpg">
 
   <!-- CSS -->
   <link rel="stylesheet" href="css/styles.css">
 
-  <!-- Favicon (Optional) -->
+  <!-- Favicon -->
   <link rel="icon" type="image/png" href="assets/logo.png">
+  <link rel="apple-touch-icon" href="assets/logo.png">
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "MobileApplication",
+    "name": "OARK",
+    "operatingSystem": "iOS, Android",
+    "applicationCategory": "SocialNetworkingApplication",
+    "description": "OARK, oyuncuların oyun stillerine, ranklarına ve dillerine uygun takım arkadaşları bulmasını sağlayan yeni nesil bir mobil uygulamadır.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "TRY"
+    }
+  }
+  </script>
+  <!-- Supabase & Auth -->
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script src="js/auth.js" defer></script>
 </head>
 
 <body>
+  <!-- Background Animation -->
+  <div class="background-globes">
+    <div class="globe globe-1"></div>
+    <div class="globe globe-2"></div>
+    <div class="globe globe-3"></div>
+  </div>
 
-  <!-- Header / Navbar -->
+  <!-- Navbar -->
   <nav class="navbar">
-    <div class="container nav-container">
+    <div class="container">
       <a href="#" class="logo">
         <img src="assets/logo.png" alt="OARK">
         OARK
       </a>
 
-      <ul class="nav-links">
-        <li><a href="#hero">Ana Sayfa</a></li>
-        <li><a href="#features">Özellikler</a></li>
-        <li><a href="#showcase">Görünüm</a></li>
-        <li><a href="#download">İndir</a></li>
-      </ul>
+      <div class="nav-links">
+        <a href="#features">Özellikler</a>
+        <a href="#about">Hakkında</a>
+        <a href="#showcase">Keşfet</a>
+        <a href="privacy.html">Gizlilik</a>
+      </div>
 
-      <button class="hamburger">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M3 12h18M3 6h18M3 18h18" />
-        </svg>
-      </button>
+      <div class="nav-actions">
+        <!-- Auth Buttons -->
+        <a href="login.html" class="btn btn-secondary auth-login-btn">Giriş Yap</a>
+
+        <!-- User Profile Widget (Logged In) -->
+        <a href="profile.html" class="nav-user-profile" style="display: none;">
+          <div class="nav-user-avatar">
+            <i class="fas fa-user"></i>
+          </div>
+          <span class="nav-user-name">Yükleniyor...</span>
+        </a>
+
+        <a href="#download" class="btn btn-primary">
+          İndir <i class="fas fa-download" style="font-size: 0.8em;"></i>
+        </a>
+      </div>
+
+      <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
     </div>
   </nav>
 
@@ -261,6 +328,8 @@
   </footer>
 
   <!-- Scripts -->
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script src="js/auth.js"></script>
   <script src="js/main.js"></script>
 </body>
 
