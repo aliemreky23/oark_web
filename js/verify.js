@@ -209,28 +209,100 @@ class Verifier {
             alert(`Hata: Girdiğiniz e-posta adresi (${email}), belgenizdeki üniversite (${this.verificationData.university}) ile eşleşmiyor.`);
             return;
         }
+        this.verificationData.email = email; // Store email for later verification
 
-        // Simulate Sending OTP (or use Supabase Function if we had one)
-        const btn = document.querySelector('#email-step button');
-        const originalText = btn.innerHTML;
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Gönderiliyor...';
-        btn.disabled = true;
+        await this.sendVerificationEmail(email);
+    }
 
-        await new Promise(r => setTimeout(r, 1500)); // Fake network delay
+    async sendVerificationEmail(email) {
+        if (!window.authManager || !window.authManager.user) {
+            alert('Lütfen önce giriş yapın.');
+            return;
+        }
 
-        // In a real app, we would call supabase.functions.invoke('send-otp', { email })
-        // For MVP, we use a fixed code "123456" or console log it
-        console.log('OTP Sent to ' + email + ': 123456');
+        const btn = document.querySelector(`button[onclick="window.verifyManager.sendVerificationCode()"]`);
+        const resultDiv = document.getElementById('email-result');
 
-        btn.disabled = false;
-        btn.innerHTML = originalText;
+        try {
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Gönderiliyor...';
+            }
 
-        // Move to OTP Step
-        document.getElementById('email-step').style.display = 'none';
-        document.getElementById('otp-step').style.display = 'block';
+            const supabase = window.authManager.supabase;
+            const { data, error } = await supabase.functions.invoke('campus-gateway', {
+                body: { action: 'send-email-otp', email: email }
+            });
 
-        alert(`Doğrulama kodu ${email} adresine gönderildi. (Demo Kodu: 123456)`);
-        this.verificationData.email = email;
+            if (error) throw error;
+            if (!data.success) throw new Error(data.error || 'Kod gönderilemedi');
+
+            if (resultDiv) {
+                resultDiv.textContent = 'Kod başarıyla gönderildi! Lütfen gelen kutunuzu kontrol edin.';
+                resultDiv.className = 'status-box status-success';
+                resultDiv.style.display = 'block';
+            }
+
+            // UI Update: Show Code Input
+            document.getElementById('email-input-group').style.display = 'none';
+            document.getElementById('code-input-group').style.display = 'block';
+
+        } catch (err) {
+            console.error('Email Send Error:', err);
+            if (resultDiv) {
+                resultDiv.textContent = 'Hata: ' + (err.message || err);
+                resultDiv.className = 'status-box status-error';
+                resultDiv.style.display = 'block';
+            }
+            if (btn) btn.disabled = false;
+        } finally {
+            if (btn) btn.innerHTML = 'Doğrulama Kodu Gönder';
+        }
+    }
+
+    async verifyCode() {
+        const codeInput = document.getElementById('verification-code');
+        const code = codeInput.value.trim();
+        const resultDiv = document.getElementById('code-result');
+
+        if (code.length !== 6) {
+            alert('Lütfen 6 haneli kodu girin.');
+            return;
+        }
+
+        try {
+            const supabase = window.authManager.supabase;
+            const { data, error } = await supabase.functions.invoke('campus-gateway', {
+                body: {
+                    action: 'verify-email-otp',
+                    email: this.verificationData.email,
+                    code: code
+                }
+            });
+
+            if (error) throw error;
+            if (!data.success) throw new Error(data.error || 'Geçersiz kod');
+
+            // Success
+            if (resultDiv) {
+                resultDiv.textContent = 'E-posta doğrulandı! Son adıma geçiliyor...';
+                resultDiv.className = 'status-box status-success';
+                resultDiv.style.display = 'block';
+            }
+
+            await new Promise(resolve => setTimeout(resolve, 1000));
+
+            // Proceed to generate the Campus Entry Code
+            this.saveVerification('DUMMY', this.verificationData.university, this.verificationData.department, this.verificationData.studentClass);
+
+        } catch (err) {
+            console.error('Verify Code Error:', err);
+            if (resultDiv) {
+                resultDiv.textContent = 'Hata: ' + (err.message || 'Kod doğrulanamadı');
+                resultDiv.className = 'status-box status-error';
+                resultDiv.style.display = 'block';
+            }
+        }
     }
 
     checkDomainMatch(email, universityName) {
@@ -311,8 +383,7 @@ class Verifier {
         }
     }
 
-    async saveVerification(code, university, department, studentClass) {
-        // Logic to save to Supabase
+    async saveVerification(dummyCode, university, department, studentClass) {
         if (!window.authManager || !window.authManager.user) {
             console.error('Cannot save verification: User not logged in.');
             return;
@@ -321,130 +392,68 @@ class Verifier {
         const user = window.authManager.user;
         const supabase = window.authManager.supabase;
 
-        console.log(`Starting Verification Save for: ${university}`);
+        console.log(`Starting Verification via API for: ${university}`);
 
         try {
-            // 1. Try to update Auth Metadata (Reliable, No Schema needed) causes immediate UI update if listener is active
-            await supabase.auth.updateUser({
-                data: {
-                    is_student: true,
-                    campus_code: code,
-                    university: university,
-                    department: department,
-                    student_class: studentClass,
-                    edu_email: this.verificationData.email // Save email too
-                }
-            });
+            // 1. Resolve Campus/Club ID (Client Side Logic kept for now)
+            // ... (Keeping the resolution logic mostly same but optimizing)
 
-            // 2. Update 'profiles' table (Display purposes)
-            const { error: profileError } = await supabase
-                .from('profiles')
-                .update({
-                    campus_code: code,
-                    university: university,
-                    department: department,
-                    student_class: studentClass,
-                    is_student: true,
-                    edu_email: this.verificationData.email
-                })
-                .eq('id', user.id);
+            // Resolve University
+            const simpleName = university.split('ÜNİVERSİTESİ')[0].trim();
+            // Fuzzy match logic
+            let { data: uniData } = await supabase.from('universities').select('id, name')
+                .ilike('name', university).maybeSingle();
 
-            if (profileError) console.warn('Profile update warning:', profileError);
-
-            // 3. CRITICAL: Add to 'club_members' table
-            // Step 3a: Find University ID
-            // We use ilike for case-insensitive matching.
-            // Note: The university name from PDF might differ slightly from DB.
-            // Ideally we'd use fuzzy search, but for now ilike %Query%
-
-            // Try exact match first
-            let { data: uniData, error: uniError } = await supabase
-                .from('universities')
-                .select('id, name')
-                .ilike('name', university)
-                .maybeSingle();
-
-            // If not found, try containing search
             if (!uniData) {
-                const simpleName = university.split('ÜNİVERSİTESİ')[0].trim();
-
-                // 1. Try fuzzy match with original CAPS (Standard I -> i issue might occur)
-                let { data: fuzzyData } = await supabase
-                    .from('universities')
-                    .select('id, name')
-                    .ilike('name', `%${simpleName}%`)
-                    .limit(1);
-
-                if (fuzzyData && fuzzyData.length > 0) {
-                    uniData = fuzzyData[0];
-                } else {
-                    // 2. Try Turkish-Specific Lowercase (Handled I -> ı)
-                    // "YILDIRIM" -> "yıldırım"
-                    const turkeyName = simpleName.toLocaleLowerCase('tr-TR');
-                    const { data: turkData } = await supabase
-                        .from('universities')
-                        .select('id, name')
-                        .ilike('name', `%${turkeyName}%`)
-                        .limit(1);
-
-                    if (turkData && turkData.length > 0) uniData = turkData[0];
-                }
+                // Try fuzzy
+                const { data: fuzzyData } = await supabase.from('universities').select('id, name')
+                    .ilike('name', `%${simpleName}%`).limit(1);
+                if (fuzzyData && fuzzyData.length > 0) uniData = fuzzyData[0];
             }
 
             if (!uniData) {
-                console.error(`University not found in DB: ${university}`);
-                alert(`Doğrulama başarılı ancak "${university}" sistemimizde henüz kayıtlı değil. Lütfen destek ile iletişime geç.`);
+                alert(`Doğrulama başarılı ancak "${university}" sistemimizde henüz kayıtlı değil.`);
                 return;
             }
 
-            console.log('Found University:', uniData);
-
-            // Step 3b: Find Default Club for this University
-            // Assuming there's at least one club. We take the first one or one named 'EXP'
-            const { data: clubData, error: clubError } = await supabase
-                .from('clubs')
-                .select('id, name')
-                .eq('university_id', uniData.id)
-                .limit(1)
-                .single();
+            // Resolve Club
+            const { data: clubData } = await supabase.from('clubs')
+                .select('id, name').eq('university_id', uniData.id).limit(1).single();
 
             if (!clubData) {
-                console.error(`No club found for university: ${uniData.name}`);
                 alert('Bu üniversite için henüz aktif bir kulüp bulunmuyor.');
                 return;
             }
 
-            console.log('Found Club:', clubData);
+            console.log('Resolved Club:', clubData);
 
-            // Step 3c: Add User to Club
-            const { error: memberError } = await supabase
-                .from('club_members')
-                .insert({
-                    user_id: user.id,
-                    club_id: clubData.id,
-                    role: 'member'
-                });
-
-            if (memberError) {
-                // If unique violation (already member), that's fine.
-                if (memberError.code === '23505') {
-                    console.log('User is already a member of this club.');
-                    alert(`Başarılı! Zaten ${clubData.name} üyesisin.`);
-                } else {
-                    console.error('Failed to add member:', memberError);
-                    alert('Kulüp üyeliği eklenirken bir hata oluştu.');
+            // 2. CALL API (Edge Function)
+            const { data: apiData, error: apiError } = await supabase.functions.invoke('campus-gateway', {
+                body: {
+                    action: 'generate-code',
+                    campus_id: clubData.id,
+                    university_name: uniData.name, // Send standardized name
+                    department: department,
+                    student_class: studentClass,
+                    student_no: '' // Not extracted currently
                 }
-            } else {
-                console.log('Successfully added to club!');
-                alert(`Tebrikler! ${uniData.name} - ${clubData.name} topluluğuna başarıyla katıldın!`);
+            });
 
-                // Update UI to show club membership
-                this.showClubSuccess(uniData.name, clubData.name);
+            if (apiError || !apiData?.success) {
+                throw new Error(apiError?.message || apiData?.error || 'Kod oluşturulamadı');
             }
 
+            console.log('API Response:', apiData);
+
+            // 3. Update UI with REAL Code
+            this.showSuccessUI(apiData.code, uniData.name, department, studentClass);
+
+            // Update Auth Metadata locally just for UI consistency if needed, but truth is in DB
+            // We don't verify them yet here, just Show Code.
+
         } catch (err) {
-            console.error('Verification Save Flow Error:', err);
-            alert('Beklenmeyen bir hata oluştu.');
+            console.error('API Error:', err);
+            alert('İşlem başarısız: ' + err.message);
         }
     }
 

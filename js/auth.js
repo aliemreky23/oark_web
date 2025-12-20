@@ -245,7 +245,7 @@ class AuthManager {
     console.log('Profile auto-created successfully.');
   }
 
-  async register(username, email, password) {
+  async register(username, email, password, fullName) {
     if (!this.supabase) return { error: 'Supabase not initialized' };
 
     // 1. Sign Up
@@ -255,7 +255,7 @@ class AuthManager {
       options: {
         data: {
           username: username,
-          full_name: username
+          full_name: fullName // Use real full name
         }
       }
     });
@@ -268,7 +268,7 @@ class AuthManager {
           id: data.user.id,
           email: email,
           username: username,
-          full_name: username,
+          full_name: fullName, // Use real full name
           created_at: new Date().toISOString()
         });
 
@@ -361,6 +361,7 @@ window.resetVerification = async () => {
 
 window.handleRegister = async (e) => {
   e.preventDefault();
+  const fullName = document.getElementById('fullname')?.value || '';
   const username = document.getElementById('username')?.value;
   const email = document.getElementById('email')?.value;
   const password = document.getElementById('password')?.value;
@@ -371,7 +372,7 @@ window.handleRegister = async (e) => {
     btn.disabled = true;
     btn.innerHTML = '<span class="spinner"></span>';
 
-    const { data, error } = await authManager.register(username, email, password);
+    const { data, error } = await authManager.register(username, email, password, fullName);
 
     if (error) {
       alert('Kayıt başarısız: ' + error.message);
