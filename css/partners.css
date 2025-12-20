@@ -1,0 +1,92 @@
+/* --- Partner Clubs (Marquee) --- */
+.partners-section {
+    padding: 4rem 0 6rem;
+    overflow: hidden;
+    position: relative;
+    background: linear-gradient(to bottom, var(--color-bg), #020202);
+}
+
+.partners-title {
+    text-align: center;
+    font-size: 1rem;
+    letter-spacing: 0.2em;
+    color: var(--color-text-dim);
+    margin-bottom: 3rem;
+    text-transform: uppercase;
+}
+
+.marquee-container {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+.marquee-content {
+    display: flex;
+    gap: 4rem;
+    width: max-content;
+    animation: marqueeScroll 20s linear infinite;
+}
+
+.marquee-content:hover {
+    animation-play-state: paused;
+}
+
+@keyframes marqueeScroll {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+
+    /* Ideally -50% if content is perfectly duplicated twice. 
+       For simple loop, ensure content width is enough to scroll. 
+    */
+}
+
+.partner-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    opacity: 0.5;
+    transition: opacity 0.3s;
+    flex-shrink: 0;
+}
+
+.partner-item:hover {
+    opacity: 1;
+}
+
+.partner-item img {
+    height: 50px;
+    width: auto;
+    filter: grayscale(1);
+    transition: filter 0.3s;
+}
+
+.partner-item:hover img {
+    filter: grayscale(0);
+}
+
+.partner-item span {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: white;
+}
+
+/* Placeholder Style */
+.partner-item.placeholder .logo-box {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px dashed rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.2);
+}

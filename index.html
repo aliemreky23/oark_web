@@ -4,11 +4,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OARK - Oyun Arkadaşı Bul | Next Gen Gaming</title>
+  <title>OARK - Oyun Arkadaşı Bulma Platformu | Oyuncu Eşleşmesi</title>
   <meta name="description"
-    content="OARK ile oyun stilinize, rankınıza ve dilinize uygun takım arkadaşını anında bulun. Toksiklikten uzak, eğlence odaklı yeni nesil oyuncu platformu.">
+    content="OARK ile oyun stilinize, rankınıza ve dilinize uygun takım arkadaşını anında bulun. LoL, Valorant, CS2 için en iyi oyun arkadaşı bulma ve duo olma uygulaması. OARK ile şimdi keşfet!">
   <meta name="keywords"
-    content="oyun arkadaşı bul, duo bul, lfg, takım arkadaşı, oyuncu bulma, valorant duo, lol duo, cs2 takım, oark, gaming, oyuncu platformu">
+    content="oark, oak, oyun arkadaşı, oyun arkadaşı bul, oyun arkadaşı bulma, duo bul, takım arkadaşı, oyuncu arama, valorant duo, lol duo, cs2 takım, game mate, oyuncu eşleşmesi, oyun arkadaşı sitesi">
   <meta name="author" content="OARK Inc.">
   <meta name="theme-color" content="#0f172a">
   <link rel="canonical" href="https://oark.app/">
@@ -16,7 +16,7 @@
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://oark.app/">
-  <meta property="og:title" content="OARK - Oyun Arkadaşı Bul | Next Gen Gaming">
+  <meta property="og:title" content="OARK - Oyun Arkadaşı Bulma Platformu">
   <meta property="og:description"
     content="Oyun stilinize uygun takım arkadaşını saniyeler içinde bulun. Discord'a gerek kalmadan sesli ve yazılı iletişim kurun.">
   <meta property="og:image" content="https://oark.app/assets/og-image.jpg">
@@ -26,13 +26,14 @@
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image">
   <meta property="twitter:url" content="https://oark.app/">
-  <meta property="twitter:title" content="OARK - Oyun Arkadaşı Bul | Next Gen Gaming">
+  <meta property="twitter:title" content="OARK - Oyun Arkadaşı Bulma Platformu">
   <meta property="twitter:description"
     content="Oyun stilinize uygun takım arkadaşını saniyeler içinde bulun. Discord'a gerek kalmadan sesli ve yazılı iletişim kurun.">
   <meta property="twitter:image" content="https://oark.app/assets/og-image.jpg">
 
   <!-- CSS -->
   <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/partners.css">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="assets/logo.png">
@@ -40,19 +41,33 @@
 
   <!-- Structured Data (JSON-LD) -->
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "MobileApplication",
-    "name": "OARK",
-    "operatingSystem": "iOS, Android",
-    "applicationCategory": "SocialNetworkingApplication",
-    "description": "OARK, oyuncuların oyun stillerine, ranklarına ve dillerine uygun takım arkadaşları bulmasını sağlayan yeni nesil bir mobil uygulamadır.",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "TRY"
+  [
+    {
+      "@context": "https://schema.org",
+      "@type": "MobileApplication",
+      "name": "OARK",
+      "operatingSystem": "iOS, Android",
+      "applicationCategory": "SocialNetworkingApplication",
+      "description": "OARK, oyuncuların oyun stillerine, ranklarına ve dillerine uygun takım arkadaşları bulmasını sağlayan yeni nesil bir mobil uygulamadır.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "TRY"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "OARK",
+      "url": "https://oark.app",
+      "logo": "https://oark.app/assets/logo.png",
+      "sameAs": [
+        "https://twitter.com/oarkapp",
+        "https://instagram.com/oarkapp"
+      ],
+      "alternateName": ["Oak", "Oark App"]
     }
-  }
+  ]
   </script>
   <!-- Supabase & Auth -->
   <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
@@ -71,7 +86,7 @@
   <nav class="navbar">
     <div class="container">
       <a href="#" class="logo">
-        <img src="assets/logo.png" alt="OARK">
+        <img src="assets/logo.png?v=2" alt="OARK">
         OARK
       </a>
 
@@ -94,7 +109,7 @@
           <span class="nav-user-name">Yükleniyor...</span>
         </a>
 
-        <a href="#download" class="btn btn-primary">
+        <a href="download.html" class="btn btn-primary">
           İndir <i class="fas fa-download" style="font-size: 0.8em;"></i>
         </a>
       </div>
@@ -124,14 +139,14 @@
       </p>
 
       <div class="hero-buttons">
-        <a href="#download" class="btn btn-primary">
+        <a href="download.html" class="btn btn-primary">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
             <path
               d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z" />
           </svg>
           App Store
         </a>
-        <a href="#download" class="btn btn-secondary">
+        <a href="download.html" class="btn btn-secondary">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
             <path
               d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 01-.61-.92V2.734a1 1 0 01.609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.198l2.807 1.626a1 1 0 010 1.73l-2.808 1.626L15.206 12l2.492-2.491zM5.864 2.658L16.8 8.99l-2.302 2.302-8.634-8.634z" />
@@ -343,8 +358,55 @@
       <p>100.000+ Oyuncu seni bekliyor. Solo oynamaya son ver.</p>
       <br>
       <div class="hero-buttons">
-        <a href="#" class="btn btn-primary">App Store'dan İndir</a>
-        <a href="#" class="btn btn-secondary">Google Play'den İndir</a>
+        <a href="download.html" class="btn btn-primary">App Store'dan İndir</a>
+        <a href="download.html" class="btn btn-secondary">Google Play'den İndir</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Partner Clubs Section (Marquee) -->
+  <!-- Partner Clubs Section (Marquee) -->
+  <section class="partners-section">
+    <div class="container">
+      <h3 class="partners-title">ANLAŞMALI KULÜPLERİMİZ</h3>
+      <div class="marquee-container">
+        <div class="marquee-content">
+          <!-- Loop content twice for seamless scroll -->
+
+          <div class="partner-item placeholder">
+            <div class="logo-box">?</div>
+            <span>Yakında</span>
+          </div>
+          <div class="partner-item placeholder">
+            <div class="logo-box">?</div>
+            <span>Yakında</span>
+          </div>
+          <div class="partner-item placeholder">
+            <div class="logo-box">?</div>
+            <span>Yakında</span>
+          </div>
+          <div class="partner-item placeholder">
+            <div class="logo-box">?</div>
+            <span>Yakında</span>
+          </div>
+          <div class="partner-item placeholder">
+            <div class="logo-box">?</div>
+            <span>Yakında</span>
+          </div>
+          <div class="partner-item placeholder">
+            <div class="logo-box">?</div>
+            <span>Yakında</span>
+          </div>
+          <div class="partner-item placeholder">
+            <div class="logo-box">?</div>
+            <span>Yakında</span>
+          </div>
+          <div class="partner-item placeholder">
+            <div class="logo-box">?</div>
+            <span>Yakında</span>
+          </div>
+
+        </div>
       </div>
     </div>
   </section>

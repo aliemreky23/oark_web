@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OARK İndir - Oyun Arkadaşı Bulma Uygulaması | App Store & Google Play</title>
+    <meta name="description"
+        content="OARK mobil uygulaması çok yakında App Store ve Google Play'de! Hemen e-posta listesine katıl, yayınlandığında ilk sen haberdar ol.">
+    <meta name="keywords"
+        content="oark indir, oark apk, oyun arkadaşı uygulaması, oark ios, oark android, game mate app">
+    <meta name="robots" content="index, follow">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow: hidden;
+            background: #000000;
+        }
+
+        .download-container {
+            text-align: center;
+            z-index: 10;
+            padding: 2rem;
+            max-width: 800px;
+        }
+
+        .app-icon-large {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 2rem;
+            filter: drop-shadow(0 0 40px rgba(139, 92, 246, 0.4));
+            animation: float 6s ease-in-out infinite;
+            mix-blend-mode: screen;
+            /* Makes black background transparent */
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .title-large {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .stores-preview {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-bottom: 3rem;
+            opacity: 0.5;
+            filter: grayscale(1);
+            transition: all 0.5s ease;
+        }
+
+        .stores-preview:hover {
+            opacity: 1;
+            filter: grayscale(0);
+        }
+
+        .notify-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 24px;
+            backdrop-filter: blur(10px);
+            display: inline-block;
+        }
+
+        .notify-input-group {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .notify-input {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 0.8rem 1.2rem;
+            color: white;
+            width: 300px;
+            font-size: 1rem;
+        }
+
+        .btn-notify {
+            background: var(--gradient-main);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .btn-notify:hover {
+            transform: scale(1.05);
+        }
+
+        .back-home {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .back-home:hover {
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background-globes">
+        <div class="globe globe-1"></div>
+        <div class="globe globe-2"></div>
+        <div class="globe globe-3"></div>
+    </div>
+
+    <a href="index.html" class="back-home">
+        <i class="fas fa-arrow-left"></i> Ana Sayfa
+    </a>
+
+    <div class="download-container">
+        <img src="assets/logo.png?v=3" alt="OARK" class="app-icon-large">
+
+        <h1 class="title-large">
+            Oyun Arkadaşın<br>
+            <span class="text-gradient">Mobil'e Geliyor</span>
+        </h1>
+
+        <p class="subtitle">
+            OARK mobil uygulaması App Store ve Google Play'de yerini almak için gün sayıyor.
+            Next-gen oyuncu bulma deneyimi çok yakında cebinde.
+        </p>
+
+        <div class="stores-preview">
+            <div class="btn btn-secondary" style="pointer-events: none;">
+                <i class="fab fa-apple" style="font-size: 1.5rem;"></i> App Store
+            </div>
+            <div class="btn btn-secondary" style="pointer-events: none;">
+                <i class="fab fa-google-play" style="font-size: 1.5rem;"></i> Google Play
+            </div>
+        </div>
+
+        <div class="notify-box">
+            <h3 style="margin-bottom: 0.5rem;"><i class="fas fa-bell"></i> Haberdar Ol</h3>
+            <p style="font-size: 0.9rem; color: rgba(255,255,255,0.6);">Yayınlandığı an sana haber verelim.</p>
+
+            <form class="notify-input-group"
+                onsubmit="event.preventDefault(); alert('Teşekkürler! Listeye eklendin.');">
+                <input type="email" placeholder="E-posta adresin" class="notify-input" required>
+                <button type="submit" class="btn-notify">Kaydet</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

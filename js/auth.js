@@ -97,6 +97,17 @@ class AuthManager {
   async fetchProfile() {
     if (!this.user) return;
 
+    // Fast Fallback: Use Metadata immediately
+    const meta = this.user.user_metadata || {};
+    const fallbackName = meta.username || meta.full_name || this.user.email.split('@')[0];
+
+    // Update Navbar immediately with fallback
+    const navNames = document.querySelectorAll('.nav-user-name');
+    const navAvatars = document.querySelectorAll('.nav-user-avatar');
+
+    navNames.forEach(el => el.textContent = fallbackName);
+    navAvatars.forEach(el => el.textContent = fallbackName.charAt(0).toUpperCase());
+
     try {
       const { data, error } = await this.supabase
         .from('profiles')
@@ -104,22 +115,21 @@ class AuthManager {
         .eq('id', this.user.id)
         .single();
 
-      if (data) {
-        const displayName = data.username || data.full_name || 'Kullanıcı';
-        const avatarUrl = data.avatar_url; // Assuming this field exists
+      if (error && error.code !== 'PGRST116') throw error; // PGRST116 is 'not found'
 
-        // Update Dashboard
+      if (data) {
+        const displayName = data.username || data.full_name || fallbackName;
+        const avatarUrl = data.avatar_url;
+
+        // Update Dashboard Name
         const nameEl = document.getElementById('user-name');
         if (nameEl) nameEl.textContent = displayName;
 
-        // Update Navbar User Profile
-        const navNames = document.querySelectorAll('.nav-user-name');
-        const navAvatars = document.querySelectorAll('.nav-user-avatar');
-
+        // Update Navbar Name (Final)
         navNames.forEach(el => el.textContent = displayName);
 
         if (avatarUrl) {
-          // Update Navbar Avatars
+          // Update Navbar Avatars with Image
           navAvatars.forEach(el => {
             if (el.tagName === 'IMG') {
               el.src = avatarUrl;
@@ -132,23 +142,23 @@ class AuthManager {
           const mainProfileAvatar = document.querySelector('.profile-avatar');
           if (mainProfileAvatar) {
             mainProfileAvatar.innerHTML = `<img src="${avatarUrl}" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">`;
-            mainProfileAvatar.style.background = 'transparent'; // Remove default gradient
-            mainProfileAvatar.style.border = 'none'; // Optional: remove border if image covers it, or keep it
+            mainProfileAvatar.style.background = 'transparent';
+            mainProfileAvatar.style.border = 'none';
           }
         } else {
-          // Initials if no avatar
+          // Re-render initial just in case
           const initial = displayName.charAt(0).toUpperCase();
-          navAvatars.forEach(el => el.textContent = initial);
+          navAvatars.forEach(el => {
+            if (!el.querySelector('img')) el.textContent = initial;
+          });
 
           const mainProfileAvatar = document.querySelector('.profile-avatar');
-          if (mainProfileAvatar) {
+          if (mainProfileAvatar && !mainProfileAvatar.querySelector('img')) {
             mainProfileAvatar.innerHTML = initial;
-            // Keep default gradient background
           }
         }
 
         // Check Student Verification Status
-        const meta = this.user?.user_metadata || {};
         const isStudent = meta.is_student || data.is_student;
         const campusCode = meta.campus_code || data.campus_code;
         const university = meta.university || data.university;
@@ -195,10 +205,44 @@ class AuthManager {
                 `;
           }
         }
+      } else {
+        // PROFILE NOT FOUND -> Auto-Create
+        console.log('Profile missing for user, attempting to create...');
+        await this.createProfileIfNotExists();
+        return this.fetchProfile(); // Retry fetch
       }
     } catch (e) {
       console.error("Error fetching profile", e);
     }
+  }
+
+  async createProfileIfNotExists() {
+    if (!this.user) return;
+
+    const meta = this.user.user_metadata || {};
+    const username = meta.username || this.user.email.split('@')[0];
+    const fullName = meta.full_name || username;
+
+    // Try insert
+    const { error } = await this.supabase
+      .from('profiles')
+      .insert({
+        id: this.user.id,
+        email: this.user.email,
+        username: username,
+        full_name: fullName,
+        created_at: new Date().toISOString()
+      })
+      .select()
+      .single();
+
+    if (error) {
+      console.error('Failed to auto-create profile:', error);
+      // If error is duplicate key, it exists, so ignore.
+      if (error.code !== '23505') return;
+    }
+
+    console.log('Profile auto-created successfully.');
   }
 
   async register(username, email, password) {
@@ -215,6 +259,25 @@ class AuthManager {
         }
       }
     });
+
+    // 2. Client-Side Profile Creation (Fallback if Trigger fails)
+    if (data && data.user && !error) {
+      const { error: profileError } = await this.supabase
+        .from('profiles')
+        .insert({
+          id: data.user.id,
+          email: email,
+          username: username,
+          full_name: username,
+          created_at: new Date().toISOString()
+        });
+
+      if (profileError) {
+        console.warn('Client-side profile creation failed (Trigger might have handled it or RLS issue):', profileError);
+      } else {
+        console.log('Client-side profile creation success.');
+      }
+    }
 
     return { data, error };
   }
