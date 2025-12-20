@@ -102,17 +102,24 @@ function initScrollReveal() {
   }, observerOptions);
 
   // Target elements to animate
-  const elements = document.querySelectorAll('.glass-card, .showcase-row, .section-head, .cta-content');
+  // Automatically add fade-up class to major elements if they don't have it
+  const sections = document.querySelectorAll('section h2, section p, .glass-card, .showcase-visual, .cta-content, .hero-content');
+
+  sections.forEach(el => {
+    if (!el.classList.contains('fade-up') && !el.classList.contains('fade-in')) {
+      el.classList.add('fade-up');
+    }
+  });
+
+  const elements = document.querySelectorAll('.fade-up, .fade-in');
 
   elements.forEach((el, index) => {
-    // Add base style for animation
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(30px)';
-    el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
-
-    // Add delay for grid items
+    // Add delay for grid items automatically based on index
     if (el.classList.contains('glass-card')) {
-      el.style.transitionDelay = `${(index % 3) * 0.1}s`;
+      // Reset index logic for each group of cards would be complex, 
+      // but a simple modulo gives a nice staggering effect regardless of total count
+      const delay = (index % 3) * 0.15;
+      el.style.transitionDelay = `${delay}s`;
     }
 
     observer.observe(el);

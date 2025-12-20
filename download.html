@@ -137,10 +137,36 @@
             gap: 0.5rem;
             font-weight: 500;
             transition: color 0.3s;
+            z-index: 100;
+            /* Ensure it's above everything */
+            padding: 10px;
+            /* Increase touch area */
         }
 
         .back-home:hover {
             color: white;
+        }
+
+        @media (max-width: 768px) {
+            .back-home {
+                top: 1rem;
+                left: 1rem;
+                background: rgba(0, 0, 0, 0.5);
+                /* Better visibility on mobile */
+                border-radius: 99px;
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+                backdrop-filter: blur(5px);
+            }
+
+            .title-large {
+                font-size: 2.5rem;
+            }
+
+            .app-icon-large {
+                width: 80px;
+                height: 80px;
+            }
         }
     </style>
 </head>

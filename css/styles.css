@@ -63,12 +63,47 @@ html {
   color: var(--color-text);
   scroll-behavior: smooth;
   overflow-x: hidden;
+  /* Modern Scroll Snap */
+  scroll-snap-type: y mandatory;
+  height: 100vh;
+  overflow-y: scroll;
 }
 
 body {
   min-height: 100vh;
   position: relative;
   overflow-x: hidden;
+  /* Ensure children can be snapped to */
+}
+
+/* Snap Areas */
+section,
+header,
+footer,
+.hero {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+/* Animation Utilities */
+.fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fade-in {
+  opacity: 0;
+  transition: opacity 1s ease-out;
+}
+
+.fade-in.visible {
+  opacity: 1;
 }
 
 /* Custom Scrollbar */
