@@ -1,12 +1,15 @@
 // ========================================
-// OARK - Main JavaScript
+// OARK - Main JavaScript (Cleaned v19)
 // ========================================
+
+console.log('Main.js v19 loaded cleanly');
 
 document.addEventListener('DOMContentLoaded', () => {
   initNavbar();
   initMobileMenu();
   initSmoothScroll();
   initScrollReveal();
+  initStatsCounter();
 });
 
 // ========== Navbar Scroll Effect ==========
@@ -406,54 +409,125 @@ class DeleteAccountForm {
     const existing = step.querySelector('.message');
     if (existing) existing.remove();
 
-    const message = document.createElement('div');
-    message.className = `message ${type}`;
-    // Inline styles for message to match new design without relying on styles.css for everything instantly
-    message.style.padding = '1rem';
-    message.style.borderRadius = '8px';
-    message.style.marginBottom = '1.5rem';
-    message.style.fontSize = '0.9rem';
-    message.style.textAlign = 'center';
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `message ${type}`;
+    messageDiv.textContent = text;
 
-    if (type === 'error') {
-      message.style.background = 'rgba(239, 68, 68, 0.15)';
-      message.style.color = '#fca5a5';
-      message.style.border = '1px solid rgba(239, 68, 68, 0.3)';
+    const formContent = step.querySelector('.form-content');
+    if (formContent) {
+      formContent.prepend(messageDiv);
     } else {
-      message.style.background = 'rgba(16, 185, 129, 0.15)';
-      message.style.color = '#6ee7b7';
-      message.style.border = '1px solid rgba(16, 185, 129, 0.3)';
+      step.prepend(messageDiv);
     }
 
-    message.textContent = text;
-
-    const form = step.querySelector('form') || step;
-    form.insertBefore(message, form.firstChild);
-
-    setTimeout(() => {
-      message.remove();
-    }, 5000);
-  }
-
-  setLoading(btn, isLoading) {
-    if (!btn) return;
-
-    if (isLoading) {
-      btn.disabled = true;
-      btn.dataset.originalText = btn.innerHTML;
-      btn.innerHTML = '<span class="spinner"></span> Yükleniyor...';
-    } else {
-      btn.disabled = false;
-      btn.innerHTML = btn.dataset.originalText || 'Gönder';
+    // Auto-hide success messages after a few seconds
+    if (type === 'success') {
+      setTimeout(() => {
+        messageDiv.remove();
+      }, 5000);
     }
   }
 
   validateEmail(email) {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(email);
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+
+  setLoading(btn, isLoading) {
+    if (!btn) return;
+    if (isLoading) {
+      btn.dataset.originalText = btn.textContent;
+      btn.textContent = 'Yükleniyor...';
+      btn.disabled = true;
+    } else {
+      btn.textContent = btn.dataset.originalText || 'Gönder';
+      btn.disabled = false;
+    }
   }
 }
 
-if (document.getElementById('deleteAccountForm')) {
-  new DeleteAccountForm();
+// Initialize the form handler if on the delete account page
+document.addEventListener('DOMContentLoaded', () => {
+  if (document.getElementById('deleteAccountForm')) {
+    new DeleteAccountForm();
+  }
+});
+
+
+// ========== Stats Counter & Dynamic Data ==========
+function initStatsCounter() {
+  // Manual Mode Active - No fetch needed
+
+  // 2. Observer for animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const element = entry.target;
+        // If it's the dynamic ID, we might wait for data, 
+        // but the animation function handles current innerText/target
+        const target = parseInt(element.getAttribute('data-target') || element.innerText.replace(/[^0-9]/g, ''));
+        if (target > 0) {
+          animateValue(element, 0, target, 2000);
+        }
+        observer.unobserve(element);
+      }
+    });
+  }, { threshold: 0.1 }); // Lower threshold to ensure trigger
+
+  // Observe all stat numbers
+  document.querySelectorAll('.stat-number').forEach(el => observer.observe(el));
+}
+
+async function fetchTotalUsers() {
+  // Access global authManager if available
+  if (window.authManager && window.authManager.supabase) {
+    try {
+      // Get count using Secure RPC function
+      const { data, error } = await authManager.supabase.rpc('get_user_count');
+
+      if (error) {
+        console.warn("Supabase RPC error:", error);
+      }
+
+      if (!error && data !== null) {
+        const count = data; // RPC returns the number directly as data
+        const playerEl = document.getElementById('stat-player-count');
+        if (playerEl) {
+          // Update data-target so animation can pick it up if not already run
+          // Or if run, update text directly but usually we want to animate TO this new number
+          playerEl.setAttribute('data-target', count);
+
+          // If element is already in view (animation finished or running), re-animate?
+          // For simplicity, let's just animate from 0 to actual count
+          animateValue(playerEl, 0, count, 2000);
+        }
+      }
+    } catch (e) {
+      console.error("Error fetching user count:", e);
+      // Fallback is 0 or whatever is in HTML
+    }
+  }
+}
+
+function animateValue(obj, start, end, duration) {
+  if (!obj) return;
+  let startTimestamp = null;
+  const step = (timestamp) => {
+    if (!startTimestamp) startTimestamp = timestamp;
+    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+    // Easing (easeOutExpo)
+    const easeProgress = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+
+    let value = Math.floor(easeProgress * (end - start) + start);
+
+    // Format if large number (e.g. 1000 -> 1K logic if needed, but request asked for raw numbers from 0)
+    // User asked for "0dan başlayarak sayılar artmaya başlayacak".
+    obj.innerHTML = value + (obj.dataset.suffix || ""); // Add suffix if needed, e.g. "+"
+
+    if (progress < 1) {
+      window.requestAnimationFrame(step);
+    } else {
+      obj.innerHTML = end + (obj.dataset.suffix || "");
+    }
+  };
+  window.requestAnimationFrame(step);
 }

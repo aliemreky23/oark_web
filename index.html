@@ -94,6 +94,7 @@
         <a href="#features">Özellikler</a>
         <a href="#about">Hakkında</a>
         <a href="#showcase">Keşfet</a>
+        <a href="#university">Kampüs</a>
         <a href="privacy.html">Gizlilik</a>
       </div>
 
@@ -157,19 +158,15 @@
 
       <div class="hero-stats">
         <div class="stat-item">
-          <span class="stat-number text-gradient">100K+</span>
+          <span class="stat-number" id="stat-player-count" data-target="20" data-suffix="+">20+</span>
           <span class="stat-label">Oyuncu</span>
         </div>
+        <div class="stat-divider"></div>
         <div class="stat-item">
-          <span class="stat-number text-gradient">50+</span>
+          <span class="stat-number" data-target="15" data-suffix="+">15+</span>
           <span class="stat-label">Oyun</span>
         </div>
-        <div class="stat-item">
-          <span class="stat-number text-gradient">4.8</span>
-          <span class="stat-label">Rating</span>
-        </div>
       </div>
-    </div>
   </section>
 
   <!-- Features Grid -->
@@ -279,77 +276,91 @@
     </div>
   </section>
 
-  <!-- Campus Section -->
-  <section class="campus-section" id="campus">
+  <section id="university" class="section">
     <div class="container">
-      <div class="campus-grid">
-        <div class="campus-content">
-          <span class="badge"
-            style="background: rgba(6, 182, 212, 0.15); color: var(--color-secondary); border-color: rgba(6, 182, 212, 0.3);">YENİ</span>
-          <h2>OARK <span class="text-gradient"
-              style="background: linear-gradient(to right, #06b6d4, #3b82f6); -webkit-background-clip: text;">KAMPÜS</span>
-          </h2>
-          <p class="campus-desc">
-            Sadece üniversite öğrencilerine özel, kapalı devre oyun ekosistemi.
-            Kendi kampüsündeki oyuncuları bul, forumda sadece kendi üniversite arkadaşlarınızla tartışıp eğlenin.
+      <div class="campus-grid-legacy"
+        style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
+
+        <!-- Left: Steps & Info -->
+        <div class="campus-info">
+          <div class="badge" style="background: rgba(6, 182, 212, 0.2); color: #06b6d4; margin-bottom: 1rem;">YENİ</div>
+          <h2 class="section-title" style="text-align: left; margin-bottom: 1rem;">OARK <span class="text-gradient"
+              style="color: #06b6d4;">KAMPÜS</span></h2>
+          <p style="margin-bottom: 2.5rem; color: #94a3b8; font-size: 1.1rem;">
+            Sadece üniversite öğrencilerine özel, kapalı devre oyun ekosistemi. Kendi kampüsündeki oyuncuları bul,
+            forumda sadece kendi üniversite arkadaşlarınla tartışıp eğlen.
           </p>
 
           <div class="steps-container">
-            <div class="step-item">
-              <div class="step-number">1</div>
-              <div class="step-text">
-                <h4>Öğrenci Belgeni Yükle</h4>
-                <p>OARK Web üzerinden e-Devlet öğrenci belgeni yükleyerek sistemden onay al.</p>
+            <!-- Step 1 -->
+            <div class="step-item" style="display: flex; gap: 1.5rem; margin-bottom: 2rem;">
+              <div class="step-number"
+                style="width: 40px; height: 40px; background: rgba(255,255,255,0.05); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #06b6d4; border: 1px solid rgba(6,182,212,0.3); flex-shrink: 0;">
+                1</div>
+              <div>
+                <h4 style="color: white; margin-bottom: 0.5rem;">Öğrenci Belgeni Yükle</h4>
+                <p style="font-size: 0.9rem; margin-bottom: 0;">OARK Web üzerinden e-Devlet öğrenci belgeni yükleyerek
+                  sistemden onay al.</p>
               </div>
             </div>
-            <div class="step-item">
-              <div class="step-icon-line"></div>
-              <div class="step-number">2</div>
-              <div class="step-text">
-                <h4>Kampüs Kodunu Al</h4>
-                <p>Doğrulama sonrası sana özel üretilen <strong>Kampüs Kodu</strong>'nu kopyala.</p>
+
+            <!-- Step 2 -->
+            <div class="step-item" style="display: flex; gap: 1.5rem; margin-bottom: 2rem;">
+              <div class="step-number"
+                style="width: 40px; height: 40px; background: rgba(255,255,255,0.05); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #06b6d4; border: 1px solid rgba(6,182,212,0.3); flex-shrink: 0;">
+                2</div>
+              <div>
+                <h4 style="color: white; margin-bottom: 0.5rem;">Kampüs Kodunu Al</h4>
+                <p style="font-size: 0.9rem; margin-bottom: 0;">Doğrulama sonrası sana özel üretilen <strong>Kampüs
+                    Kodu</strong>'nu kopyala.</p>
               </div>
             </div>
-            <div class="step-item">
-              <div class="step-icon-line"></div>
-              <div class="step-number">3</div>
-              <div class="step-text">
-                <h4>Uygulamaya Gir</h4>
-                <p>OARK Mobil uygulamasında "Kampüs" sekmesine kodunu gir ve kampüsüne katıl!</p>
+
+            <!-- Step 3 -->
+            <div class="step-item" style="display: flex; gap: 1.5rem; margin-bottom: 2rem;">
+              <div class="step-number"
+                style="width: 40px; height: 40px; background: rgba(255,255,255,0.05); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #06b6d4; border: 1px solid rgba(6,182,212,0.3); flex-shrink: 0;">
+                3</div>
+              <div>
+                <h4 style="color: white; margin-bottom: 0.5rem;">Uygulamaya Gir</h4>
+                <p style="font-size: 0.9rem; margin-bottom: 0;">OARK Mobil uygulamasında "Kampüs" sekmesine kodunu gir
+                  ve kampüsüne katıl!</p>
               </div>
             </div>
           </div>
 
           <a href="login.html" class="btn btn-primary"
-            style="background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%); border:none; margin-top: 2rem;">
+            style="background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%); border:none; padding: 0.8rem 2rem;">
             Hemen Doğrula &rarr;
           </a>
         </div>
 
+        <!-- Right: Card -->
         <div class="campus-visual">
-          <div class="glass-card education-card">
-            <div class="edu-icon">
+          <div class="glass-card education-card"
+            style="margin: 0 auto; max-width: 400px; padding: 3rem 2rem; border-color: rgba(6,182,212,0.2);">
+            <div class="edu-icon"
+              style="width: 80px; height: 80px; margin: 0 auto 1.5rem; background: linear-gradient(135deg, #06b6d4, #3b82f6); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: white; box-shadow: 0 0 20px rgba(6,182,212,0.4);">
               <i class="fas fa-graduation-cap"></i>
             </div>
-            <div class="edu-info">
-              <h3>Öğrenci Doğrulaması</h3>
-              <div class="verified-badge">
-                <i class="fas fa-check-circle"></i> Onaylandı
-              </div>
+
+            <h3 style="text-align: center; margin-bottom: 0.5rem;">Öğrenci Doğrulaması</h3>
+            <div class="verified-badge" style="margin: 0 auto 2rem; display: table;">
+              <i class="fas fa-check-circle"></i> Onaylandı
             </div>
-            <div class="code-preview">
-              <span>KAMPÜS KODUN:</span>
-              <div class="code-box">OARK-2024-X9Y2</div>
+
+            <div class="code-preview" style="text-align: center;">
+              <span style="font-size: 0.8rem; letter-spacing: 2px; opacity: 0.7;">KAMPÜS KODUN:</span>
+              <div class="code-box"
+                style="margin-top: 0.5rem; font-family: monospace; font-size: 1.5rem; font-weight: bold; letter-spacing: 1px;">
+                OARK-2024-X9Y2</div>
             </div>
           </div>
-          <!-- Decorative Elements -->
-          <div class="campus-blob blob-1"></div>
-          <div class="campus-blob blob-2"></div>
         </div>
+
       </div>
     </div>
   </section>
-
   <!-- CTA Section -->
   <section class="cta-section" id="download">
     <div class="cta-glow"></div>
@@ -373,6 +384,40 @@
         <div class="marquee-content">
           <!-- Loop content twice for seamless scroll -->
 
+          <div class="partner-item placeholder">
+            <div class="logo-box">?</div>
+            <span>Yakında</span>
+          </div>
+          <div class="partner-item placeholder">
+            <div class="logo-box">?</div>
+            <span>Yakında</span>
+          </div>
+          <div class="partner-item placeholder">
+            <div class="logo-box">?</div>
+            <span>Yakında</span>
+          </div>
+          <div class="partner-item placeholder">
+            <div class="logo-box">?</div>
+            <span>Yakında</span>
+          </div>
+          <div class="partner-item placeholder">
+            <div class="logo-box">?</div>
+            <span>Yakında</span>
+          </div>
+          <div class="partner-item placeholder">
+            <div class="logo-box">?</div>
+            <span>Yakında</span>
+          </div>
+          <div class="partner-item placeholder">
+            <div class="logo-box">?</div>
+            <span>Yakında</span>
+          </div>
+          <div class="partner-item placeholder">
+            <div class="logo-box">?</div>
+            <span>Yakında</span>
+          </div>
+
+          <!-- DUPLICATE FOR INFINITE SCROLL -->
           <div class="partner-item placeholder">
             <div class="logo-box">?</div>
             <span>Yakında</span>
@@ -464,7 +509,7 @@
   <!-- Scripts -->
   <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
   <script src="js/auth.js"></script>
-  <script src="js/main.js"></script>
+  <script src="js/main.js?v=26"></script>
 </body>
 
 </html>

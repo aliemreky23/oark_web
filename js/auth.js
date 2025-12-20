@@ -431,6 +431,10 @@ window.handleGoogleLogin = async () => {
   if (error) alert('Google girişi hatası: ' + error.message);
 };
 
+
 window.handleLogout = async () => {
   await authManager.logout();
 };
+
+// Initialize Global Auth Manager
+window.authManager = new AuthManager();

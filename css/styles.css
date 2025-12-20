@@ -63,7 +63,7 @@ html {
   color: var(--color-text);
   scroll-behavior: smooth;
   overflow-x: hidden;
-  /* Modern Scroll Snap */
+  /* Modern Scroll Snap configuration */
   scroll-snap-type: y mandatory;
   height: 100vh;
   overflow-y: scroll;
@@ -73,16 +73,47 @@ body {
   min-height: 100vh;
   position: relative;
   overflow-x: hidden;
-  /* Ensure children can be snapped to */
 }
 
 /* Snap Areas */
-section,
-header,
-footer,
+/* Snap Areas */
+section:not(.partners-section),
 .hero {
   scroll-snap-align: start;
   scroll-snap-stop: always;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+
+.partners-section {
+  scroll-snap-align: start;
+  scroll-snap-stop: normal;
+  min-height: auto !important;
+  padding: 4rem 0;
+  height: auto;
+}
+
+footer {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  /* Footer doesn't need to be 100vh */
+}
+
+/* Glass Card - Clean Style */
+.education-card {
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  max-width: 400px;
+  text-align: center;
+  transform: scale(1);
+  transition: transform 0.3s ease;
+}
+
+.education-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--color-secondary);
 }
 
 /* Animation Utilities */
@@ -525,6 +556,81 @@ a {
   letter-spacing: 0.1em;
 }
 
+/* Partners & Marquee */
+.partners-section {
+  background: black;
+  /* or transparent if overlay */
+  overflow: hidden;
+  padding: 4rem 0;
+}
+
+.partners-title {
+  text-align: center;
+  margin-bottom: 3rem;
+  color: var(--color-text-dim);
+  font-size: 0.9rem;
+  letter-spacing: 0.2em;
+}
+
+.marquee-container {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  /* Fade mask on sides */
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+.marquee-content {
+  display: flex;
+  gap: 3rem;
+  width: max-content;
+  /* Ensures it fits all items */
+  animation: scroll 20s linear infinite;
+  /* Smooth continuous scroll */
+}
+
+/* Pause on hover optional */
+.marquee-content:hover {
+  animation-play-state: paused;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.partner-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  opacity: 0.5;
+  transition: opacity 0.3s;
+  flex-shrink: 0;
+  /* Prevent shrinking */
+}
+
+.partner-item:hover {
+  opacity: 1;
+}
+
+.partner-item .logo-box {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  color: var(--color-text-dim);
+}
+
 /* Features Grid */
 .features-section {
   padding: 8rem 0;
@@ -944,8 +1050,24 @@ footer {
   }
 
   .hero-stats {
-    flex-direction: column;
-    gap: 1.5rem;
+    flex-direction: row;
+    /* Keep horizontal on mobile */
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    /* Allow wrap if very small */
+  }
+
+  .hero-stats .stat-number {
+    font-size: 2rem;
+    /* Slightly smaller on mobile */
+  }
+
+  .marquee-content {
+    gap: 2rem;
+    /* Reduce gap in marquee on mobile */
+    animation-duration: 15s;
+    /* Speed up slightly or keep same */
   }
 
   .footer-content {
