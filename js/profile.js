@@ -45,7 +45,8 @@ window.handleStudentUpload = async (event) => {
     document.getElementById('upload-step').style.display = 'none';
     const emailStep = document.getElementById('email-step');
     emailStep.style.display = 'block';
-    emailStep.classList.add('fade-up'); // Add animation class if exists or just show
+    // Animation removed to prevent visibility issues
+    // emailStep.classList.add('fade-up');
 
     // Auto-fill email if it's an edu mail
     const userEmail = window.authManager?.user?.email;
