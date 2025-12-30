@@ -1,7 +1,8 @@
 // ========================================
-// OARK - Authentication Logic
+// OARK - Authentication Logic (API Version)
 // ========================================
 
+// Supabase is still needed for OAuth and Realtime
 const SUPABASE_URL = 'https://hxwlwnlfnnsflbkkbbea.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh4d2x3bmxmbm5zZmxia2tiYmVhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI2ODg0NTgsImV4cCI6MjA3ODI2NDQ1OH0.h2HbS9OIQLgh7M0DpwtUfKhgAMYXryv9H9tjK4brzaI';
 
@@ -9,51 +10,86 @@ class AuthManager {
   constructor() {
     this.supabase = null;
     this.user = null;
+    this.profile = null;
     this.init();
   }
 
   init() {
+    // Initialize Supabase for OAuth only
     if (typeof supabase !== 'undefined' && supabase.createClient) {
       this.supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-      this.initSessionListener();
+    }
+
+    // Check if we have tokens stored
+    const accessToken = localStorage.getItem('access_token');
+    if (accessToken) {
+      this.checkCurrentUser();
+    } else if (this.supabase) {
+      // Check Supabase session (for OAuth users)
+      this.initSupabaseSession();
     } else {
-      console.error('Supabase SDK not loaded.');
+      this.updateUI();
     }
   }
 
-  async initSessionListener() {
-    console.log('Auth: initSessionListener started');
-    // Check initial session
+  async initSupabaseSession() {
     try {
-      const { data: { session }, error } = await this.supabase.auth.getSession();
-      if (error) console.error('Auth: getSession error', error);
-      console.log('Auth: Initial session', session);
-      this.handleSessionUpdate(session);
+      const { data: { session } } = await this.supabase.auth.getSession();
+      if (session) {
+        // Migrate Supabase session to API tokens
+        window.oarkAPI.setTokens(session.access_token, session.refresh_token);
+        await this.checkCurrentUser();
+      } else {
+        this.updateUI();
+      }
     } catch (err) {
-      console.error('Auth: Unexpected error in init', err);
+      console.error('Supabase session check failed:', err);
+      this.updateUI();
     }
 
-    // Listen for changes
-    this.supabase.auth.onAuthStateChange((_event, session) => {
-      console.log('Auth: onAuthStateChange', _event, session);
-      this.handleSessionUpdate(session);
+    // Listen for OAuth callbacks
+    this.supabase.auth.onAuthStateChange(async (event, session) => {
+      if (event === 'SIGNED_IN' && session) {
+        window.oarkAPI.setTokens(session.access_token, session.refresh_token);
+        await this.checkCurrentUser();
+
+        // Redirect if on login page
+        if (window.location.pathname.includes('login.html')) {
+          window.location.href = 'profile.html';
+        }
+      }
     });
   }
 
-  handleSessionUpdate(session) {
-    this.user = session?.user ?? null;
-    console.log('Auth: handleSessionUpdate, user:', this.user);
-    this.updateUI();
+  async checkCurrentUser() {
+    try {
+      const response = await window.oarkAPI.getCurrentUser();
+      if (response.success) {
+        this.user = response.data;
+        this.profile = response.data;
+        this.updateUI();
+        this.handleRedirects();
+      } else {
+        this.clearSession();
+      }
+    } catch (err) {
+      console.error('Auth check failed:', err);
+      this.clearSession();
+    }
+  }
 
-    // Redirect logic if needed
+  clearSession() {
+    this.user = null;
+    this.profile = null;
+    window.oarkAPI.clearTokens();
+    this.updateUI();
+  }
+
+  handleRedirects() {
     const path = window.location.pathname;
     const isLoginPage = path.includes('login.html');
     const isProfilePage = path.includes('profile.html');
-
-    // Check if we are potentially handling an OAuth redirect
-    // If so, we shouldn't redirect away, because Supabase needs to process the hash/query
     const hasAuthParams = window.location.hash.includes('access_token') ||
-      window.location.hash.includes('error') ||
       window.location.search.includes('code');
 
     if (this.user && isLoginPage) {
@@ -64,242 +100,142 @@ class AuthManager {
   }
 
   updateUI() {
-    console.log('Auth: updateUI called, user present:', !!this.user);
-    // Update navigation items based on auth state
     const loginBtns = document.querySelectorAll('.auth-login-btn');
     const profileBtns = document.querySelectorAll('.auth-profile-btn');
     const userProfileNavs = document.querySelectorAll('.nav-user-profile');
 
-    console.log(`Auth: Found ${loginBtns.length} login btns, ${userProfileNavs.length} profile navs`);
-
     if (this.user) {
       loginBtns.forEach(btn => btn.style.display = 'none');
-      profileBtns.forEach(btn => btn.style.display = 'none'); // Hide generic profile button
-      userProfileNavs.forEach(nav => {
-        nav.style.display = 'inline-flex';
-        console.log('Auth: Showing profile nav');
-      }); // Show specific user nav
+      profileBtns.forEach(btn => btn.style.display = 'none');
+      userProfileNavs.forEach(nav => nav.style.display = 'inline-flex');
 
-      // Trigger profile fetch to populate data
-      this.fetchProfile();
+      this.updateProfileDisplay();
     } else {
       loginBtns.forEach(btn => btn.style.display = 'inline-flex');
       profileBtns.forEach(btn => btn.style.display = 'none');
       userProfileNavs.forEach(nav => nav.style.display = 'none');
     }
 
-    // Update profile info if on profile page (dashboard)
     if (document.getElementById('user-email')) {
       document.getElementById('user-email').textContent = this.user?.email || '';
     }
   }
 
-  async fetchProfile() {
-    if (!this.user) return;
+  updateProfileDisplay() {
+    const profile = this.profile || this.user;
+    if (!profile) return;
 
-    // Fast Fallback: Use Metadata immediately
-    const meta = this.user.user_metadata || {};
-    const fallbackName = meta.username || meta.full_name || this.user.email.split('@')[0];
+    const displayName = profile.username || profile.full_name || profile.email?.split('@')[0] || 'Kullanıcı';
+    const avatarUrl = profile.avatar_url;
 
-    // Update Navbar immediately with fallback
+    // Update navbar
     const navNames = document.querySelectorAll('.nav-user-name');
     const navAvatars = document.querySelectorAll('.nav-user-avatar');
 
-    navNames.forEach(el => el.textContent = fallbackName);
-    navAvatars.forEach(el => el.textContent = fallbackName.charAt(0).toUpperCase());
+    navNames.forEach(el => el.textContent = displayName);
 
-    try {
-      const { data, error } = await this.supabase
-        .from('profiles')
-        .select('*')
-        .eq('id', this.user.id)
-        .single();
-
-      if (error && error.code !== 'PGRST116') throw error; // PGRST116 is 'not found'
-
-      if (data) {
-        const displayName = data.username || data.full_name || fallbackName;
-        const avatarUrl = data.avatar_url;
-
-        // Update Dashboard Name
-        const nameEl = document.getElementById('user-name');
-        if (nameEl) nameEl.textContent = displayName;
-
-        // Update Navbar Name (Final)
-        navNames.forEach(el => el.textContent = displayName);
-
-        if (avatarUrl) {
-          // Update Navbar Avatars with Image
-          navAvatars.forEach(el => {
-            if (el.tagName === 'IMG') {
-              el.src = avatarUrl;
-            } else {
-              el.innerHTML = `<img src="${avatarUrl}" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">`;
-            }
-          });
-
-          // Update Main Profile Dashboard Avatar
-          const mainProfileAvatar = document.querySelector('.profile-avatar');
-          if (mainProfileAvatar) {
-            mainProfileAvatar.innerHTML = `<img src="${avatarUrl}" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">`;
-            mainProfileAvatar.style.background = 'transparent';
-            mainProfileAvatar.style.border = 'none';
-          }
+    if (avatarUrl) {
+      navAvatars.forEach(el => {
+        if (el.tagName === 'IMG') {
+          el.src = avatarUrl;
         } else {
-          // Re-render initial just in case
-          const initial = displayName.charAt(0).toUpperCase();
-          navAvatars.forEach(el => {
-            if (!el.querySelector('img')) el.textContent = initial;
-          });
-
-          const mainProfileAvatar = document.querySelector('.profile-avatar');
-          if (mainProfileAvatar && !mainProfileAvatar.querySelector('img')) {
-            mainProfileAvatar.innerHTML = initial;
-          }
+          el.innerHTML = `<img src="${avatarUrl}" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">`;
         }
+      });
+    } else {
+      const initial = displayName.charAt(0).toUpperCase();
+      navAvatars.forEach(el => {
+        if (!el.querySelector('img')) el.textContent = initial;
+      });
+    }
 
-        // Check Student Verification Status
-        const isStudent = meta.is_student || data.is_student;
-        const campusCode = meta.campus_code || data.campus_code;
-        const university = meta.university || data.university;
-        const department = meta.department || data.department;
-        const studentClass = meta.student_class || data.student_class;
+    // Update profile page elements
+    const nameEl = document.getElementById('user-name');
+    if (nameEl) nameEl.textContent = displayName;
 
-        if (isStudent && campusCode) {
-          const fileInputCtx = document.getElementById('student-file-input');
-          const resultArea = document.getElementById('verification-result');
-          const verifyMsg = document.getElementById('verify-status');
-
-          if (fileInputCtx && fileInputCtx.parentElement) {
-            fileInputCtx.parentElement.style.display = 'none';
-          }
-
-          if (verifyMsg) {
-            verifyMsg.style.display = 'block';
-            verifyMsg.className = 'verify-status-box status-success';
-            verifyMsg.style.background = 'rgba(16, 185, 129, 0.1)';
-            verifyMsg.style.borderColor = 'rgba(16, 185, 129, 0.4)';
-            verifyMsg.style.color = '#34d399';
-            verifyMsg.innerHTML = '<i class="fas fa-check-circle"></i> Doğrulanmış Öğrenci Hesabı';
-          }
-
-          if (resultArea) {
-            resultArea.style.display = 'block';
-
-            let deptInfo = department ? `${department}` : '';
-            if (department && studentClass) deptInfo += ` - ${studentClass}. Sınıf`;
-
-            resultArea.innerHTML = `
-                    <div class="code-display">
-                        <div class="code-label">Kampüs Giriş Kodun:</div>
-                        <div class="campus-code">${campusCode}</div>
-                        <div class="code-info">
-                            <div>${university || 'Kampüs'}</div>
-                            <div style="font-size: 0.9em; opacity: 0.8; margin-top: 0.3rem;">${deptInfo}</div>
-                        </div>
-                        <div class="code-instruction">Bu kodu Oark mobil uygulamasında "Kampüs" sekmesine gir.</div>
-                        <button onclick="window.resetVerification()" style="margin-top: 1.5rem; background: transparent; border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.5); padding: 0.5rem 1rem; border-radius: 99px; cursor: pointer; font-size: 0.8rem;">
-                            <i class="fas fa-redo"></i> Bilgileri Güncelle / Yeniden Yükle
-                        </button>
-                    </div>
-                `;
-          }
-        }
+    const mainAvatar = document.querySelector('.profile-avatar');
+    if (mainAvatar) {
+      if (avatarUrl) {
+        mainAvatar.innerHTML = `<img src="${avatarUrl}" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">`;
+        mainAvatar.style.background = 'transparent';
       } else {
-        // PROFILE NOT FOUND -> Auto-Create
-        console.log('Profile missing for user, attempting to create...');
-        await this.createProfileIfNotExists();
-        return this.fetchProfile(); // Retry fetch
+        mainAvatar.innerHTML = displayName.charAt(0).toUpperCase();
       }
-    } catch (e) {
-      console.error("Error fetching profile", e);
+    }
+
+    // Student verification status
+    this.updateStudentStatus();
+  }
+
+  updateStudentStatus() {
+    const profile = this.profile;
+    if (!profile?.is_student || !profile?.campus_code) return;
+
+    const fileInputCtx = document.getElementById('student-file-input');
+    const resultArea = document.getElementById('verification-result');
+    const verifyMsg = document.getElementById('verify-status');
+
+    if (fileInputCtx?.parentElement) {
+      fileInputCtx.parentElement.style.display = 'none';
+    }
+
+    if (verifyMsg) {
+      verifyMsg.style.display = 'block';
+      verifyMsg.className = 'verify-status-box status-success';
+      verifyMsg.innerHTML = '<i class="fas fa-check-circle"></i> Doğrulanmış Öğrenci Hesabı';
+    }
+
+    if (resultArea) {
+      resultArea.style.display = 'block';
+      let deptInfo = profile.department || '';
+      if (profile.department && profile.class_grade) deptInfo += ` - ${profile.class_grade}. Sınıf`;
+
+      resultArea.innerHTML = `
+        <div class="code-display">
+          <div class="code-label">Kampüs Giriş Kodun:</div>
+          <div class="campus-code">${profile.campus_code}</div>
+          <div class="code-info">
+            <div>${profile.university || 'Kampüs'}</div>
+            <div style="font-size: 0.9em; opacity: 0.8; margin-top: 0.3rem;">${deptInfo}</div>
+          </div>
+        </div>
+      `;
     }
   }
 
-  async createProfileIfNotExists() {
-    if (!this.user) return;
-
-    const meta = this.user.user_metadata || {};
-    const username = meta.username || this.user.email.split('@')[0];
-    const fullName = meta.full_name || username;
-
-    // Try insert
-    const { error } = await this.supabase
-      .from('profiles')
-      .insert({
-        id: this.user.id,
-        email: this.user.email,
-        username: username,
-        full_name: fullName,
-        created_at: new Date().toISOString()
-      })
-      .select()
-      .single();
-
-    if (error) {
-      console.error('Failed to auto-create profile:', error);
-      // If error is duplicate key, it exists, so ignore.
-      if (error.code !== '23505') return;
-    }
-
-    console.log('Profile auto-created successfully.');
-  }
+  // ========================================
+  // Auth Methods (Now using API)
+  // ========================================
 
   async register(username, email, password, fullName) {
-    if (!this.supabase) return { error: 'Supabase not initialized' };
-
-    // 1. Sign Up
-    const { data, error } = await this.supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: {
-          username: username,
-          full_name: fullName // Use real full name
-        }
+    try {
+      const response = await window.oarkAPI.register(email, password, username, fullName);
+      if (response.success) {
+        return { data: response.data, error: null };
       }
-    });
-
-    // 2. Client-Side Profile Creation (Fallback if Trigger fails)
-    if (data && data.user && !error) {
-      const { error: profileError } = await this.supabase
-        .from('profiles')
-        .insert({
-          id: data.user.id,
-          email: email,
-          username: username,
-          full_name: fullName, // Use real full name
-          created_at: new Date().toISOString()
-        });
-
-      if (profileError) {
-        console.warn('Client-side profile creation failed (Trigger might have handled it or RLS issue):', profileError);
-      } else {
-        console.log('Client-side profile creation success.');
-      }
+      return { data: null, error: { message: response.error?.message || 'Kayıt başarısız' } };
+    } catch (err) {
+      return { data: null, error: { message: err.message } };
     }
-
-    return { data, error };
-  }
-
-  async resetPassword(email) {
-    if (!this.supabase) return { error: 'Supabase not initialized' };
-    return await this.supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: window.location.origin + '/login.html?reset=true'
-    });
   }
 
   async login(email, password) {
-    if (!this.supabase) return { error: 'Supabase not initialized' };
-
-    return await this.supabase.auth.signInWithPassword({
-      email,
-      password
-    });
+    try {
+      const response = await window.oarkAPI.login(email, password);
+      if (response.success) {
+        this.user = response.data.user;
+        this.profile = response.data.user;
+        this.updateUI();
+        return { data: response.data, error: null };
+      }
+      return { data: null, error: { message: response.error?.message || 'Giriş başarısız' } };
+    } catch (err) {
+      return { data: null, error: { message: err.message } };
+    }
   }
 
   async loginWithGoogle() {
-    if (!this.supabase) return { error: 'Supabase not initialized' };
+    if (!this.supabase) return { error: { message: 'Supabase not initialized' } };
 
     return await this.supabase.auth.signInWithOAuth({
       provider: 'google',
@@ -309,13 +245,43 @@ class AuthManager {
     });
   }
 
+  async resetPassword(email) {
+    if (!this.supabase) return { error: { message: 'Supabase not initialized' } };
+    return await this.supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: window.location.origin + '/login.html?reset=true'
+    });
+  }
+
   async logout() {
-    if (!this.supabase) return;
-    const { error } = await this.supabase.auth.signOut();
-    if (!error) {
+    try {
+      await window.oarkAPI.logout();
+
+      // Also sign out from Supabase (for OAuth sessions)
+      if (this.supabase) {
+        await this.supabase.auth.signOut();
+      }
+
+      this.user = null;
+      this.profile = null;
+      window.location.href = 'index.html';
+    } catch (err) {
+      console.error('Logout error:', err);
+      // Force clear anyway
+      this.clearSession();
       window.location.href = 'index.html';
     }
-    return { error };
+  }
+
+  async fetchProfile() {
+    try {
+      const response = await window.oarkAPI.getProfile();
+      if (response.success) {
+        this.profile = response.data;
+        this.updateProfileDisplay();
+      }
+    } catch (err) {
+      console.error('Profile fetch error:', err);
+    }
   }
 }
 
@@ -332,10 +298,9 @@ document.addEventListener('DOMContentLoaded', () => {
 window.resetVerification = async () => {
   if (!confirm('Mevcut doğrulamanı silip yeni belge yüklemek istiyor musun?')) return;
 
-  // Clear display
   document.getElementById('verification-result').style.display = 'none';
   const fileInputCtx = document.getElementById('student-file-input');
-  if (fileInputCtx && fileInputCtx.parentElement) {
+  if (fileInputCtx?.parentElement) {
     fileInputCtx.parentElement.style.display = 'flex';
     fileInputCtx.disabled = false;
     fileInputCtx.value = '';
@@ -343,19 +308,18 @@ window.resetVerification = async () => {
   const verifyMsg = document.getElementById('verify-status');
   if (verifyMsg) verifyMsg.style.display = 'none';
 
-  // Clear Auth Metadata (via empty strings or null)
-  if (window.authManager) {
-    await window.authManager.supabase.auth.updateUser({
-      data: {
-        is_student: false,
-        campus_code: null,
-        university: null,
-        department: null,
-        student_class: null
-      }
+  // Update profile via API
+  try {
+    await window.oarkAPI.updateProfile({
+      is_student: false,
+      campus_code: null,
+      university: null,
+      department: null,
+      class_grade: null
     });
-    // Reload page to reflect fresh state
     window.location.reload();
+  } catch (err) {
+    alert('Hata: ' + err.message);
   }
 };
 
@@ -417,7 +381,7 @@ window.handleLogin = async (e) => {
     if (error) {
       alert('Giriş başarısız: ' + error.message);
     } else {
-      // Redirect handled by session listener
+      window.location.href = 'profile.html';
     }
   } catch (err) {
     alert('Bir hata oluştu: ' + err.message);
@@ -431,7 +395,6 @@ window.handleGoogleLogin = async () => {
   const { error } = await authManager.loginWithGoogle();
   if (error) alert('Google girişi hatası: ' + error.message);
 };
-
 
 window.handleLogout = async () => {
   await authManager.logout();

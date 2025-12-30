@@ -30,9 +30,15 @@ async function handleEmailSubmit(e) {
     errorBox.style.display = 'none';
 
     try {
+        const session = await window.authManager.supabase.auth.getSession();
+        console.log('[Client] Invoke - Session:', session);
+        console.log('[Client] Invoke - User:', window.authManager.user);
+
         const { data, error } = await window.authManager.supabase.functions.invoke('campus-gateway', {
             body: { action: 'send-email-otp', email }
         });
+
+        console.log('[Client] Invoke Response:', { data, error });
 
         if (error || (data && !data.success)) {
             throw new Error(error?.message || data?.error || 'Bir hata oluştu.');
