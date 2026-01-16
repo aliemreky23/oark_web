@@ -23,7 +23,7 @@
             justify-content: center;
             min-height: 100vh;
             overflow: hidden;
-            background: #000000;
+            background: linear-gradient(135deg, #f5f0ff 0%, #e8dcff 30%, #ddd0ff 70%, #f0e6ff 100%);
         }
 
         .download-container {
@@ -37,10 +37,7 @@
             width: 120px;
             height: 120px;
             margin-bottom: 2rem;
-            filter: drop-shadow(0 0 40px rgba(139, 92, 246, 0.4));
             animation: float 6s ease-in-out infinite;
-            mix-blend-mode: screen;
-            /* Makes black background transparent */
         }
 
         @keyframes float {
@@ -49,7 +46,7 @@
             }
 
             50% {
-                transform: translateY(-20px);
+                transform: translateY(-15px);
             }
 
             100% {
@@ -58,16 +55,21 @@
         }
 
         .title-large {
-            font-size: 3.5rem;
+            font-size: 3rem;
             font-weight: 800;
             line-height: 1.1;
             margin-bottom: 1.5rem;
             letter-spacing: -0.02em;
+            color: #2d2640;
+        }
+
+        .title-large .text-gradient {
+            color: #9d7be8;
         }
 
         .subtitle {
-            font-size: 1.25rem;
-            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.15rem;
+            color: #5a4d6e;
             margin-bottom: 3rem;
             max-width: 600px;
             margin-left: auto;
@@ -79,8 +81,8 @@
             gap: 1.5rem;
             justify-content: center;
             margin-bottom: 3rem;
-            opacity: 0.5;
-            filter: grayscale(1);
+            opacity: 0.6;
+            filter: grayscale(0.5);
             transition: all 0.5s ease;
         }
 
@@ -90,12 +92,16 @@
         }
 
         .notify-box {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: #ffffff;
+            border: 1px solid #e0d4f0;
             padding: 2rem;
-            border-radius: 24px;
-            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(157, 123, 232, 0.15);
             display: inline-block;
+        }
+
+        .notify-box h3 {
+            color: #2d2640;
         }
 
         .notify-input-group {
@@ -106,27 +112,38 @@
         }
 
         .notify-input {
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: #ffffff;
+            border: 1px solid #e0d4f0;
             border-radius: 12px;
             padding: 0.8rem 1.2rem;
-            color: white;
+            color: #2d2640;
             width: 300px;
             font-size: 1rem;
         }
 
+        .notify-input:focus {
+            outline: none;
+            border-color: #bea1f7;
+            box-shadow: 0 0 0 3px rgba(190, 161, 247, 0.2);
+        }
+
+        .notify-input::placeholder {
+            color: #8b7fa0;
+        }
+
         .btn-notify {
-            background: var(--gradient-main);
+            background: #bea1f7;
             color: white;
             border: none;
             padding: 0.8rem 1.5rem;
             border-radius: 12px;
             font-weight: 600;
             cursor: pointer;
-            transition: transform 0.2s;
+            transition: all 0.2s;
         }
 
         .btn-notify:hover {
+            background: #9d7be8;
             transform: scale(1.05);
         }
 
@@ -134,60 +151,52 @@
             position: absolute;
             top: 2rem;
             left: 2rem;
-            color: rgba(255, 255, 255, 0.5);
+            color: #5a4d6e;
             text-decoration: none;
             display: flex;
             align-items: center;
             gap: 0.5rem;
             font-weight: 500;
-            transition: color 0.3s;
+            transition: all 0.3s;
             z-index: 100;
-            /* Ensure it's above everything */
-            padding: 10px;
-            /* Increase touch area */
+            padding: 0.5rem 1rem;
+            background: #ffffff;
+            border: 1px solid #e0d4f0;
+            border-radius: 99px;
+            box-shadow: 0 2px 8px rgba(157, 123, 232, 0.1);
         }
 
         .back-home:hover {
-            color: white;
+            color: #9d7be8;
+            border-color: #bea1f7;
         }
 
         @media (max-width: 768px) {
             .back-home {
                 top: 1rem;
                 left: 1rem;
-                background: rgba(0, 0, 0, 0.5);
-                /* Better visibility on mobile */
-                border-radius: 99px;
-                padding: 0.5rem 1rem;
                 font-size: 0.9rem;
-                backdrop-filter: blur(5px);
             }
 
             .title-large {
-                font-size: 2.5rem;
+                font-size: 2.2rem;
             }
 
             .app-icon-large {
-                width: 80px;
-                height: 80px;
+                width: 90px;
+                height: 90px;
             }
         }
     </style>
 </head>
 
 <body>
-    <div class="background-globes">
-        <div class="globe globe-1"></div>
-        <div class="globe globe-2"></div>
-        <div class="globe globe-3"></div>
-    </div>
-
     <a href="index.html" class="back-home">
         <i class="fas fa-arrow-left"></i> Ana Sayfa
     </a>
 
     <div class="download-container">
-        <img src="assets/logo.png?v=3" alt="OARK" class="app-icon-large">
+        <img src="assets/logo-white.png" alt="OARK" class="app-icon-large">
 
         <h1 class="title-large">
             Oyun Arkadaşın<br>
@@ -210,7 +219,7 @@
 
         <div class="notify-box">
             <h3 style="margin-bottom: 0.5rem;"><i class="fas fa-bell"></i> Haberdar Ol</h3>
-            <p style="font-size: 0.9rem; color: rgba(255,255,255,0.6);">Yayınlandığı an sana haber verelim.</p>
+            <p style="font-size: 0.9rem; color: #5a4d6e;">Yayınlandığı an sana haber verelim.</p>
 
             <form class="notify-input-group"
                 onsubmit="event.preventDefault(); alert('Teşekkürler! Listeye eklendin.');">

@@ -3,7 +3,7 @@
     padding: 4rem 0 6rem;
     overflow: hidden;
     position: relative;
-    background: linear-gradient(to bottom, var(--color-bg), #020202);
+    background: linear-gradient(to bottom, var(--color-bg-alt), #f0e6ff);
 }
 
 .partners-title {
@@ -19,8 +19,8 @@
     width: 100%;
     overflow: hidden;
     position: relative;
-    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    mask-image: linear-gradient(to right, transparent, white 10%, white 90%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, white 10%, white 90%, transparent);
 }
 
 .marquee-content {
@@ -75,7 +75,7 @@
 .partner-item span {
     font-weight: 600;
     font-size: 1.1rem;
-    color: white;
+    color: var(--color-text);
 }
 
 /* Placeholder Style */
@@ -83,10 +83,10 @@
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    border: 2px dashed rgba(255, 255, 255, 0.2);
+    border: 2px dashed rgba(157, 123, 232, 0.3);
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: bold;
-    color: rgba(255, 255, 255, 0.2);
+    color: rgba(157, 123, 232, 0.5);
 }

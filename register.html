@@ -13,13 +13,14 @@
     <link rel="apple-touch-icon" sizes="180x180" href="assets/logo.png">
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <style>
-        /* Reusing Login Styles */
+        /* Light Lavender Theme - Register Styles */
         body {
             display: flex;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
             overflow: hidden;
+            background: linear-gradient(135deg, #f5f0ff 0%, #e8dcff 30%, #ddd0ff 70%, #f0e6ff 100%);
         }
 
         .auth-container {
@@ -32,27 +33,14 @@
         }
 
         .auth-card {
-            background: rgba(10, 10, 16, 0.6);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 32px;
-            padding: 3rem 2.5rem;
+            background: #ffffff;
+            border: 1px solid #e0d4f0;
+            border-radius: 24px;
+            padding: 2.5rem 2rem;
             width: 100%;
             max-width: 420px;
-            box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.7);
+            box-shadow: 0 20px 60px rgba(157, 123, 232, 0.15);
             position: relative;
-            overflow: hidden;
-        }
-
-        .auth-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
         }
 
         .auth-header {
@@ -61,10 +49,9 @@
         }
 
         .auth-logo {
-            width: 64px;
-            height: 64px;
+            width: 72px;
+            height: 72px;
             margin-bottom: 1rem;
-            filter: drop-shadow(0 0 15px rgba(139, 92, 246, 0.3));
         }
 
         .auth-title {
@@ -72,10 +59,11 @@
             font-weight: 800;
             margin-bottom: 0.5rem;
             letter-spacing: -0.02em;
+            color: #2d2640;
         }
 
         .auth-subtitle {
-            color: var(--color-text-muted);
+            color: #5a4d6e;
             font-size: 0.9rem;
         }
 
@@ -86,64 +74,71 @@
 
         .form-input {
             width: 100%;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
-            padding: 1.1rem;
-            color: white;
+            background: #ffffff;
+            border: 1px solid #e0d4f0;
+            border-radius: 12px;
+            padding: 1rem;
+            color: #2d2640;
             font-size: 0.95rem;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s ease;
+        }
+
+        .form-input::placeholder {
+            color: #8b7fa0;
         }
 
         .form-input:focus {
-            background: rgba(255, 255, 255, 0.06);
-            border-color: var(--color-primary);
+            background: #ffffff;
+            border-color: #bea1f7;
             outline: none;
-            box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.15);
-            transform: translateY(-1px);
+            box-shadow: 0 0 0 4px rgba(190, 161, 247, 0.2);
         }
 
         .btn-auth {
             width: 100%;
-            padding: 1.1rem;
-            border-radius: 16px;
+            padding: 1rem;
+            border-radius: 12px;
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 0.6rem;
-            letter-spacing: 0.01em;
         }
 
         .btn-primary-auth {
-            background: var(--gradient-main);
+            background: #bea1f7;
             color: white;
             border: none;
-            box-shadow: 0 10px 25px -5px rgba(139, 92, 246, 0.4);
+            box-shadow: 0 8px 20px rgba(190, 161, 247, 0.3);
             margin-bottom: 1rem;
             margin-top: 1rem;
         }
 
         .btn-primary-auth:hover {
+            background: #9d7be8;
             transform: translateY(-2px);
-            box-shadow: 0 15px 35px -5px rgba(139, 92, 246, 0.5);
+            box-shadow: 0 12px 25px rgba(157, 123, 232, 0.4);
         }
 
         .auth-footer {
             text-align: center;
             margin-top: 1.5rem;
             font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.5);
+            color: #5a4d6e;
         }
 
         .auth-link {
-            color: var(--color-primary);
+            color: #9d7be8;
             font-weight: 600;
             margin-left: 0.3rem;
             transition: color 0.2s;
+        }
+
+        .auth-link:hover {
+            color: #7c5fd6;
         }
 
         .navbar-minimal {
@@ -157,25 +152,38 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            color: rgba(255, 255, 255, 0.6);
+            color: #5a4d6e;
             font-weight: 500;
             padding: 0.5rem 1rem;
             border-radius: 99px;
-            background: rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: #ffffff;
+            border: 1px solid #e0d4f0;
             transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(157, 123, 232, 0.1);
+        }
+
+        .back-link:hover {
+            background: #ffffff;
+            border-color: #bea1f7;
+            color: #9d7be8;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 480px) {
+            .auth-card {
+                padding: 2rem 1.5rem;
+                margin: 1rem;
+            }
+
+            .navbar-minimal {
+                top: 1rem;
+                left: 1rem;
+            }
         }
     </style>
 </head>
 
 <body>
-    <div class="background-globes">
-        <div class="globe globe-1"></div>
-        <div class="globe globe-2"></div>
-        <div class="globe globe-3"></div>
-    </div>
-
     <div class="navbar-minimal">
         <a href="login.html" class="back-link">
             <i class="fas fa-arrow-left"></i>
@@ -186,7 +194,7 @@
     <div class="auth-container">
         <div class="auth-card">
             <div class="auth-header">
-                <img src="assets/logo.png" alt="OARK" class="auth-logo">
+                <img src="assets/logo-white.png" alt="OARK" class="auth-logo">
                 <h1 class="auth-title">Oark'a Katıl</h1>
                 <p class="auth-subtitle">Oyun arkadaşını bulmaya hemen başla.</p>
             </div>
