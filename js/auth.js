@@ -15,19 +15,12 @@ class AuthManager {
   }
 
   init() {
-    // Initialize Supabase for OAuth only
+    // Initialize Supabase
     if (typeof supabase !== 'undefined' && supabase.createClient) {
       this.supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-    }
-
-    // Check if we have tokens stored
-    const accessToken = localStorage.getItem('access_token');
-    if (accessToken) {
-      this.checkCurrentUser();
-    } else if (this.supabase) {
-      // Check Supabase session (for OAuth users)
       this.initSupabaseSession();
     } else {
+      console.error("Supabase client not loaded!");
       this.updateUI();
     }
   }
@@ -36,9 +29,9 @@ class AuthManager {
     try {
       const { data: { session } } = await this.supabase.auth.getSession();
       if (session) {
-        // Migrate Supabase session to API tokens
-        window.oarkAPI.setTokens(session.access_token, session.refresh_token);
-        await this.checkCurrentUser();
+        this.user = session.user;
+        await this.fetchProfile();
+        this.handleRedirects();
       } else {
         this.updateUI();
       }
@@ -47,47 +40,31 @@ class AuthManager {
       this.updateUI();
     }
 
-    // Listen for OAuth callbacks
+    // Listen for Auth callbacks
     this.supabase.auth.onAuthStateChange(async (event, session) => {
-      if (event === 'SIGNED_IN' && session) {
-        window.oarkAPI.setTokens(session.access_token, session.refresh_token);
-        await this.checkCurrentUser();
+      if ((event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') && session) {
+        this.user = session.user;
+        await this.fetchProfile();
 
         // Redirect if on login page
-        if (window.location.pathname.includes('login.html')) {
+        if (window.location.pathname.includes('login.html') || window.location.pathname.includes('register.html')) {
           window.location.href = 'profile.html';
         }
-      }
-    });
-  }
-
-  async checkCurrentUser() {
-    try {
-      const response = await window.oarkAPI.getCurrentUser();
-      if (response.success) {
-        this.user = response.data;
-        this.profile = response.data;
-        this.updateUI();
-        this.handleRedirects();
-      } else {
+      } else if (event === 'SIGNED_OUT') {
         this.clearSession();
       }
-    } catch (err) {
-      console.error('Auth check failed:', err);
-      this.clearSession();
-    }
+    });
   }
 
   clearSession() {
     this.user = null;
     this.profile = null;
-    window.oarkAPI.clearTokens();
     this.updateUI();
   }
 
   handleRedirects() {
     const path = window.location.pathname;
-    const isLoginPage = path.includes('login.html');
+    const isLoginPage = path.includes('login.html') || path.includes('register.html');
     const isProfilePage = path.includes('profile.html');
     const hasAuthParams = window.location.hash.includes('access_token') ||
       window.location.search.includes('code');
@@ -169,35 +146,39 @@ class AuthManager {
 
   updateStudentStatus() {
     const profile = this.profile;
-    if (!profile?.is_student || !profile?.campus_code) return;
+    const statusContainer = document.getElementById('student-status-container');
+    if (!statusContainer || !profile) return;
 
-    const fileInputCtx = document.getElementById('student-file-input');
-    const resultArea = document.getElementById('verification-result');
-    const verifyMsg = document.getElementById('verify-status');
-
-    if (fileInputCtx?.parentElement) {
-      fileInputCtx.parentElement.style.display = 'none';
-    }
-
-    if (verifyMsg) {
-      verifyMsg.style.display = 'block';
-      verifyMsg.className = 'verify-status-box status-success';
-      verifyMsg.innerHTML = '<i class="fas fa-check-circle"></i> Doğrulanmış Öğrenci Hesabı';
-    }
-
-    if (resultArea) {
-      resultArea.style.display = 'block';
+    if (profile.is_student === true) {
+      // User is a verified student
       let deptInfo = profile.department || '';
       if (profile.department && profile.class_grade) deptInfo += ` - ${profile.class_grade}. Sınıf`;
 
-      resultArea.innerHTML = `
-        <div class="code-display">
-          <div class="code-label">Kampüs Giriş Kodun:</div>
-          <div class="campus-code">${profile.campus_code}</div>
-          <div class="code-info">
-            <div>${profile.university || 'Kampüs'}</div>
-            <div style="font-size: 0.9em; opacity: 0.8; margin-top: 0.3rem;">${deptInfo}</div>
-          </div>
+      statusContainer.innerHTML = `
+        <div style="width: 100%; background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(5, 150, 105, 0.15)); border: 1px solid rgba(16, 185, 129, 0.3); padding: 1.5rem; border-radius: 16px; display: flex; align-items: center; gap: 1.5rem; animation: fadeUp 0.5s ease;">
+            <div style="width: 50px; height: 50px; background: rgba(16, 185, 129, 0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #10b981; font-size: 1.5rem; flex-shrink: 0;">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            <div>
+                <h3 style="color: #10b981; margin-bottom: 0.25rem; font-size: 1.25rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="fas fa-check-circle"></i> Doğrulanmış Öğrenci
+                </h3>
+                <div style="color: rgba(255, 255, 255, 0.9); font-weight: 500; font-size: 1.05rem;">${profile.university || 'Üniversite Bilgisi Bekleniyor'}</div>
+                <div style="color: rgba(255, 255, 255, 0.6); font-size: 0.9rem; margin-top: 0.25rem;">${deptInfo}</div>
+            </div>
+        </div>
+      `;
+    } else {
+      // User is NOT a verified student
+      statusContainer.innerHTML = `
+        <div style="width: 100%; background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05)); border: 1px solid rgba(255, 255, 255, 0.2); padding: 2rem; border-radius: 16px; text-align: center; backdrop-filter: blur(10px); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); animation: fadeUp 0.5s ease;">
+            <div style="width: 64px; height: 64px; background: rgba(139, 92, 246, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #8b5cf6; font-size: 2rem; margin: 0 auto 1.25rem auto;">
+                <i class="fas fa-mobile-alt"></i>
+            </div>
+            <h3 style="color: white; font-size: 1.3rem; margin-bottom: 0.75rem;">Öğrenci Doğrulaması Uygulamada</h3>
+            <p style="font-size: 0.95rem; color: rgba(255,255,255,0.8); max-width: 80%; margin: 0 auto; line-height: 1.6;">
+                OARK'ın kampüs özelliklerini kullanabilmek için lütfen <strong style="color: #8b5cf6;">OARK Mobil Uygulamasını</strong> indirerek öğrenci belgenizi onaylatın.
+            </p>
         </div>
       `;
     }
@@ -209,11 +190,18 @@ class AuthManager {
 
   async register(username, email, password, fullName) {
     try {
-      const response = await window.oarkAPI.register(email, password, username, fullName);
-      if (response.success) {
-        return { data: response.data, error: null };
-      }
-      return { data: null, error: { message: response.error?.message || 'Kayıt başarısız' } };
+      const { data, error } = await this.supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            username: username,
+            full_name: fullName
+          }
+        }
+      });
+      if (error) throw error;
+      return { data, error: null };
     } catch (err) {
       return { data: null, error: { message: err.message } };
     }
@@ -221,14 +209,15 @@ class AuthManager {
 
   async login(email, password) {
     try {
-      const response = await window.oarkAPI.login(email, password);
-      if (response.success) {
-        this.user = response.data.user;
-        this.profile = response.data.user;
-        this.updateUI();
-        return { data: response.data, error: null };
-      }
-      return { data: null, error: { message: response.error?.message || 'Giriş başarısız' } };
+      const { data, error } = await this.supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+      if (error) throw error;
+      this.user = data.user;
+      await this.fetchProfile();
+      this.updateUI();
+      return { data, error: null };
     } catch (err) {
       return { data: null, error: { message: err.message } };
     }
@@ -254,13 +243,9 @@ class AuthManager {
 
   async logout() {
     try {
-      await window.oarkAPI.logout();
-
-      // Also sign out from Supabase (for OAuth sessions)
       if (this.supabase) {
         await this.supabase.auth.signOut();
       }
-
       this.user = null;
       this.profile = null;
       window.location.href = 'index.html';
@@ -273,12 +258,17 @@ class AuthManager {
   }
 
   async fetchProfile() {
+    if (!this.user) return;
     try {
-      const response = await window.oarkAPI.getProfile();
-      if (response.success) {
-        this.profile = response.data;
-        this.updateProfileDisplay();
-      }
+      const { data, error } = await this.supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', this.user.id)
+        .single();
+
+      if (error) throw error;
+      this.profile = data;
+      this.updateProfileDisplay();
     } catch (err) {
       console.error('Profile fetch error:', err);
     }
@@ -308,15 +298,19 @@ window.resetVerification = async () => {
   const verifyMsg = document.getElementById('verify-status');
   if (verifyMsg) verifyMsg.style.display = 'none';
 
-  // Update profile via API
+  // Update profile via Supabase
   try {
-    await window.oarkAPI.updateProfile({
-      is_student: false,
-      campus_code: null,
-      university: null,
-      department: null,
-      class_grade: null
-    });
+    const { error } = await authManager.supabase
+      .from('profiles')
+      .update({
+        is_student: false,
+        campus_code: null,
+        university: null,
+        department: null,
+        class_grade: null
+      })
+      .eq('id', authManager.user.id);
+    if (error) throw error;
     window.location.reload();
   } catch (err) {
     alert('Hata: ' + err.message);
@@ -402,3 +396,111 @@ window.handleLogout = async () => {
 
 // Initialize Global Auth Manager
 window.authManager = new AuthManager();
+
+// Password Change Modal Handlers
+window.openPasswordModal = (e) => {
+  e.preventDefault();
+  if (!window.authManager.user) {
+    alert("Oturum açmanız gerekiyor.");
+    return;
+  }
+  document.getElementById('password-modal').style.display = 'flex';
+  document.getElementById('pw-step-1').style.display = 'block';
+  document.getElementById('pw-step-2').style.display = 'none';
+  document.getElementById('pw-step-3').style.display = 'none';
+  document.getElementById('pw-error-1').style.display = 'none';
+  document.getElementById('pw-error-2').style.display = 'none';
+  document.getElementById('pw-otp').value = '';
+  document.getElementById('pw-new').value = '';
+};
+
+window.closePasswordModal = () => {
+  document.getElementById('password-modal').style.display = 'none';
+};
+
+window.sendPasswordResetOtp = async () => {
+  const errorEl = document.getElementById('pw-error-1');
+  const btn = document.getElementById('btn-send-otp');
+  errorEl.style.display = 'none';
+
+  if (!window.authManager.user?.email) {
+    errorEl.textContent = "Kullanıcı e-postası bulunamadı!";
+    errorEl.style.display = 'block';
+    return;
+  }
+
+  try {
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner" style="margin-right: 8px;"></span> Gönderiliyor...';
+
+    const { error } = await window.authManager.supabase.auth.resetPasswordForEmail(
+      window.authManager.user.email
+    );
+
+    if (error) throw error;
+
+    document.getElementById('pw-step-1').style.display = 'none';
+    document.getElementById('pw-step-2').style.display = 'block';
+
+  } catch (err) {
+    errorEl.textContent = err.message || "Bir hata oluştu.";
+    errorEl.style.display = 'block';
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = 'Kodu Gönder <i class="fas fa-paper-plane"></i>';
+  }
+};
+
+window.verifyPasswordResetOtp = async () => {
+  const otp = document.getElementById('pw-otp').value;
+  const newPassword = document.getElementById('pw-new').value;
+  const errorEl = document.getElementById('pw-error-2');
+  const btn = document.getElementById('btn-verify-otp');
+
+  errorEl.style.display = 'none';
+
+  if (!otp || otp.length !== 8) {
+    errorEl.textContent = "Lütfen 8 haneli kodu eksiksiz girin.";
+    errorEl.style.display = 'block';
+    return;
+  }
+
+  if (!newPassword || newPassword.length < 6) {
+    errorEl.textContent = "Yeni şifre en az 6 karakter olmalıdır.";
+    errorEl.style.display = 'block';
+    return;
+  }
+
+  try {
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner" style="margin-right: 8px;"></span> Doğrulanıyor...';
+
+    // 1. Doğrulama Kodunu (OTP) onayla
+    const { error: verifyError } = await window.authManager.supabase.auth.verifyOtp({
+      email: window.authManager.user.email,
+      token: otp,
+      type: 'recovery'
+    });
+
+    if (verifyError) throw verifyError;
+
+    // 2. Yeni şifreyle güncelle
+    const { error: updateError } = await window.authManager.supabase.auth.updateUser({
+      password: newPassword
+    });
+
+    if (updateError) throw updateError;
+
+    document.getElementById('pw-step-2').style.display = 'none';
+    document.getElementById('pw-step-3').style.display = 'block';
+
+  } catch (err) {
+    errorEl.textContent = err.message === "Token has expired or is invalid"
+      ? "Geçersiz veya süresi dolmuş onay kodu."
+      : err.message || "Bir hata oluştu.";
+    errorEl.style.display = 'block';
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = 'Şifreyi Güncelle';
+  }
+};

@@ -54,12 +54,14 @@ html {
   background-color: var(--color-bg);
   color: var(--color-text);
   scroll-behavior: smooth;
+  scroll-snap-type: y proximity;
 }
 
 body {
-  min-height: 100vh;
   position: relative;
-  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
 }
 
 /* Hide background globes */
@@ -70,17 +72,19 @@ body {
 /* Section Layout */
 section:not(.partners-section),
 .hero {
-  min-height: auto;
+  min-height: 100vh;
   padding: 5rem 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
   position: relative;
+  scroll-snap-align: start;
 }
 
 .partners-section {
   min-height: auto;
   padding: 4rem 0;
+  scroll-snap-align: none;
 }
 
 /* Glass Card - Clean Style */
@@ -601,6 +605,8 @@ a {
   padding: 6rem 0;
   position: relative;
   background: linear-gradient(180deg, #f0e6ff 0%, #f8f4ff 50%, #f5f0ff 100%);
+  min-height: 100vh;
+  scroll-snap-align: start;
 }
 
 .section-head {
@@ -632,6 +638,8 @@ a {
 .showcase-section {
   padding: 5rem 0;
   background: var(--color-bg);
+  min-height: 100vh;
+  scroll-snap-align: start;
 }
 
 .showcase-row {
@@ -732,6 +740,7 @@ footer {
   border-top: 1px solid var(--card-border);
   padding: 4rem 0 2rem;
   background: var(--color-bg-alt);
+  scroll-snap-align: none;
 }
 
 .footer-content {
@@ -1042,6 +1051,26 @@ footer {
     grid-template-columns: 1fr;
     text-align: center;
   }
+}
+
+/* Bottom Snap Wrapper */
+.bottom-snap-section {
+  scroll-snap-align: start;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* CTA Section */
+.cta-section {
+  padding: 6rem 0;
+  text-align: center;
+  background: var(--color-bg);
+  position: relative;
+  overflow: hidden;
+  min-height: auto !important;
+  scroll-snap-align: none !important;
+  flex: 1;
 }
 
 /* Campus Section */

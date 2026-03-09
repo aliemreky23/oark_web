@@ -6,9 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>OARK - Oyun Arkadaşı Bulma Platformu | Oyuncu Eşleşmesi</title>
   <meta name="description"
-    content="OARK ile oyun stilinize, rankınıza ve dilinize uygun takım arkadaşını anında bulun. LoL, Valorant, CS2 için en iyi oyun arkadaşı bulma ve duo olma uygulaması. OARK ile şimdi keşfet!">
+    content="OARK ile dijital ve kutu oyunlarında seninle aynı kafadan takım arkadaşını anında bul. İster kampüsünde oyuncu ara, ister kulüplere katıl. Hemen OARK'ı keşfet!">
   <meta name="keywords"
-    content="oark, oak, oyun arkadaşı, oyun arkadaşı bul, oyun arkadaşı bulma, duo bul, takım arkadaşı, oyuncu arama, valorant duo, lol duo, cs2 takım, game mate, oyuncu eşleşmesi, oyun arkadaşı sitesi">
+    content="oark, oak, oyun arkadaşı, oyun arkadaşı bul, oyun arkadaşı bulma, masa oyunları, kutu oyunları, valorant duo, lol duo, cs2 takım, kampüs, kulüpler, game mate">
   <meta name="author" content="OARK Inc.">
   <meta name="theme-color" content="#0f172a">
   <link rel="canonical" href="https://www.oark.com.tr/">
@@ -18,7 +18,7 @@
   <meta property="og:url" content="https://www.oark.com.tr/">
   <meta property="og:title" content="OARK - Oyun Arkadaşı Bulma Platformu">
   <meta property="og:description"
-    content="Oyun stilinize uygun takım arkadaşını saniyeler içinde bulun. Discord'a gerek kalmadan sesli ve yazılı iletişim kurun.">
+    content="İster dijital ister kutu oyunlarında seninle aynı kafadan takım arkadaşını anında bul. Kampüsüne özel ağa katıl veya kulüpleri keşfet.">
   <meta property="og:image" content="https://www.oark.com.tr/assets/logo.png">
   <meta property="og:site_name" content="OARK">
   <meta property="og:locale" content="tr_TR">
@@ -28,7 +28,7 @@
   <meta property="twitter:url" content="https://www.oark.com.tr/">
   <meta property="twitter:title" content="OARK - Oyun Arkadaşı Bulma Platformu">
   <meta property="twitter:description"
-    content="Oyun stilinize uygun takım arkadaşını saniyeler içinde bulun. Discord'a gerek kalmadan sesli ve yazılı iletişim kurun.">
+    content="İster dijital ister kutu oyunlarında seninle aynı kafadan takım arkadaşını anında bul. Kampüsüne özel ağa katıl veya kulüpleri keşfet.">
   <meta property="twitter:image" content="https://www.oark.com.tr/assets/logo.png">
 
   <!-- CSS -->
@@ -36,11 +36,13 @@
   <link rel="stylesheet" href="css/partners.css">
 
   <!-- Favicon -->
-  <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
   <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
   <link rel="shortcut icon" href="favicon.ico">
   <link rel="apple-touch-icon" sizes="180x180" href="assets/logo.png">
+
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <!-- Structured Data (JSON-LD) -->
   <script type="application/ld+json">
@@ -72,10 +74,8 @@
     }
   ]
   </script>
-  <!-- Supabase & Auth -->
+  <!-- Supabase -->
   <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-  <script src="js/api.js" defer></script>
-  <script src="js/auth.js" defer></script>
 </head>
 
 <body>
@@ -127,12 +127,13 @@
 
     <div class="hero-content">
       <h1>
-        <span>OYUN ARKADAŞINI</span>
-        BULMANIN <br>EN <span class="text-gradient">MODERN</span> YOLU
+        <span class="text-gradient">- OARK -</span> İLE ETKİNLİK<br>
+        VE ONLİNE <span class="text-gradient">OYUN ARKADAŞI</span> BUL
       </h1>
       <p>
-        Sıradan eşleşmelere elveda de. OARK ile oyun stilinize, rankınıza ve dilinize uygun oyuncuları anında bulun.
-        Toksiklikten uzak, tamamen eğlence odaklı.
+        Üniversite öğrencilerine özel kapalı ağda kahve/masa oyunu arkadaşı bul veya istediğin PC/Mobil oyununda
+        sana en uygun takım arkadaşıyla eşleş. <br>
+        OARK ile ikisi de tek bir yerde!
       </p>
 
       <div class="hero-buttons">
@@ -169,8 +170,9 @@
   <section class="features-section" id="features">
     <div class="container">
       <div class="section-head">
-        <h2>OYUN DENEYİMİNİ <span class="text-gradient">YÜKSELT</span></h2>
-        <p>Sadece bir takım arkadaşı bulma uygulaması değil, tam bir oyun ekosistemi.</p>
+        <h2>İKİ DÜNYA <span class="text-gradient">TEK UYGULAMA</span></h2>
+        <p>Hem %100 onaylı öğrencilerden oluşan kampüs sosyalleşme ağı, hem de detaylı filtrelerle dijital oyun arkadaşı
+          bulma ekosistemi.</p>
       </div>
 
       <div class="grid-3">
@@ -182,8 +184,9 @@
               <path d="M7 12.5l3.2-3.2" />
             </svg>
           </div>
-          <h3>Akıllı Eşleşme</h3>
-          <p>Yapay zeka destekli algoritmamız oyun stilini analiz eder ve sana en uygun takım arkadaşını önerir.</p>
+          <h3>Kampüs: Sadece Öğrenciler</h3>
+          <p>e-Devlet entegrasyonu ile sadece %100 doğrulanmış üniversite öğrencilerine özel "Kampüs" modu. Tam bir
+            güven ortamında şehrindeki insanlarla tanışıp etkinlik düzenle.</p>
         </div>
 
         <div class="glass-card">
@@ -193,8 +196,9 @@
                 d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
             </svg>
           </div>
-          <h3>Güvenli Sohbet</h3>
-          <p>Uçtan uca şifreli mesajlaşma ile stratejilerin güvende. Sesli ve yazılı iletişim imkanı.</p>
+          <h3>Online Oyun Eşleşmesi</h3>
+          <p>Oyununa, rankına, dillerine ve oyun stiline (Eğlence/Rekabetçi) göre detaylı filtreleme ile aradığın
+            dijital "Duo"yu anında bul.</p>
         </div>
 
         <div class="glass-card">
@@ -203,8 +207,23 @@
               <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
             </svg>
           </div>
-          <h3>Moderasyon</h3>
-          <p>Toksik oyunculara yer yok. Gelişmiş raporlama sistemi ve 7/24 moderasyon ekibi ile temiz oyun.</p>
+          <h3>Gelişmiş Raporlama</h3>
+          <p>Oyun keyfini bozanlara yer yok. Bildirimlerini ciddiye alıyor ve titizlikle inceliyoruz. Adil bir ortam
+            için buradayız.</p>
+        </div>
+
+        <div class="glass-card">
+          <div class="feature-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+          </div>
+          <h3>Kulüpler & Topluluklar</h3>
+          <p>Üniversitendeki oyun ve etkinlik topluluklarına katıl veya kendi kulübünü kur! Benzer ilgi alanlarına sahip
+            öğrencilerle kampüs hayatını canlandır.</p>
         </div>
       </div>
     </div>
@@ -218,10 +237,10 @@
       <div class="showcase-row">
         <div class="showcase-text">
           <span class="badge">Keşfet</span>
-          <h2>ARADIĞIN TAKIM<br><span class="text-gradient">BURADA</span></h2>
+          <h2>ARADIĞIN ETKİNLİK<br>VE <span class="text-gradient">TAKIM BURADA</span></h2>
           <p>
-            "Looking for Group" (LFG) ilanları oluşturun veya mevcut ilanlara göz atın.
-            İster duo, ister full squad arayın. Kriterlerinizi belirleyin, sadece uygun oyuncular başvursun.
+            Masa tenisi veya kahve mi? Yoksa Valorant/CS2'de rekabetçi maç mı? "Looking for Group" (LFG) ilanları
+            oluşturun veya hem kampüs içi hem global etkinliklere başvurun.
           </p>
           <a href="#download" class="btn btn-secondary">İlanlara Göz At &rarr;</a>
         </div>
@@ -238,9 +257,8 @@
           <span class="badge">Profil</span>
           <h2>KİMLİĞİNİ<br><span class="text-gradient">YANSIT</span></h2>
           <p>
-            Detaylı oyuncu profili oluşturun. Oynadığınız oyunları, ranklarınızı, rollerinizi ve başarılarınızı
-            sergileyin.
-            Diğer oyuncular sizi oyun stilinize göre bulsun.
+            Üniversiteni, bölümünü ve oynamaktan keyif aldığın oyunları profilinde sergile.
+            Hem kampüsündeki öğrencilerin hem de tüm OARK ağının seni ilgi alanlarına göre bulmasını sağla.
           </p>
           <a href="#download" class="btn btn-secondary">Profil Oluştur &rarr;</a>
         </div>
@@ -255,10 +273,10 @@
       <div class="showcase-row">
         <div class="showcase-text">
           <span class="badge">İletişim</span>
-          <h2>SINIRSIZ<br><span class="text-gradient">İLETİŞİM</span></h2>
+          <h2>ŞİFRELİ VE SINIRSIZ<br><span class="text-gradient">İLETİŞİM</span></h2>
           <p>
-            Uygulama içi mesajlaşma ile Discord'a gerek kalmadan iletişim kurun.
-            Takımınızı kurun, taktikleri belirleyin ve oyuna hazır girin.
+            Oyun takımınla taktikleri belirle veya üniversitendeki insanlarla etkinlikleri planla.
+            Uygulama içi güvenli mesajlaşma ile ister dijital arenada ister kampüste herkesle anında iletişim kur.
           </p>
         </div>
         <div class="showcase-visual">
@@ -280,20 +298,20 @@
         <div class="campus-info">
           <div class="badge" style="background: rgba(6, 182, 212, 0.2); color: #06b6d4; margin-bottom: 1rem;">YENİ</div>
           <h2 class="section-title" style="text-align: left; margin-bottom: 1rem;">OARK <span class="text-gradient"
-              style="color: #06b6d4;">KAMPÜS</span></h2>
-          <p style="margin-bottom: 2.5rem; color: #94a3b8; font-size: 1.1rem;">
-            Sadece üniversite öğrencilerine özel, kapalı devre oyun ekosistemi. Kendi kampüsündeki oyuncuları bul,
-            forumda sadece kendi üniversite arkadaşlarınla tartışıp eğlen.
+              style="color: #06b6d4;">KAMPÜS+</span></h2>
+          <p style="margin-bottom: 2.5rem; color: var(--color-text-muted); font-size: 1.1rem;">
+            Sadece üniversite öğrencilerine özel, kapalı devre %100 güvenli sosyalleşme ekosistemi. Kendi kampüsündeki
+            öğrencileri bul, kahve iç, masa oyunu oyna veya etkinlik düzenle.
           </p>
 
           <div class="steps-container">
             <!-- Step 1 -->
             <div class="step-item" style="display: flex; gap: 1.5rem; margin-bottom: 2rem;">
               <div class="step-number"
-                style="width: 40px; height: 40px; background: rgba(255,255,255,0.05); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #06b6d4; border: 1px solid rgba(6,182,212,0.3); flex-shrink: 0;">
+                style="width: 40px; height: 40px; background: rgba(6,182,212,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #06b6d4; border: 1px solid rgba(6,182,212,0.3); flex-shrink: 0;">
                 1</div>
               <div>
-                <h4 style="color: white; margin-bottom: 0.5rem;">Öğrenci Belgeni Yükle</h4>
+                <h4 style="color: var(--color-text); margin-bottom: 0.5rem;">Öğrenci Belgeni Yükle</h4>
                 <p style="font-size: 0.9rem; margin-bottom: 0;">OARK Web üzerinden e-Devlet öğrenci belgeni yükleyerek
                   sistemden onay al.</p>
               </div>
@@ -302,24 +320,24 @@
             <!-- Step 2 -->
             <div class="step-item" style="display: flex; gap: 1.5rem; margin-bottom: 2rem;">
               <div class="step-number"
-                style="width: 40px; height: 40px; background: rgba(255,255,255,0.05); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #06b6d4; border: 1px solid rgba(6,182,212,0.3); flex-shrink: 0;">
+                style="width: 40px; height: 40px; background: rgba(6,182,212,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #06b6d4; border: 1px solid rgba(6,182,212,0.3); flex-shrink: 0;">
                 2</div>
               <div>
-                <h4 style="color: white; margin-bottom: 0.5rem;">Kampüs Kodunu Al</h4>
-                <p style="font-size: 0.9rem; margin-bottom: 0;">Doğrulama sonrası sana özel üretilen <strong>Kampüs
-                    Kodu</strong>'nu kopyala.</p>
+                <h4 style="color: var(--color-text); margin-bottom: 0.5rem;">Okul Mailini Onayla</h4>
+                <p style="font-size: 0.9rem; margin-bottom: 0;">Üniversitenin sana sağladığı <strong>edu.tr</strong>
+                  veya kurumsal öğrenci mailini girerek son adımı tamamla.</p>
               </div>
             </div>
 
             <!-- Step 3 -->
             <div class="step-item" style="display: flex; gap: 1.5rem; margin-bottom: 2rem;">
               <div class="step-number"
-                style="width: 40px; height: 40px; background: rgba(255,255,255,0.05); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #06b6d4; border: 1px solid rgba(6,182,212,0.3); flex-shrink: 0;">
+                style="width: 40px; height: 40px; background: rgba(6,182,212,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #06b6d4; border: 1px solid rgba(6,182,212,0.3); flex-shrink: 0;">
                 3</div>
               <div>
-                <h4 style="color: white; margin-bottom: 0.5rem;">Uygulamaya Gir</h4>
-                <p style="font-size: 0.9rem; margin-bottom: 0;">OARK Mobil uygulamasında "Kampüs" sekmesine kodunu gir
-                  ve kampüsüne katıl!</p>
+                <h4 style="color: var(--color-text); margin-bottom: 0.5rem;">Arkadaş Edinmeye Başla</h4>
+                <p style="font-size: 0.9rem; margin-bottom: 0;">Tebrikler, artık kampüsüne özel ağdasın! Etkinliklere
+                  katıl veya kendi etkinliklerini düzenle.</p>
               </div>
             </div>
           </div>
@@ -333,9 +351,9 @@
         <!-- Right: Card -->
         <div class="campus-visual">
           <div class="glass-card education-card"
-            style="margin: 0 auto; max-width: 400px; padding: 3rem 2rem; border-color: rgba(6,182,212,0.2);">
+            style="margin: 0 auto; max-width: 500px; padding: 3rem 1.5rem; border-color: rgba(6,182,212,0.2);">
             <div class="edu-icon"
-              style="width: 80px; height: 80px; margin: 0 auto 1.5rem; background: linear-gradient(135deg, #06b6d4, #3b82f6); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: white; box-shadow: 0 0 20px rgba(6,182,212,0.4);">
+              style="width: 80px; height: 80px; margin: 0 auto 1.5rem; background: linear-gradient(135deg, #06b6d4, #3b82f6); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; color: white; box-shadow: 0 0 20px rgba(6,182,212,0.4);">
               <i class="fas fa-graduation-cap"></i>
             </div>
 
@@ -345,10 +363,10 @@
             </div>
 
             <div class="code-preview" style="text-align: center;">
-              <span style="font-size: 0.8rem; letter-spacing: 2px; opacity: 0.7;">KAMPÜS KODUN:</span>
+              <span style="font-size: 0.8rem; letter-spacing: 2px; opacity: 0.7;">ONAYLI ÖĞRENCİ MAİLİ:</span>
               <div class="code-box"
-                style="margin-top: 0.5rem; font-family: monospace; font-size: 1.5rem; font-weight: bold; letter-spacing: 1px;">
-                OARK-2024-X9Y2</div>
+                style="margin-top: 0.5rem; font-family: monospace; font-size: 1.05rem; font-weight: bold; letter-spacing: 0.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding: 1rem 0.5rem;">
+                öğrencimaili@uni.edu.tr</div>
             </div>
           </div>
         </div>
@@ -356,150 +374,156 @@
       </div>
     </div>
   </section>
-  <!-- CTA Section -->
-  <section class="cta-section" id="download">
-    <div class="cta-glow"></div>
-    <div class="container cta-content">
-      <h2>HEMEN <span class="text-gradient">KATIL</span></h2>
-      <p>100.000+ Oyuncu seni bekliyor. Solo oynamaya son ver.</p>
-      <br>
-      <div class="hero-buttons">
-        <a href="download.html" class="btn btn-primary">App Store'dan İndir</a>
-        <a href="download.html" class="btn btn-secondary">Google Play'den İndir</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Partner Clubs Section (Marquee) -->
-  <!-- Partner Clubs Section (Marquee) -->
-  <section class="partners-section">
-    <div class="container">
-      <h3 class="partners-title">ANLAŞMALI KULÜPLERİMİZ</h3>
-      <div class="marquee-container">
-        <div class="marquee-content">
-          <!-- Loop content twice for seamless scroll -->
-
-          <div class="partner-item placeholder">
-            <div class="logo-box">?</div>
-            <span>Yakında</span>
-          </div>
-          <div class="partner-item placeholder">
-            <div class="logo-box">?</div>
-            <span>Yakında</span>
-          </div>
-          <div class="partner-item placeholder">
-            <div class="logo-box">?</div>
-            <span>Yakında</span>
-          </div>
-          <div class="partner-item placeholder">
-            <div class="logo-box">?</div>
-            <span>Yakında</span>
-          </div>
-          <div class="partner-item placeholder">
-            <div class="logo-box">?</div>
-            <span>Yakında</span>
-          </div>
-          <div class="partner-item placeholder">
-            <div class="logo-box">?</div>
-            <span>Yakında</span>
-          </div>
-          <div class="partner-item placeholder">
-            <div class="logo-box">?</div>
-            <span>Yakında</span>
-          </div>
-          <div class="partner-item placeholder">
-            <div class="logo-box">?</div>
-            <span>Yakında</span>
-          </div>
-
-          <!-- DUPLICATE FOR INFINITE SCROLL -->
-          <div class="partner-item placeholder">
-            <div class="logo-box">?</div>
-            <span>Yakında</span>
-          </div>
-          <div class="partner-item placeholder">
-            <div class="logo-box">?</div>
-            <span>Yakında</span>
-          </div>
-          <div class="partner-item placeholder">
-            <div class="logo-box">?</div>
-            <span>Yakında</span>
-          </div>
-          <div class="partner-item placeholder">
-            <div class="logo-box">?</div>
-            <span>Yakında</span>
-          </div>
-          <div class="partner-item placeholder">
-            <div class="logo-box">?</div>
-            <span>Yakında</span>
-          </div>
-          <div class="partner-item placeholder">
-            <div class="logo-box">?</div>
-            <span>Yakında</span>
-          </div>
-          <div class="partner-item placeholder">
-            <div class="logo-box">?</div>
-            <span>Yakında</span>
-          </div>
-          <div class="partner-item placeholder">
-            <div class="logo-box">?</div>
-            <span>Yakında</span>
-          </div>
-
+  <!-- Bottom Snap Wrapper -->
+  <div class="bottom-snap-section">
+    <!-- CTA Section -->
+    <section class="cta-section" id="download">
+      <div class="cta-glow"></div>
+      <div class="container cta-content">
+        <h2>HEMEN <span class="text-gradient">KAMPÜSE KATIL</span></h2>
+        <p>Sıradan uygulamaları unut. Yalnızca onaylı öğrencilerin yer aldığı en güvenli üniversite sosyal ağı seni
+          bekliyor.</p>
+        <br>
+        <div class="hero-buttons">
+          <a href="download.html" class="btn btn-primary">App Store'dan İndir</a>
+          <a href="download.html" class="btn btn-secondary">Google Play'den İndir</a>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Footer -->
-  <footer>
-    <div class="container">
-      <div class="footer-content">
-        <div class="footer-col">
-          <a href="#" class="logo" style="margin-bottom: 1rem; display:block;">
-            <img src="assets/logo-new.png" alt="OARK">
-          </a>
-          <p style="font-size: 0.9rem;">
-            Oyun arkadaşı bulmanın en kolay ve güvenli yolu.
-            Tüm oyuncular için oluşturulmuş, oyuncular tarafından yönetilen platform.
-          </p>
-        </div>
+    <!-- Partner Clubs Section (Marquee) -->
+    <!-- Partner Clubs Section (Marquee) -->
+    <section class="partners-section">
+      <div class="container">
+        <h3 class="partners-title">ANLAŞMALI KULÜPLERİMİZ</h3>
+        <div class="marquee-container">
+          <div class="marquee-content">
+            <!-- Loop content twice for seamless scroll -->
 
-        <div class="footer-col">
-          <h4>Keşfet</h4>
-          <ul>
-            <li><a href="#hero">Ana Sayfa</a></li>
-            <li><a href="#features">Özellikler</a></li>
-            <li><a href="#showcase">Ekranlar</a></li>
-            <li><a href="#download">İndir</a></li>
-          </ul>
-        </div>
+            <div class="partner-item placeholder">
+              <div class="logo-box">?</div>
+              <span>Yakında</span>
+            </div>
+            <div class="partner-item placeholder">
+              <div class="logo-box">?</div>
+              <span>Yakında</span>
+            </div>
+            <div class="partner-item placeholder">
+              <div class="logo-box">?</div>
+              <span>Yakında</span>
+            </div>
+            <div class="partner-item placeholder">
+              <div class="logo-box">?</div>
+              <span>Yakında</span>
+            </div>
+            <div class="partner-item placeholder">
+              <div class="logo-box">?</div>
+              <span>Yakında</span>
+            </div>
+            <div class="partner-item placeholder">
+              <div class="logo-box">?</div>
+              <span>Yakında</span>
+            </div>
+            <div class="partner-item placeholder">
+              <div class="logo-box">?</div>
+              <span>Yakında</span>
+            </div>
+            <div class="partner-item placeholder">
+              <div class="logo-box">?</div>
+              <span>Yakında</span>
+            </div>
 
-        <div class="footer-col">
-          <h4>Yasal</h4>
-          <ul>
-            <li><a href="privacy.html">Gizlilik Politikası</a></li>
-            <li><a href="kvkk.html">Kullanım Koşulları</a></li>
-            <li><a href="delete-account.html">Hesap Silme</a></li>
-          </ul>
-        </div>
+            <!-- DUPLICATE FOR INFINITE SCROLL -->
+            <div class="partner-item placeholder">
+              <div class="logo-box">?</div>
+              <span>Yakında</span>
+            </div>
+            <div class="partner-item placeholder">
+              <div class="logo-box">?</div>
+              <span>Yakında</span>
+            </div>
+            <div class="partner-item placeholder">
+              <div class="logo-box">?</div>
+              <span>Yakında</span>
+            </div>
+            <div class="partner-item placeholder">
+              <div class="logo-box">?</div>
+              <span>Yakında</span>
+            </div>
+            <div class="partner-item placeholder">
+              <div class="logo-box">?</div>
+              <span>Yakında</span>
+            </div>
+            <div class="partner-item placeholder">
+              <div class="logo-box">?</div>
+              <span>Yakında</span>
+            </div>
+            <div class="partner-item placeholder">
+              <div class="logo-box">?</div>
+              <span>Yakında</span>
+            </div>
+            <div class="partner-item placeholder">
+              <div class="logo-box">?</div>
+              <span>Yakında</span>
+            </div>
 
-        <div class="footer-col">
-          <h4>İletişim</h4>
-          <ul>
-            <li><a href="mailto:support@oark.app">Destek</a></li>
-            <li><a href="#">Twitter</a></li>
-            <li><a href="https://www.instagram.com/oark.official/" target="_blank">Instagram</a></li>
-            <li><a href="#">Discord</a></li>
-          </ul>
+          </div>
         </div>
       </div>
+    </section>
 
-      <div class="copyright">
-        &copy; 2024 OARK Inc. Tüm hakları saklıdır.
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-col">
+            <a href="#" class="logo" style="margin-bottom: 1rem; display:block;">
+              <img src="assets/logo-new.png" alt="OARK">
+            </a>
+            <p style="font-size: 0.9rem;">
+              Oyun arkadaşı bulmanın en kolay ve güvenli yolu. <br>
+              Tüm oyuncular ve Üniversite öğrencileriiçin oluşturulmuş <br> Oyuncular ve üniversite öğrencileri
+              tarafından
+              yönetilen platform.
+            </p>
+          </div>
+
+          <div class="footer-col">
+            <h4>Keşfet</h4>
+            <ul>
+              <li><a href="#hero">Ana Sayfa</a></li>
+              <li><a href="#features">Özellikler</a></li>
+              <li><a href="#showcase">Ekranlar</a></li>
+              <li><a href="#download">İndir</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-col">
+            <h4>Yasal</h4>
+            <ul>
+              <li><a href="privacy.html">Gizlilik Politikası</a></li>
+              <li><a href="kvkk.html">Kullanım Koşulları</a></li>
+              <li><a href="delete-account.html">Hesap Silme</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-col">
+            <h4>İletişim</h4>
+            <ul>
+              <li><a href="mailto:support@oark.app">Destek</a></li>
+              <li><a href="#">Twitter</a></li>
+              <li><a href="https://www.instagram.com/oark.official/" target="_blank">Instagram</a></li>
+              <li><a href="#">Discord</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="copyright">
+          &copy; 2026 OARK Inc. Tüm hakları saklıdır.
+        </div>
       </div>
-    </div>
-  </footer>
+    </footer>
+  </div> <!-- End Bottom Snap Wrapper -->
 
   <!-- Scripts -->
   <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
