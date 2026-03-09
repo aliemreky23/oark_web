@@ -394,8 +394,7 @@ window.handleLogout = async () => {
   await authManager.logout();
 };
 
-// Initialize Global Auth Manager
-window.authManager = new AuthManager();
+// Global Auth Manager is initialized in DOMContentLoaded above
 
 // Password Change Modal Handlers
 window.openPasswordModal = (e) => {
