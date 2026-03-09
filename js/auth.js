@@ -31,6 +31,7 @@ class AuthManager {
       if (session) {
         this.user = session.user;
         await this.fetchProfile();
+        this.updateUI();
         this.handleRedirects();
       } else {
         this.updateUI();
@@ -45,6 +46,7 @@ class AuthManager {
       if ((event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') && session) {
         this.user = session.user;
         await this.fetchProfile();
+        this.updateUI();
 
         // Redirect if on login page
         if (window.location.pathname.includes('login.html') || window.location.pathname.includes('register.html')) {
@@ -155,29 +157,29 @@ class AuthManager {
       if (profile.department && profile.class_grade) deptInfo += ` - ${profile.class_grade}. Sınıf`;
 
       statusContainer.innerHTML = `
-        <div style="width: 100%; background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(5, 150, 105, 0.15)); border: 1px solid rgba(16, 185, 129, 0.3); padding: 1.5rem; border-radius: 16px; display: flex; align-items: center; gap: 1.5rem; animation: fadeUp 0.5s ease;">
-            <div style="width: 50px; height: 50px; background: rgba(16, 185, 129, 0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #10b981; font-size: 1.5rem; flex-shrink: 0;">
+        <div style="width: 100%; background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.1)); border: 1px solid rgba(16, 185, 129, 0.3); padding: 1.5rem; border-radius: 16px; display: flex; align-items: center; gap: 1.5rem; animation: fadeUp 0.5s ease;">
+            <div style="width: 50px; height: 50px; background: rgba(16, 185, 129, 0.15); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #10b981; font-size: 1.5rem; flex-shrink: 0;">
                 <i class="fas fa-graduation-cap"></i>
             </div>
             <div>
-                <h3 style="color: #10b981; margin-bottom: 0.25rem; font-size: 1.25rem; display: flex; align-items: center; gap: 0.5rem;">
+                <h3 style="color: #059669; margin-bottom: 0.25rem; font-size: 1.25rem; display: flex; align-items: center; gap: 0.5rem;">
                     <i class="fas fa-check-circle"></i> Doğrulanmış Öğrenci
                 </h3>
-                <div style="color: rgba(255, 255, 255, 0.9); font-weight: 500; font-size: 1.05rem;">${profile.university || 'Üniversite Bilgisi Bekleniyor'}</div>
-                <div style="color: rgba(255, 255, 255, 0.6); font-size: 0.9rem; margin-top: 0.25rem;">${deptInfo}</div>
+                <div style="color: var(--color-text, #2d2640); font-weight: 500; font-size: 1.05rem;">${profile.university || 'Üniversite Bilgisi Bekleniyor'}</div>
+                <div style="color: var(--color-text-muted, #5a4d6e); font-size: 0.9rem; margin-top: 0.25rem;">${deptInfo}</div>
             </div>
         </div>
       `;
     } else {
       // User is NOT a verified student
       statusContainer.innerHTML = `
-        <div style="width: 100%; background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05)); border: 1px solid rgba(255, 255, 255, 0.2); padding: 2rem; border-radius: 16px; text-align: center; backdrop-filter: blur(10px); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); animation: fadeUp 0.5s ease;">
-            <div style="width: 64px; height: 64px; background: rgba(139, 92, 246, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #8b5cf6; font-size: 2rem; margin: 0 auto 1.25rem auto;">
+        <div style="width: 100%; background: linear-gradient(135deg, rgba(139, 92, 246, 0.08), rgba(109, 40, 217, 0.08)); border: 1px solid rgba(139, 92, 246, 0.2); padding: 2rem; border-radius: 16px; text-align: center; box-shadow: 0 4px 20px rgba(157, 123, 232, 0.1); animation: fadeUp 0.5s ease;">
+            <div style="width: 64px; height: 64px; background: rgba(139, 92, 246, 0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #8b5cf6; font-size: 2rem; margin: 0 auto 1.25rem auto;">
                 <i class="fas fa-mobile-alt"></i>
             </div>
-            <h3 style="color: white; font-size: 1.3rem; margin-bottom: 0.75rem;">Öğrenci Doğrulaması Uygulamada</h3>
-            <p style="font-size: 0.95rem; color: rgba(255,255,255,0.8); max-width: 80%; margin: 0 auto; line-height: 1.6;">
-                OARK'ın kampüs özelliklerini kullanabilmek için lütfen <strong style="color: #8b5cf6;">OARK Mobil Uygulamasını</strong> indirerek öğrenci belgenizi onaylatın.
+            <h3 style="color: var(--color-text, #2d2640); font-size: 1.3rem; margin-bottom: 0.75rem;">Öğrenci Doğrulaması Uygulamada</h3>
+            <p style="font-size: 0.95rem; color: var(--color-text-muted, #5a4d6e); max-width: 80%; margin: 0 auto; line-height: 1.6;">
+                OARK'ın kampüs özelliklerini kullanabilmek için lütfen <a href="download.html" style="color: #8b5cf6; font-weight: bold; text-decoration: underline;">OARK Mobil Uygulamasını</a> indirerek öğrenci belgenizi onaylatın.
             </p>
         </div>
       `;

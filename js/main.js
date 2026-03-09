@@ -142,12 +142,12 @@ function initScrollReveal() {
 // ========== Delete Account Form Handler ==========
 // This will be used in delete-account.html
 
-// Supabase Configuration
-const SUPABASE_URL = 'https://hxwlwnlfnnsflbkkbbea.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh4d2x3bmxmbm5zZmxia2tiYmVhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI2ODg0NTgsImV4cCI6MjA3ODI2NDQ1OH0.h2HbS9OIQLgh7M0DpwtUfKhgAMYXryv9H9tjK4brzaI';
+// Supabase config is handled within DeleteAccountForm to avoid conflicts with auth.js
 
 class DeleteAccountForm {
   constructor() {
+    this.SUPABASE_URL = 'https://hxwlwnlfnnsflbkkbbea.supabase.co';
+    this.SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh4d2x3bmxmbm5zZmxia2tiYmVhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI2ODg0NTgsImV4cCI6MjA3ODI2NDQ1OH0.h2HbS9OIQLgh7M0DpwtUfKhgAMYXryv9H9tjK4brzaI';
     this.currentStep = 1;
     this.email = '';
     this.verificationCode = '';
@@ -162,7 +162,7 @@ class DeleteAccountForm {
 
     // Initialize Supabase client
     if (typeof supabase !== 'undefined' && supabase.createClient) {
-      this.supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      this.supabase = supabase.createClient(this.SUPABASE_URL, this.SUPABASE_ANON_KEY);
     } else {
       console.error('Supabase SDK yüklenemedi');
     }
@@ -353,11 +353,11 @@ class DeleteAccountForm {
     }
 
     try {
-      const response = await fetch(`${SUPABASE_URL}/functions/v1/web-delete-account`, {
+      const response = await fetch(`${this.SUPABASE_URL}/functions/v1/web-delete-account`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+          'Authorization': `Bearer ${this.SUPABASE_ANON_KEY}`
         },
         body: JSON.stringify({
           email: email,
