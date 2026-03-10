@@ -287,37 +287,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // --- Helper Functions ---
 
-window.resetVerification = async () => {
-  if (!confirm('Mevcut doğrulamanı silip yeni belge yüklemek istiyor musun?')) return;
 
-  document.getElementById('verification-result').style.display = 'none';
-  const fileInputCtx = document.getElementById('student-file-input');
-  if (fileInputCtx?.parentElement) {
-    fileInputCtx.parentElement.style.display = 'flex';
-    fileInputCtx.disabled = false;
-    fileInputCtx.value = '';
-  }
-  const verifyMsg = document.getElementById('verify-status');
-  if (verifyMsg) verifyMsg.style.display = 'none';
-
-  // Update profile via Supabase
-  try {
-    const { error } = await authManager.supabase
-      .from('profiles')
-      .update({
-        is_student: false,
-        campus_code: null,
-        university: null,
-        department: null,
-        class_grade: null
-      })
-      .eq('id', authManager.user.id);
-    if (error) throw error;
-    window.location.reload();
-  } catch (err) {
-    alert('Hata: ' + err.message);
-  }
-};
 
 window.handleRegister = async (e) => {
   e.preventDefault();
