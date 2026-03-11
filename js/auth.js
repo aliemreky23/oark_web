@@ -190,7 +190,7 @@ class AuthManager {
   // Auth Methods (Now using API)
   // ========================================
 
-  async register(username, email, password, fullName) {
+  async register(username, email, password, fullName, gender) {
     try {
       const { data, error } = await this.supabase.auth.signUp({
         email,
@@ -198,7 +198,8 @@ class AuthManager {
         options: {
           data: {
             username: username,
-            full_name: fullName
+            full_name: fullName,
+            gender: gender
           }
         }
       });
@@ -295,6 +296,7 @@ window.handleRegister = async (e) => {
   const username = document.getElementById('username')?.value;
   const email = document.getElementById('email')?.value;
   const password = document.getElementById('password')?.value;
+  const gender = document.getElementById('gender')?.value;
   const btn = e.target.querySelector('button');
   const originalText = btn.innerHTML;
 
@@ -302,7 +304,7 @@ window.handleRegister = async (e) => {
     btn.disabled = true;
     btn.innerHTML = '<span class="spinner"></span>';
 
-    const { data, error } = await authManager.register(username, email, password, fullName);
+    const { data, error } = await authManager.register(username, email, password, fullName, gender);
 
     if (error) {
       alert('Kayıt başarısız: ' + error.message);
