@@ -28,38 +28,51 @@ function initNavbar() {
 
 // ========== Mobile Menu Toggle ==========
 function initMobileMenu() {
-  const hamburger = document.querySelector('.hamburger');
-  const navLinks = document.querySelector('.nav-links');
+  const hamburger = document.getElementById('hamburger-menu');
+  const overlay = document.getElementById('mobile-menu-overlay');
+  const mobileLinks = document.querySelectorAll('.mobile-link');
 
-  if (!hamburger || !navLinks) return;
+  console.log('initMobileMenu called');
 
-  hamburger.addEventListener('click', () => {
-    navLinks.classList.toggle('active');
+  if (!hamburger || !overlay) {
+    console.error('Mobile menu elements not found in DOM');
+    return;
+  }
+
+  function toggleMenu() {
+    console.log('Toggling mobile menu active state');
     hamburger.classList.toggle('active');
+    overlay.classList.toggle('active');
+    document.body.classList.toggle('no-scroll');
+  }
 
-    // Simple rotation animation for hamburger icon (optional)
-    if (navLinks.classList.contains('active')) {
-      hamburger.style.transform = 'rotate(90deg)';
-    } else {
-      hamburger.style.transform = 'rotate(0deg)';
-    }
-  });
+  // Remove existing listeners if any (though usually not an issue with fresh load)
+  hamburger.onclick = (e) => {
+    e.preventDefault();
+    toggleMenu();
+  };
 
   // Close menu when clicking on a link
-  navLinks.querySelectorAll('a').forEach(link => {
+  mobileLinks.forEach(link => {
     link.addEventListener('click', () => {
-      navLinks.classList.remove('active');
+      console.log('Mobile link clicked');
       hamburger.classList.remove('active');
-      hamburger.style.transform = 'rotate(0deg)';
+      overlay.classList.remove('active');
+      document.body.classList.remove('no-scroll');
     });
   });
 
-  // Close menu when clicking outside
-  document.addEventListener('click', (e) => {
-    if (!hamburger.contains(e.target) && !navLinks.contains(e.target) && navLinks.classList.contains('active')) {
-      navLinks.classList.remove('active');
-      hamburger.classList.remove('active');
-      hamburger.style.transform = 'rotate(0deg)';
+  // Close menu when clicking on the overlay background (not content)
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) {
+      toggleMenu();
+    }
+  });
+
+  // Escape key to close
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && overlay.classList.contains('active')) {
+      toggleMenu();
     }
   });
 }

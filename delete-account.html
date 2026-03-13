@@ -36,13 +36,31 @@
                 <li><a href="delete-account.html">Hesap Sil</a></li>
             </ul>
 
-            <button class="hamburger">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M3 12h18M3 6h18M3 18h18" />
-                </svg>
-            </button>
-        </div>
-    </nav>
+      <button class="hamburger" id="hamburger-menu" aria-label="Menü">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-menu-overlay" id="mobile-menu-overlay">
+    <div class="mobile-menu-content">
+      <div class="mobile-menu-links">
+        <a href="index.html#features" class="mobile-link">Özellikler</a>
+        <a href="index.html#about" class="mobile-link">Hakkında</a>
+        <a href="index.html#showcase" class="mobile-link">Keşfet</a>
+        <a href="index.html#university" class="mobile-link">Kampüs</a>
+        <a href="privacy.html" class="mobile-link">Gizlilik</a>
+        <a href="sartlar.html" class="mobile-link">Sözleşme</a>
+      </div>
+      <div class="mobile-menu-actions">
+        <a href="login.html" class="btn btn-secondary auth-login-btn">Giriş Yap</a>
+        <a href="download.html" class="btn btn-primary">İndir</a>
+      </div>
+    </div>
+  </div>
 
     <!-- Delete Account Content -->
     <main class="delete-account-page">
@@ -137,7 +155,7 @@
             </div>
 
             <div style="text-align:center; margin-top:2rem; font-size:0.9rem; color:var(--color-text-dim);">
-                Yardım için: <a href="mailto:support@oark.app" style="color:var(--color-primary);">support@oark.app</a>
+                Yardım için: <a href="mailto:destek.oark@gmail.com" style="color:var(--color-primary);">destek.oark@gmail.com</a>
             </div>
         </div>
     </main>
@@ -164,19 +182,19 @@
                 <div class="footer-col">
                     <h4>İletişim</h4>
                     <ul>
-                        <li><a href="mailto:support@oark.app">Destek</a></li>
+                        <li><a href="mailto:destek.oark@gmail.com">Destek</a></li>
                     </ul>
                 </div>
             </div>
 
             <div class="copyright">
-                &copy; 2024 OARK Inc. Tüm hakları saklıdır.
+                &copy; 2026 OARK Inc. Tüm hakları saklıdır.
             </div>
         </div>
     </footer>
 
     <!-- Scripts -->
-    <script src="js/main.js"></script>
+    <script src="js/main.js?v=27"></script>
     <style>
         /* Extra styles to ensure toggle works with display:none */
         .form-step {

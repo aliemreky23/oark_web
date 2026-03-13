@@ -12,221 +12,7 @@
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="assets/logo.png">
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-    <style>
-        .profile-page {
-            padding-top: 100px;
-            padding-bottom: 4rem;
-            min-height: 100vh;
-        }
-
-        .profile-header-card {
-            background: #ffffff;
-            border: 1px solid #e0d4f0;
-            box-shadow: 0 4px 20px rgba(157, 123, 232, 0.1);
-            border-radius: 24px;
-            padding: 3rem;
-            display: flex;
-            align-items: center;
-            gap: 2.5rem;
-            margin-bottom: 3rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .profile-header-card::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            width: 40%;
-            background: radial-gradient(circle at right center, rgba(190, 161, 247, 0.1), transparent 70%);
-            pointer-events: none;
-        }
-
-        .profile-avatar {
-            width: 120px;
-            height: 120px;
-            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
-            border-radius: 50%;
-            /* Circle */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            color: white;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-            border: 4px solid rgba(255, 255, 255, 0.1);
-            flex-shrink: 0;
-        }
-
-        .profile-info {
-            flex: 1;
-            z-index: 1;
-        }
-
-        .profile-info h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            line-height: 1;
-            color: var(--color-text);
-        }
-
-        .profile-tag {
-            display: inline-flex;
-            align-items: center;
-            padding: 0.4rem 1rem;
-            background: rgba(139, 92, 246, 0.1);
-            border-radius: 99px;
-            font-size: 0.9rem;
-            color: var(--color-text);
-            margin-top: 1rem;
-        }
-
-        .profile-tag i {
-            margin-right: 0.5rem;
-            color: var(--color-secondary);
-        }
-
-        /* Section Title */
-        .section-title {
-            font-size: 1.25rem;
-            color: var(--color-text);
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .section-title::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: var(--card-border);
-        }
-
-        /* Grid Layout */
-        .action-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 3rem;
-        }
-
-        .action-card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 20px;
-            padding: 2rem;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            text-decoration: none;
-            display: flex;
-            align-items: flex-start;
-            gap: 1.5rem;
-            position: relative;
-            overflow: hidden;
-            box-shadow: var(--card-shadow);
-        }
-
-        .action-card:hover {
-            background: var(--card-bg);
-            transform: translateY(-5px);
-            border-color: var(--color-primary-light);
-            box-shadow: var(--card-shadow-hover);
-        }
-
-        .action-icon-box {
-            width: 60px;
-            height: 60px;
-            border-radius: 16px;
-            background: rgba(190, 161, 247, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            flex-shrink: 0;
-            transition: all 0.3s ease;
-        }
-
-        .action-card:hover .action-icon-box {
-            transform: scale(1.1) rotate(5deg);
-        }
-
-        .card-content {
-            flex: 1;
-        }
-
-        .action-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--color-text);
-            margin-bottom: 0.5rem;
-        }
-
-        .action-desc {
-            font-size: 0.95rem;
-            color: var(--color-text-muted);
-            line-height: 1.5;
-        }
-
-        /* Danger Zone */
-        .danger-card {
-            border-color: rgba(239, 68, 68, 0.3);
-            background: rgba(239, 68, 68, 0.05);
-        }
-
-        .danger-card:hover {
-            background: rgba(239, 68, 68, 0.08);
-            border-color: rgba(239, 68, 68, 0.4);
-        }
-
-        .danger-icon {
-            color: #ef4444;
-            background: rgba(239, 68, 68, 0.1);
-        }
-
-        .bottom-actions {
-            display: flex;
-            justify-content: flex-end;
-            padding-top: 2rem;
-        }
-
-        .btn-logout {
-            background: transparent;
-            border: 1px solid var(--card-border);
-            color: var(--color-text);
-            padding: 1rem 2rem;
-            border-radius: 99px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            font-weight: 600;
-        }
-
-        .btn-logout:hover {
-            background: rgba(190, 161, 247, 0.1);
-            border-color: var(--color-primary);
-        }
-
-        @media (max-width: 768px) {
-            .profile-header-card {
-                flex-direction: column;
-                text-align: center;
-                padding: 2rem;
-                gap: 1.5rem;
-            }
-
-            .profile-avatar {
-                margin: 0 auto;
-            }
-
-            .action-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="css/profile.css">
 </head>
 
 <body>
@@ -247,19 +33,36 @@
                     <span class="nav-user-name">...</span>
                 </div>
 
-                <button onclick="window.handleLogout()" class="btn btn-secondary"
-                    style="margin-left: 1rem; padding: 0.5rem 1rem; border: 1px solid rgba(255,255,255,0.2);">
+                <button onclick="window.handleLogout()" class="btn btn-secondary auth-logout-btn-nav">
                     <i class="fas fa-sign-out-alt"></i>
                 </button>
             </div>
 
-            <div class="hamburger">
+            <button class="hamburger" id="hamburger-menu" aria-label="Menü">
                 <span></span>
                 <span></span>
                 <span></span>
-            </div>
+            </button>
         </div>
     </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobile-menu-overlay">
+        <div class="mobile-menu-content">
+            <div class="mobile-menu-links">
+                <a href="index.html#features" class="mobile-link">Özellikler</a>
+                <a href="index.html#about" class="mobile-link">Hakkında</a>
+                <a href="index.html#showcase" class="mobile-link">Keşfet</a>
+                <a href="index.html#university" class="mobile-link">Kampüs</a>
+                <a href="privacy.html" class="mobile-link">Gizlilik</a>
+                <a href="sartlar.html" class="mobile-link">Sözleşme</a>
+            </div>
+            <div class="mobile-menu-actions">
+                <a href="login.html" class="btn btn-secondary auth-login-btn">Giriş Yap</a>
+                <a href="download.html" class="btn btn-primary">İndir</a>
+            </div>
+        </div>
+    </div>
 
     <div class="container profile-page">
         <div class="profile-header-card">
@@ -268,7 +71,7 @@
             </div>
             <div class="profile-info">
                 <h1 id="user-name">...</h1>
-                <p id="user-email" style="color: var(--color-text-muted); font-size: 1.1rem;"></p>
+                <p id="user-email"></p>
                 <div class="profile-tag">
                     <i class="fas fa-check-circle"></i> Doğrulanmış Hesap
                 </div>
@@ -276,23 +79,19 @@
         </div>
 
         <!-- Student Verification Section -->
-        <div class="profile-header-card"
-            style="background: linear-gradient(135deg, rgba(6, 182, 212, 0.1), rgba(59, 130, 246, 0.1)); border-color: rgba(6, 182, 212, 0.3); margin-bottom: 2rem; flex-direction: column; align-items: flex-start; gap: 1.5rem;">
-            <div style="display: flex; align-items: center; gap: 1rem; width: 100%;">
-                <div class="action-icon-box" style="background: rgba(6, 182, 212, 0.2); color: #06b6d4;">
+        <div class="profile-header-card verification-highlight">
+            <div class="verification-header">
+                <div class="action-icon-box campus-icon-box">
                     <i class="fas fa-graduation-cap"></i>
                 </div>
-                <div>
-                    <h2
-                        style="font-size: 1.5rem; margin-bottom: 0.25rem; background: none; -webkit-text-fill-color: inherit; color: var(--color-text);">
-                        Öğrenci Durumu</h2>
-                    <p style="margin-bottom: 0; font-size: 0.95rem;">Üniversite ve kampüs doğrulama bilgileriniz.
-                    </p>
+                <div class="verification-title">
+                    <h2>Öğrenci Durumu</h2>
+                    <p class="verification-subtitle">Üniversite ve kampüs doğrulama bilgileriniz.</p>
                 </div>
             </div>
 
             <!-- Status Container (Dynamically updated via JS) -->
-            <div id="student-status-container" style="width: 100%;">
+            <div id="student-status-container" class="status-container-full">
                 <!-- Code is injected here by auth.js -->
             </div>
         </div>
@@ -305,107 +104,43 @@
 
     </div>
 
-    <div class="section-title">Hesap Ayarları</div>
+    <div class="container">
+        <div class="section-title">Hesap Ayarları</div>
 
-    <div class="action-grid">
-        <a href="#" onclick="openPasswordModal(event)" class="action-card">
-            <div class="action-icon-box" style="color: var(--color-primary);">
-                <i class="fas fa-lock"></i>
-            </div>
-            <div class="card-content">
-                <div class="action-title">Şifre & Güvenlik</div>
-                <div class="action-desc">Şifrenizi güncelleyin ve hesap güvenliğinizi sağlayın.</div>
-            </div>
-        </a>
+        <div class="action-grid">
+            <a href="change-password.html" class="action-card">
+                <div class="action-icon-box security-icon-box">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <div class="card-content">
+                    <div class="action-title">Şifre & Güvenlik</div>
+                    <div class="action-desc">Şifrenizi güncelleyin ve hesap güvenliğinizi sağlayın.</div>
+                </div>
+            </a>
 
+            <a href="delete-account.html" class="action-card danger-card">
+                <div class="action-icon-box danger-icon">
+                    <i class="fas fa-trash-alt"></i>
+                </div>
+                <div class="card-content">
+                    <div class="action-title danger-text">Hesabı Sil</div>
+                    <div class="action-desc danger-desc">Hesabınızı ve tüm verilerinizi kalıcı olarak silin.</div>
+                </div>
+            </a>
+        </div>
 
-
-        <a href="delete-account.html" class="action-card danger-card">
-            <div class="action-icon-box danger-icon">
-                <i class="fas fa-trash-alt"></i>
-            </div>
-            <div class="card-content">
-                <div class="action-title" style="color: #ef4444;">Hesabı Sil</div>
-                <div class="action-desc" style="color: rgba(239, 68, 68, 0.7);">Hesabınızı ve tüm verilerinizi
-                    kalıcı olarak silin.</div>
-            </div>
-        </a>
-    </div>
-
-    <div class="bottom-actions">
-        <button onclick="window.handleLogout()" class="btn-logout">
-            <i class="fas fa-sign-out-alt"></i>
-            Oturumu Kapat
-        </button>
-    </div>
+        <div class="bottom-actions">
+            <button onclick="window.handleLogout()" class="btn-logout">
+                <i class="fas fa-sign-out-alt"></i>
+                Oturumu Kapat
+            </button>
+        </div>
     </div>
 
     <script src="js/api.js"></script>
     <script src="js/auth.js"></script>
-    <script src="js/main.js"></script>
+    <script src="js/main.js?v=27"></script>
 
-    <!-- Password Change Modal -->
-    <div id="password-modal" class="modal-overlay"
-        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(5px); z-index: 1000; align-items: center; justify-content: center;">
-        <div class="modal-content"
-            style="background: linear-gradient(145deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 2.5rem; width: 90%; max-width: 450px; position: relative; backdrop-filter: blur(30px); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);">
-            <button onclick="closePasswordModal()"
-                style="position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; opacity: 0.7; transition: opacity 0.3s;"><i
-                    class="fas fa-times"></i></button>
-            <h2 style="color: white; margin-bottom: 0.5rem; font-size: 1.5rem;"><i class="fas fa-lock"
-                    style="color: var(--color-primary); margin-right: 0.5rem;"></i> Şifre Değiştirme</h2>
-            <p style="color: rgba(255, 255, 255, 0.6); margin-bottom: 1.5rem; font-size: 0.95rem;">Şifrenizi e-postanıza
-                gönderilecek 6 haneli doğrulama kodu (OTP) le değiştirebilirsiniz.</p>
-
-            <div id="pw-step-1">
-                <p style="color: rgba(255,255,255,0.8); margin-bottom: 1rem;">Mevcut e-posta adresinize bir şifre
-                    sıfırlama kodu göndereceğiz.</p>
-                <div id="pw-error-1" style="color: #ef4444; font-size: 0.9rem; margin-bottom: 1rem; display: none;">
-                </div>
-                <button onclick="sendPasswordResetOtp()" id="btn-send-otp" class="btn btn-primary"
-                    style="width: 100%; padding: 1rem; border-radius: 12px; font-weight: 600; display: flex; justify-content: center; align-items: center; gap: 0.5rem;">
-                    Kodu Gönder <i class="fas fa-paper-plane"></i>
-                </button>
-            </div>
-
-            <div id="pw-step-2" style="display: none;">
-                <p style="color: rgba(255,255,255,0.8); margin-bottom: 1rem;">E-postanıza (oark.27.app@gmail.com
-                    üzerinden) gönderilen 8 haneli kodu ve yeni şifrenizi aşağıya girin.</p>
-                <div id="pw-error-2" style="color: #ef4444; font-size: 0.9rem; margin-bottom: 1rem; display: none;">
-                </div>
-                <div class="form-group" style="margin-bottom: 1rem;">
-                    <label
-                        style="color: rgba(255,255,255,0.7); display: block; margin-bottom: 0.5rem; font-size: 0.9rem;">Doğrulama
-                        Kodu (OTP)</label>
-                    <input type="text" id="pw-otp" placeholder="12345678" maxlength="8"
-                        style="width: 100%; padding: 1rem; border-radius: 12px; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.1); color: white; text-align: center; letter-spacing: 0.3em; font-size: 1.1rem; font-weight: bold;">
-                </div>
-                <div class="form-group" style="margin-bottom: 1rem;">
-                    <label
-                        style="color: rgba(255,255,255,0.7); display: block; margin-bottom: 0.5rem; font-size: 0.9rem;">Yeni
-                        Şifre</label>
-                    <input type="password" id="pw-new" placeholder="Yeni şifrenizi girin"
-                        style="width: 100%; padding: 1rem; border-radius: 12px; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.1); color: white;">
-                </div>
-                <button onclick="verifyPasswordResetOtp()" id="btn-verify-otp" class="btn btn-secondary"
-                    style="width: 100%; padding: 1rem; border-radius: 12px; font-weight: 600; margin-top: 0.5rem;">
-                    Şifreyi Güncelle
-                </button>
-            </div>
-
-            <div id="pw-step-3" style="display: none; text-align: center; padding: 1rem 0;">
-                <div
-                    style="width: 60px; height: 60px; background: rgba(16, 185, 129, 0.2); color: #10b981; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; margin: 0 auto 1rem auto;">
-                    <i class="fas fa-check"></i>
-                </div>
-                <h3 style="color: white; margin-bottom: 0.5rem;">Şifreniz Güncellendi</h3>
-                <p style="color: rgba(255,255,255,0.6); margin-bottom: 1.5rem;">Artık yeni şifrenizle giriş
-                    yapabilirsiniz.</p>
-                <button onclick="closePasswordModal()" class="btn btn-primary"
-                    style="width: 100%; padding: 1rem; border-radius: 12px; font-weight: 600;">Kapat</button>
-            </div>
-        </div>
-    </div>
 </body>
 
 </html>

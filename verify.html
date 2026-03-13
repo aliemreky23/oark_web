@@ -210,13 +210,42 @@
 
 <body>
     <!-- Navbar (Copied from index.html) -->
-    <nav class="navbar" style="position: absolute; width: 100%; top: 0; z-index: 10;">
-        <div class="container">
+    <nav class="navbar scanned">
+        <div class="container nav-container">
             <a href="index.html" class="logo">
                 <img src="assets/logo-new.png" alt="OARK">
             </a>
+
+            <ul class="nav-links">
+                <li><a href="index.html#features">Özellikler</a></li>
+                <li><a href="index.html#download">İndir</a></li>
+            </ul>
+
+            <button class="hamburger" id="hamburger-menu" aria-label="Menü">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobile-menu-overlay">
+        <div class="mobile-menu-content">
+            <div class="mobile-menu-links">
+                <a href="index.html#features" class="mobile-link">Özellikler</a>
+                <a href="index.html#about" class="mobile-link">Hakkında</a>
+                <a href="index.html#showcase" class="mobile-link">Keşfet</a>
+                <a href="index.html#university" class="mobile-link">Kampüs</a>
+                <a href="privacy.html" class="mobile-link">Gizlilik</a>
+                <a href="sartlar.html" class="mobile-link">Sözleşme</a>
+            </div>
+            <div class="mobile-menu-actions">
+                <a href="login.html" class="btn btn-secondary auth-login-btn">Giriş Yap</a>
+                <a href="download.html" class="btn btn-primary">İndir</a>
+            </div>
+        </div>
+    </div>
 
     <div class="verify-container">
         <div class="glass-panel">
@@ -304,8 +333,7 @@
         </div>
     </div>
 
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-    <!-- FontAwesome fallback if needed -->
+    <script src="js/main.js?v=27"></script>
 </body>
 
 </html>

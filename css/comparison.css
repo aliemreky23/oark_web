@@ -1,0 +1,156 @@
+/* ─── Image Comparison Slider ─── */
+.comparison-slider {
+  position: relative;
+  width: 100%;
+  max-width: 340px;
+  aspect-ratio: 9 / 19.5;
+  margin: 0 auto;
+  border-radius: 28px;
+  overflow: hidden;
+  cursor: ew-resize;
+  user-select: none;
+  -webkit-user-select: none;
+  box-shadow:
+    0 0 0 3px rgba(139, 92, 246, 0.15),
+    0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  background: #111;
+}
+
+/* Both images fill the container */
+.comparison-slider .comparison-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  display: block;
+}
+
+/* Dark image is the base layer */
+.comparison-slider .comparison-dark {
+  z-index: 1;
+}
+
+/* Light image sits on top, clipped */
+.comparison-slider .comparison-light {
+  z-index: 2;
+  clip-path: inset(0 0 0 0); /* Will be updated via JS */
+  will-change: clip-path;
+}
+
+/* Vertical divider line */
+.comparison-divider {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: rgba(255, 255, 255, 0.9);
+  z-index: 10;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+  will-change: left;
+}
+
+/* Circle handle on the divider */
+.comparison-handle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  border: 2px solid rgba(139, 92, 246, 0.6);
+  z-index: 11;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  pointer-events: none;
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.25),
+    0 0 12px rgba(139, 92, 246, 0.2);
+  will-change: left;
+}
+
+.comparison-slider:active .comparison-handle,
+.comparison-slider.dragging .comparison-handle {
+  transform: translate(-50%, -50%) scale(1.05);
+}
+
+/* Arrows inside the handle */
+.comparison-handle .handle-arrow {
+  width: 0;
+  height: 0;
+  border-style: solid;
+}
+
+.comparison-handle .handle-arrow.left {
+  border-width: 4px 6px 4px 0;
+  border-color: transparent rgba(139, 92, 246, 0.8) transparent transparent;
+}
+
+.comparison-handle .handle-arrow.right {
+  border-width: 4px 0 4px 6px;
+  border-color: transparent transparent transparent rgba(139, 92, 246, 0.8);
+}
+
+/* Labels for Dark / Light */
+.comparison-label {
+  position: absolute;
+  top: 12px;
+  z-index: 12;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  pointer-events: none;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.comparison-label.label-dark {
+  right: 10px;
+  background: rgba(15, 23, 42, 0.7);
+  color: #e2e8f0;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.comparison-label.label-light {
+  left: 10px;
+  background: rgba(255, 255, 255, 0.8);
+  color: #1e293b;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 768px) {
+  .comparison-slider {
+    max-width: 200px;
+    border-radius: 22px;
+  }
+
+  .comparison-handle {
+    width: 26px;
+    height: 26px;
+  }
+
+  .comparison-label {
+    font-size: 0.6rem;
+    padding: 3px 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .comparison-slider {
+    max-width: 140px;
+    border-radius: 18px;
+  }
+}

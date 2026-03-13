@@ -32,8 +32,9 @@
   <meta property="twitter:image" content="https://www.oark.com.tr/assets/logo.png">
 
   <!-- CSS -->
-  <link rel="stylesheet" href="css/styles.css">
-  <link rel="stylesheet" href="css/partners.css">
+  <link rel="stylesheet" href="css/styles.css?v=2">
+  <link rel="stylesheet" href="css/partners.css?v=2">
+  <link rel="stylesheet" href="css/comparison.css?v=2">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
@@ -90,6 +91,7 @@
         <a href="#showcase">Keşfet</a>
         <a href="#university">Kampüs</a>
         <a href="privacy.html">Gizlilik</a>
+        <a href="sartlar.html">Sözleşme</a>
       </div>
 
       <div class="nav-actions">
@@ -109,13 +111,31 @@
         </a>
       </div>
 
-      <div class="hamburger">
+      <button class="hamburger" id="hamburger-menu" aria-label="Menü">
         <span></span>
         <span></span>
         <span></span>
-      </div>
+      </button>
     </div>
   </nav>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-menu-overlay" id="mobile-menu-overlay">
+    <div class="mobile-menu-content">
+      <div class="mobile-menu-links">
+        <a href="#features" class="mobile-link">Özellikler</a>
+        <a href="#about" class="mobile-link">Hakkında</a>
+        <a href="#showcase" class="mobile-link">Keşfet</a>
+        <a href="#university" class="mobile-link">Kampüs</a>
+        <a href="privacy.html" class="mobile-link">Gizlilik</a>
+        <a href="sartlar.html" class="mobile-link">Sözleşme</a>
+      </div>
+      <div class="mobile-menu-actions">
+        <a href="login.html" class="btn btn-secondary auth-login-btn">Giriş Yap</a>
+        <a href="download.html" class="btn btn-primary">İndir</a>
+      </div>
+    </div>
+  </div>
 
   <!-- Mobile Menu Overlay (Simulated via JS usually, simplified here) -->
 
@@ -231,55 +251,140 @@
   <section class="showcase-section" id="showcase">
     <div class="container">
 
-      <!-- Row 1 -->
+      <!-- Row 1: Ana Sayfa -->
       <div class="showcase-row">
         <div class="showcase-text">
-          <span class="badge">Keşfet</span>
-          <h2>ARADIĞIN ETKİNLİK<br>VE <span class="text-gradient">TAKIM BURADA</span></h2>
+          <span class="badge">Ana Sayfa</span>
+          <h2>OARK DÜNYASINA<br><span class="text-gradient">ADIM AT</span></h2>
           <p>
-            Masa tenisi veya kahve mi? Yoksa Valorant/CS2'de rekabetçi maç mı? "Looking for Group" (LFG) ilanları
-            oluşturun veya hem kampüs içi hem global etkinliklere başvurun.
+            Oyun dünyası ve kampüs hayatı tek bir noktada. OARK sistemiyle arkadaş bulmak, etkinlik planlamak ve oyunlara katılmak artık çok daha kolay.
           </p>
-          <a href="#download" class="btn btn-secondary">İlanlara Göz At &rarr;</a>
+          <a href="download.html" class="btn btn-secondary">Keşfet &rarr;</a>
         </div>
         <div class="showcase-visual">
-          <div class="app-mockup">
-            <img src="assets/screenshots/listings.jpg" alt="OARK Listings" loading="lazy">
+          <div class="comparison-slider">
+            <img src="assets/screenshots/anasayfa-dark.webp" alt="OARK Ana Sayfa Dark" class="comparison-img comparison-dark" loading="lazy">
+            <img src="assets/screenshots/anasayfa-light.webp" alt="OARK Ana Sayfa Light" class="comparison-img comparison-light" loading="lazy">
+            <div class="comparison-divider"></div>
+            <div class="comparison-handle">
+              <span class="handle-arrow left"></span>
+              <span class="handle-arrow right"></span>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- Row 2 (Reverse) -->
+      <!-- Row 2: Keşfet (Reverse) -->
       <div class="showcase-row reverse">
         <div class="showcase-text">
-          <span class="badge">Profil</span>
-          <h2>KİMLİĞİNİ<br><span class="text-gradient">YANSIT</span></h2>
+          <span class="badge">Keşfet</span>
+          <h2>KAMPÜSÜN<br><span class="text-gradient">SOSYAL AĞI</span></h2>
           <p>
-            Üniversiteni, bölümünü ve oynamaktan keyif aldığın oyunları profilinde sergile.
-            Hem kampüsündeki öğrencilerin hem de tüm OARK ağının seni ilgi alanlarına göre bulmasını sağla.
+            Sadece üniversite öğrencilerinin yer aldığı güvenli ağda kampüsün nabzını tut. Duyuruları takip et, düşüncelerini paylaş ve sosyal çevreni genişlet.
           </p>
-          <a href="#download" class="btn btn-secondary">Profil Oluştur &rarr;</a>
+          <a href="download.html" class="btn btn-secondary">Ağa Katıl &rarr;</a>
         </div>
         <div class="showcase-visual">
-          <div class="app-mockup">
-            <img src="assets/screenshots/profile.png" alt="OARK Profile" loading="lazy">
+          <div class="comparison-slider">
+            <img src="assets/screenshots/Keşfet-dark.webp" alt="OARK Keşfet Dark" class="comparison-img comparison-dark" loading="lazy">
+            <img src="assets/screenshots/Keşfet-light.webp" alt="OARK Keşfet Light" class="comparison-img comparison-light" loading="lazy">
+            <div class="comparison-divider"></div>
+            <div class="comparison-handle">
+              <span class="handle-arrow left"></span>
+              <span class="handle-arrow right"></span>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- Row 3 -->
+      <!-- Row 3: PC Oyunları -->
       <div class="showcase-row">
         <div class="showcase-text">
-          <span class="badge">İletişim</span>
-          <h2>ŞİFRELİ VE SINIRSIZ<br><span class="text-gradient">İLETİŞİM</span></h2>
+          <span class="badge">Oyunlar</span>
+          <h2>ARADIĞIN TAKIM<br><span class="text-gradient">ARKADAŞI BURADA</span></h2>
           <p>
-            Oyun takımınla taktikleri belirle veya üniversitendeki insanlarla etkinlikleri planla.
-            Uygulama içi güvenli mesajlaşma ile ister dijital arenada ister kampüste herkesle anında iletişim kur.
+            Favori oyunlarında rankına, diline ve oyun tarzına göre filtreleme yaparak kendine en uygun "Duo"yu veya takım arkadaşını anında bul.
           </p>
+          <a href="download.html" class="btn btn-secondary">Duo Bul &rarr;</a>
         </div>
         <div class="showcase-visual">
-          <div class="app-mockup">
-            <img src="assets/screenshots/games.jpg" alt="OARK Chat" loading="lazy">
+          <div class="comparison-slider">
+            <img src="assets/screenshots/pcoyunlar-dark.webp" alt="OARK Oyunlar Dark" class="comparison-img comparison-dark" loading="lazy">
+            <img src="assets/screenshots/pcoyunlar-light.webp" alt="OARK Oyunlar Light" class="comparison-img comparison-light" loading="lazy">
+            <div class="comparison-divider"></div>
+            <div class="comparison-handle">
+              <span class="handle-arrow left"></span>
+              <span class="handle-arrow right"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 4: Harita (Reverse) -->
+      <div class="showcase-row reverse">
+        <div class="showcase-text">
+          <span class="badge">Harita</span>
+          <h2>ETKİNLİKLERİ<br><span class="text-gradient">HARİTADA KEŞFET</span></h2>
+          <p>
+            Kampüsün her köşesindeki etkinlikleri ve oyuncuları canlı olarak gör. Yakınındaki kahve buluşmalarına veya oyun gruplarına katıl.
+          </p>
+          <a href="download.html" class="btn btn-secondary">Haritaya Göz At &rarr;</a>
+        </div>
+        <div class="showcase-visual">
+          <div class="comparison-slider">
+            <img src="assets/screenshots/harita-dark.webp" alt="OARK Harita Dark" class="comparison-img comparison-dark" loading="lazy">
+            <img src="assets/screenshots/harita-light.webp" alt="OARK Harita Light" class="comparison-img comparison-light" loading="lazy">
+            <div class="comparison-divider"></div>
+            <div class="comparison-handle">
+              <span class="handle-arrow left"></span>
+              <span class="handle-arrow right"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 5: Profil -->
+      <div class="showcase-row">
+        <div class="showcase-text">
+          <span class="badge">Profil</span>
+          <h2>OYUNCU KARTINI<br><span class="text-gradient">OLUŞTUR</span></h2>
+          <p>
+            Üniversiteni, bölümünü ve oyun başarılarını sergile. Kendi tarzını yansıtan profilinle OARK topluluğunda öne çık.
+          </p>
+          <a href="download.html" class="btn btn-secondary">Profil Oluştur &rarr;</a>
+        </div>
+        <div class="showcase-visual">
+          <div class="comparison-slider">
+            <img src="assets/screenshots/profile-dark.webp" alt="OARK Profil Dark" class="comparison-img comparison-dark" loading="lazy">
+            <img src="assets/screenshots/profile-light.webp" alt="OARK Profil Light" class="comparison-img comparison-light" loading="lazy">
+            <div class="comparison-divider"></div>
+            <div class="comparison-handle">
+              <span class="handle-arrow left"></span>
+              <span class="handle-arrow right"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 6: Mesajlar (Reverse) -->
+      <div class="showcase-row reverse">
+        <div class="showcase-text">
+          <span class="badge">Mesajlar</span>
+          <h2>ŞİFRELİ VE GÜVENLİ<br><span class="text-gradient">İLETİŞİM</span></h2>
+          <p>
+            Takımınla taktikleri belirle veya etkinlikleri planla. Uygulama içi güvenli iletişim kanallarıyla herkesle anında bağlantıda kal.
+          </p>
+          <a href="download.html" class="btn btn-secondary">Sohbete Başla &rarr;</a>
+        </div>
+        <div class="showcase-visual">
+          <div class="comparison-slider">
+            <img src="assets/screenshots/Mesajlar-dark.webp" alt="OARK Mesajlar Dark" class="comparison-img comparison-dark" loading="lazy">
+            <img src="assets/screenshots/Mesajlar-light.webp" alt="OARK Mesajlar Light" class="comparison-img comparison-light" loading="lazy">
+            <div class="comparison-divider"></div>
+            <div class="comparison-handle">
+              <span class="handle-arrow left"></span>
+              <span class="handle-arrow right"></span>
+            </div>
           </div>
         </div>
       </div>
@@ -294,77 +399,71 @@
 
         <!-- Left: Steps & Info -->
         <div class="campus-info">
-          <div class="badge" style="background: rgba(6, 182, 212, 0.2); color: #06b6d4; margin-bottom: 1rem;">YENİ</div>
-          <h2 class="section-title" style="text-align: left; margin-bottom: 1rem;">OARK <span class="text-gradient"
-              style="color: #06b6d4;">KAMPÜS+</span></h2>
-          <p style="margin-bottom: 2.5rem; color: var(--color-text-muted); font-size: 1.1rem;">
+          <div class="badge badge-new">YENİ</div>
+          <h2 class="section-title">OARK <span class="text-gradient-campus">KAMPÜS+</span></h2>
+          <p class="campus-desc">
             Sadece üniversite öğrencilerine özel, kapalı devre %100 güvenli sosyalleşme ekosistemi. Kendi kampüsündeki
             öğrencileri bul, kahve iç, masa oyunu oyna veya etkinlik düzenle.
           </p>
 
           <div class="steps-container">
             <!-- Step 1 -->
-            <div class="step-item" style="display: flex; gap: 1.5rem; margin-bottom: 2rem;">
-              <div class="step-number"
-                style="width: 40px; height: 40px; background: rgba(6,182,212,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #06b6d4; border: 1px solid rgba(6,182,212,0.3); flex-shrink: 0;">
-                1</div>
-              <div>
-                <h4 style="color: var(--color-text); margin-bottom: 0.5rem;">Uygulamayı İndir</h4>
+            <div class="step-item">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <h4>Uygulamayı İndir</h4>
                 <p style="font-size: 0.9rem; margin-bottom: 0;">OARK'ı App Store veya Google Play'den indirerek hemen
                   başla.</p>
               </div>
             </div>
 
             <!-- Step 2 -->
-            <div class="step-item" style="display: flex; gap: 1.5rem; margin-bottom: 2rem;">
-              <div class="step-number"
-                style="width: 40px; height: 40px; background: rgba(6,182,212,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #06b6d4; border: 1px solid rgba(6,182,212,0.3); flex-shrink: 0;">
-                2</div>
-              <div>
-                <h4 style="color: var(--color-text); margin-bottom: 0.5rem;">Öğrenci Belgenle Doğrulan</h4>
+            <div class="step-item">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <h4>Öğrenci Belgenle Doğrulan</h4>
                 <p style="font-size: 0.9rem; margin-bottom: 0;">Uygulama içinden e-Devlet öğrenci belgeni yükleyerek
                   öğrenci kimliğini doğrula.</p>
               </div>
             </div>
 
             <!-- Step 3 -->
-            <div class="step-item" style="display: flex; gap: 1.5rem; margin-bottom: 2rem;">
-              <div class="step-number"
-                style="width: 40px; height: 40px; background: rgba(6,182,212,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #06b6d4; border: 1px solid rgba(6,182,212,0.3); flex-shrink: 0;">
-                3</div>
-              <div>
-                <h4 style="color: var(--color-text); margin-bottom: 0.5rem;">Arkadaş Edinmeye Başla</h4>
+            <div class="step-item">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <h4>Arkadaş Edinmeye Başla</h4>
                 <p style="font-size: 0.9rem; margin-bottom: 0;">Tebrikler, artık kampüsüne özel ağdasın! Etkinliklere
                   katıl veya kendi etkinliklerini düzenle.</p>
               </div>
             </div>
           </div>
 
-          <a href="download.html" class="btn btn-primary"
-            style="background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%); border:none; padding: 0.8rem 2rem;">
+          <a href="download.html" class="btn btn-primary btn-campus">
             Uygulamayı İndir &rarr;
           </a>
         </div>
 
         <!-- Right: Card -->
         <div class="campus-visual">
-          <div class="glass-card education-card"
-            style="margin: 0 auto; max-width: 500px; padding: 3rem 1.5rem; border-color: rgba(6,182,212,0.2);">
-            <div class="edu-icon"
-              style="width: 80px; height: 80px; margin: 0 auto 1.5rem; background: linear-gradient(135deg, #06b6d4, #3b82f6); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; color: white; box-shadow: 0 0 20px rgba(6,182,212,0.4);">
+          <div class="glass-card education-card campus-education-card">
+            <div class="edu-icon">
               <i class="fas fa-mobile-alt"></i>
             </div>
 
-            <h3 style="text-align: center; margin-bottom: 0.5rem;">OARK Mobil Uygulama</h3>
-            <div class="verified-badge" style="margin: 0 auto 2rem; display: table;">
+            <h3>OARK Mobil Uygulama</h3>
+            <div class="verified-badge">
               <i class="fas fa-download"></i> Hemen İndir
             </div>
 
-            <div class="code-preview" style="text-align: center;">
-              <span style="font-size: 0.8rem; letter-spacing: 2px; opacity: 0.7;">KAMPÜS ÖZELLİKLERİ İÇİN:</span>
-              <div class="code-box"
-                style="margin-top: 0.5rem; font-family: monospace; font-size: 1.05rem; font-weight: bold; letter-spacing: 0.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding: 1rem 0.5rem;">
-                App Store & Google Play</div>
+            <div class="code-preview">
+              <span class="code-label-campus">KAMPÜS ÖZELLİKLERİ İÇİN:</span>
+              <div class="code-box">
+                <div style="display: flex; align-items: center; justify-content: center; gap: 1rem;">
+                  <i class="fab fa-apple"></i>
+                  <i class="fab fa-google-play"></i>
+                </div>
+                <span>App Store & Google Play</span>
+              </div>
             </div>
           </div>
         </div>
@@ -500,7 +599,8 @@
             <h4>Yasal</h4>
             <ul>
               <li><a href="privacy.html">Gizlilik Politikası</a></li>
-              <li><a href="kvkk.html">Kullanım Koşulları</a></li>
+              <li><a href="sartlar.html">Kullanım Koşulları</a></li>
+              <li><a href="acik-riza.html">Açık Rıza Metni</a></li>
               <li><a href="delete-account.html">Hesap Silme</a></li>
             </ul>
           </div>
@@ -508,7 +608,7 @@
           <div class="footer-col">
             <h4>İletişim</h4>
             <ul>
-              <li><a href="mailto:support@oark.app">Destek</a></li>
+              <li><a href="mailto:destek.oark@gmail.com">Destek</a></li>
               <li><a href="#">Twitter</a></li>
               <li><a href="https://www.instagram.com/oark.official/" target="_blank">Instagram</a></li>
               <li><a href="#">Discord</a></li>
@@ -527,7 +627,9 @@
   <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
   <script src="js/api.js"></script>
   <script src="js/auth.js"></script>
-  <script src="js/main.js?v=26"></script>
+  <script src="js/premium-scroll.js"></script>
+  <script src="js/main.js?v=27"></script>
+  <script src="js/comparison.js"></script>
 </body>
 
 </html>

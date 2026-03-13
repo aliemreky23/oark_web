@@ -191,6 +191,35 @@
         </a>
     </div>
 
+    <!-- Minimal Hamburger for Register -->
+    <nav class="navbar" style="background: transparent; border: none; box-shadow: none;">
+        <div class="container nav-container" style="justify-content: flex-end;">
+            <button class="hamburger" id="hamburger-menu" aria-label="Menü" style="background: white; border: 1px solid #e0d4f0; border-radius: 50%; width: 50px; height: 50px;">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobile-menu-overlay">
+        <div class="mobile-menu-content">
+            <div class="mobile-menu-links">
+                <a href="index.html#features" class="mobile-link">Özellikler</a>
+                <a href="index.html#about" class="mobile-link">Hakkında</a>
+                <a href="index.html#showcase" class="mobile-link">Keşfet</a>
+                <a href="index.html#university" class="mobile-link">Kampüs</a>
+                <a href="privacy.html" class="mobile-link">Gizlilik</a>
+                <a href="sartlar.html" class="mobile-link">Sözleşme</a>
+            </div>
+            <div class="mobile-menu-actions">
+                <a href="login.html" class="btn btn-secondary auth-login-btn">Giriş Yap</a>
+                <a href="download.html" class="btn btn-primary">İndir</a>
+            </div>
+        </div>
+    </div>
+
     <div class="auth-container">
         <div class="auth-card">
             <div class="auth-header">
@@ -235,6 +264,7 @@
         </div>
     </div>
 
+    <script src="js/main.js?v=27"></script>
     <script src="js/api.js"></script>
     <script src="js/auth.js"></script>
 </body>
