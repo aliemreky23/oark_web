@@ -10,7 +10,7 @@ class PremiumScroll {
     this.currentSectionIndex = 0;
     this.touchStartY = 0;
     this.wheelAccumulator = 0;
-    this.wheelThreshold = 100; // Increased threshold for intentionality
+    this.wheelThreshold = 80; // Slightly lower for better responsiveness
     this.scrollTimeout = null;
     this.init();
   }
@@ -53,23 +53,24 @@ class PremiumScroll {
   }
 
   handleEvents() {
-    // Bidirectional Wheel Handling
     window.addEventListener('wheel', (e) => {
       if (this.isScrolling) return;
 
-      // Accumulate delta to avoid micro-scroll triggers
       this.wheelAccumulator += e.deltaY;
 
-      clearTimeout(this.scrollTimeout);
-      this.scrollTimeout = setTimeout(() => {
-        if (Math.abs(this.wheelAccumulator) >= this.wheelThreshold) {
-          const direction = this.wheelAccumulator > 0 ? 1 : -1;
-          this.scrollToNextSection(direction);
-        }
+      // Immediate trigger when threshold reached, instead of timeout
+      if (Math.abs(this.wheelAccumulator) >= this.wheelThreshold) {
+        const direction = this.wheelAccumulator > 0 ? 1 : -1;
+        this.scrollToNextSection(direction);
         this.wheelAccumulator = 0;
-      }, 50);
+      } else {
+        // Clear accumulator if user stops scrolling for a bit
+        clearTimeout(this.scrollTimeout);
+        this.scrollTimeout = setTimeout(() => {
+          this.wheelAccumulator = 0;
+        }, 150);
+      }
 
-      // Prevent default to disable native snappy jumping and allow our slow slide
       e.preventDefault();
     }, { passive: false });
 
@@ -134,7 +135,7 @@ class PremiumScroll {
       // Respect Navbar
       offsetPosition -= 10; // Extra bit of breathing room
 
-      this.smoothScrollTo(offsetPosition, 800); // Faster duration for better responsiveness
+      this.smoothScrollTo(offsetPosition, 300); // 300ms = Snappy fast transition
       this.currentSectionIndex = nextIndex;
     }
   }
@@ -149,9 +150,8 @@ class PremiumScroll {
       const timeElapsed = currentTime - startTime;
       const progress = Math.min(timeElapsed / duration, 1);
       
-      const ease = progress < 0.5 
-        ? 8 * progress * progress * progress * progress 
-        : 1 - Math.pow(-2 * progress + 2, 4) / 2;
+      // Snappy cubic ease out
+      const ease = 1 - Math.pow(1 - progress, 3);
 
       window.scrollTo(0, startY + diff * ease);
 

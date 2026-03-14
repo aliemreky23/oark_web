@@ -53,10 +53,9 @@ html {
   font-family: 'Outfit', sans-serif;
   background-color: var(--color-bg);
   color: var(--color-text);
-  scroll-behavior: smooth;
-  scroll-snap-type: y proximity;
+  scroll-snap-type: y proximity; /* Proximity for desktop - less intrusive */
   scroll-padding-top: var(--header-height);
-  overflow-x: hidden; /* Prevent horizontal scroll */
+  overflow-x: hidden;
 }
 
 body {
@@ -86,16 +85,20 @@ section:not(.partners-section),
   justify-content: center;
   position: relative;
   /* Removal of global snap-align to prevent conflict with inner elements */
-  scroll-snap-stop: always;
+  scroll-snap-stop: normal;
 }
 
-/* Specific sections that should snap as a whole */
+/* Specific sections that should snap */
 .hero,
 .features-section,
+.showcase-row,
+#university {
+  scroll-snap-align: start;
+}
+
 .partners-section,
-#university,
 .cta-section {
-  scroll-snap-align: center;
+  scroll-snap-align: none !important;
 }
 
 .partners-section {
@@ -575,7 +578,7 @@ a {
 /* Hero Section */
 .hero {
   position: relative;
-  min-height: 70vh;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   padding: 8rem 0 4rem;
@@ -732,22 +735,30 @@ a {
 
 /* Features Grid */
 .features-section {
-  padding: 6rem 0;
+  padding: 3rem 0;
   position: relative;
   background: linear-gradient(180deg, #f0e6ff 0%, #f8f4ff 50%, #f5f0ff 100%);
-  min-height: 100vh;
+  min-height: auto;
   scroll-snap-align: start;
 }
 
 .section-head {
   text-align: center;
-  margin-bottom: 4rem;
+  margin-bottom: 2.5rem;
 }
 
 .grid-3 {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(clamp(280px, 30vw, 320px), 1fr));
   gap: clamp(1.5rem, 3vw, 2rem);
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(1.5rem, 3vw, 2rem);
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
 .feature-icon {
@@ -777,10 +788,10 @@ a {
   align-items: center;
   gap: clamp(2rem, 5vw, 4rem);
   margin-bottom: 0; /* Removing large margins that cause gaps */
-  padding: 10vh 0; /* Using padding for centering space */
-  min-height: 90vh; /* Row takes most of viewport */
-  scroll-snap-align: center;
-  scroll-snap-stop: always;
+  padding: 5vh 0; /* Using padding for centering space */
+  min-height: 100vh; /* Row takes most of viewport */
+  scroll-snap-align: start;
+  scroll-snap-stop: normal;
 }
 
 .showcase-row.reverse {
@@ -887,7 +898,7 @@ footer {
   border-top: 1px solid var(--card-border);
   padding: 4rem 0 2rem;
   background: var(--color-bg-alt);
-  scroll-snap-align: none;
+  scroll-snap-align: start;
 }
 
 .footer-content {
@@ -1128,7 +1139,8 @@ footer {
     min-width: 100px;
   }
 
-  .grid-3 {
+  .grid-3,
+  .features-grid {
     grid-template-columns: 1fr 1fr;
     gap: 0.75rem;
   }
@@ -1179,52 +1191,60 @@ footer {
     font-size: 0.85rem;
   }
 
-  .showcase-row {
-    flex-direction: row !important;
-    text-align: left;
-    gap: 0.8rem;
-    padding: 2rem 0;
+  html {
+    scroll-snap-type: y mandatory !important; /* Mandatory for mobile - precise fitting */
+  }
+
+  .showcase-row,
+  .showcase-row.reverse {
+    flex-direction: column-reverse !important; /* Forces [Visual, Text] order regardless of class */
+    text-align: center;
+    gap: 1.5rem;
+    padding: 3rem 1.5rem;
     min-height: 100vh;
-    display: flex;
+    display: flex !important;
     align-items: center;
-    justify-content: space-between;
-    scroll-snap-align: center;
+    justify-content: center;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
   }
 
   .showcase-text {
-    flex: 1.4;
-    width: auto;
+    flex: 0 0 auto;
+    width: 100%;
+    margin-top: 1rem;
     margin-bottom: 0;
   }
 
   .showcase-text h2 {
-    font-size: clamp(1.1rem, 3.5vw, 1.6rem);
+    font-size: clamp(1.2rem, 4vw, 1.8rem);
     margin-bottom: 0.5rem;
   }
 
   .showcase-text p {
-    font-size: 0.75rem;
-    line-height: 1.3;
-    margin-bottom: 0.8rem;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    margin-bottom: 1rem;
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .showcase-visual {
-    flex: 1;
-    width: auto;
-    max-width: 140px; /* Even smaller for side-by-side */
-    margin: 0;
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: 280px;
+    min-height: 350px; /* Ensure space for slider on mobile */
+    margin: 0 auto;
     display: flex !important;
     justify-content: center;
+    align-items: center;
   }
 
   .showcase-visual img {
     height: auto;
-    max-height: 50vh;
+    max-height: 48vh;
     object-fit: contain;
-  }
-
-  .showcase-row.reverse {
-    flex-direction: row-reverse !important;
   }
 
   .footer-content {
@@ -1450,7 +1470,10 @@ footer {
 }
 
 #university {
-  scroll-snap-align: none; /* Changed from center to prevent scroll issues */
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  scroll-snap-align: start;
 }
 
 .code-box {
