@@ -16,18 +16,19 @@
         /* Light Lavender Theme - Register Styles */
         body {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
             min-height: 100vh;
-            overflow: hidden;
             background: linear-gradient(135deg, #f5f0ff 0%, #e8dcff 30%, #ddd0ff 70%, #f0e6ff 100%);
         }
 
         .auth-container {
             width: 100%;
+            flex: 1;
             display: flex;
+            align-items: center;
             justify-content: center;
-            padding: 1rem;
+            padding: 120px 1rem 4rem;
             position: relative;
             z-index: 10;
         }
@@ -191,6 +192,7 @@
             </a>
 
             <div class="nav-links">
+                <a href="index.html#hero">Ana Sayfa</a>
                 <a href="index.html#features">Özellikler</a>
                 <a href="index.html#showcase-row-1">Keşfet</a>
                 <a href="index.html#university">Kampüs</a>
@@ -218,6 +220,7 @@
     <div class="mobile-menu-overlay" id="mobile-menu-overlay">
         <div class="mobile-menu-content">
             <div class="mobile-menu-links">
+                <a href="index.html#hero" class="mobile-link">Ana Sayfa</a>
                 <a href="index.html#features" class="mobile-link">Özellikler</a>
                 <a href="index.html#showcase-row-1" class="mobile-link">Keşfet</a>
                 <a href="index.html#university" class="mobile-link">Kampüs</a>
@@ -281,11 +284,13 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-col">
-                    <a href="index.html" class="logo" style="margin-bottom: 1rem; display:block;">
-                        <img src="assets/logo-new.png" alt="OARK">
+                    <a href="index.html" class="footer-logo">
+                        <img src="assets/logo-white.png" alt="OARK">
                     </a>
                     <p style="font-size: 0.9rem;">
-                        Oyun arkadaşı bulmanın en kolay ve güvenli yolu.
+                        Oyun arkadaşı bulmanın en kolay ve güvenli yolu. <br>
+                        Tüm oyuncular ve üniversite öğrencileri için oluşturulmuş, <br>
+                        güvenli sosyal ağ platformu.
                     </p>
                 </div>
 
@@ -306,7 +311,7 @@
                         <li><a href="privacy.html">Gizlilik Politikası</a></li>
                         <li><a href="sartlar.html">Kullanım Koşulları</a></li>
                         <li><a href="acik-riza.html">Açık Rıza Metni</a></li>
-                        <li><a href="hakkinda.html">Hakkında</a></li>
+                        <li><a href="delete-account.html">Hesap Silme</a></li>
                     </ul>
                 </div>
 
@@ -315,6 +320,7 @@
                     <ul>
                         <li><a href="mailto:destek.oark@gmail.com">Destek</a></li>
                         <li><a href="https://www.instagram.com/oark.official/" target="_blank">Instagram</a></li>
+                        <li><a href="#">Discord</a></li>
                     </ul>
                 </div>
             </div>
@@ -325,7 +331,7 @@
         </div>
     </footer>
 
-    <script src="js/main.js?v=27"></script>
+    <script src="js/main.js?v=28"></script>
     <script src="js/api.js"></script>
     <script src="js/auth.js"></script>
 </body>

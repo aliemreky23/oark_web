@@ -53,8 +53,6 @@ html {
   font-family: 'Outfit', sans-serif;
   background-color: var(--color-bg);
   color: var(--color-text);
-  scroll-snap-type: y proximity; /* Proximity for desktop - less intrusive */
-  scroll-padding-top: var(--header-height);
   overflow-x: hidden;
 }
 
@@ -84,27 +82,11 @@ section:not(.partners-section),
   flex-direction: column;
   justify-content: center;
   position: relative;
-  /* Removal of global snap-align to prevent conflict with inner elements */
-  scroll-snap-stop: normal;
-}
-
-/* Specific sections that should snap */
-.hero,
-.features-section,
-.showcase-row,
-#university {
-  scroll-snap-align: start;
-}
-
-.partners-section,
-.cta-section {
-  scroll-snap-align: none !important;
 }
 
 .partners-section {
   min-height: auto;
   padding: 4rem 0;
-  scroll-snap-align: none;
 }
 
 /* Glass Card - Clean Style */
@@ -584,6 +566,7 @@ a {
   padding: 8rem 0 4rem;
   background: linear-gradient(135deg, #f5f0ff 0%, #e8dcff 30%, #ddd0ff 70%, #f0e6ff 100%);
   overflow: hidden;
+  scroll-margin-top: 92px;
 }
 
 .hero::before {
@@ -739,7 +722,7 @@ a {
   position: relative;
   background: linear-gradient(180deg, #f0e6ff 0%, #f8f4ff 50%, #f5f0ff 100%);
   min-height: auto;
-  scroll-snap-align: start;
+  scroll-margin-top: 92px;
 }
 
 .section-head {
@@ -780,18 +763,16 @@ a {
   padding: 2rem 0; /* Reduced padding to let rows breathe */
   background: var(--color-bg);
   min-height: auto; /* Let content define height */
-  scroll-snap-align: none;
 }
 
 .showcase-row {
   display: flex;
   align-items: center;
-  gap: clamp(2rem, 5vw, 4rem);
+  gap: clamp(1rem, 3vw, 2rem);
   margin-bottom: 0; /* Removing large margins that cause gaps */
   padding: 5vh 0; /* Using padding for centering space */
   min-height: 100vh; /* Row takes most of viewport */
-  scroll-snap-align: start;
-  scroll-snap-stop: normal;
+  scroll-margin-top: 92px;
 }
 
 .showcase-row.reverse {
@@ -898,7 +879,6 @@ footer {
   border-top: 1px solid var(--card-border);
   padding: 4rem 0 2rem;
   background: var(--color-bg-alt);
-  scroll-snap-align: start;
 }
 
 .footer-content {
@@ -907,6 +887,19 @@ footer {
   gap: 3rem;
   margin-bottom: 3rem;
 }
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  text-decoration: none;
+}
+
+.footer-logo img {
+  height: 50px;
+  width: auto;
+}
+
 
 .footer-col h4 {
   color: var(--color-text);
@@ -1191,28 +1184,23 @@ footer {
     font-size: 0.85rem;
   }
 
-  html {
-    scroll-snap-type: y mandatory !important; /* Mandatory for mobile - precise fitting */
-  }
 
   .showcase-row,
   .showcase-row.reverse {
     flex-direction: column-reverse !important; /* Forces [Visual, Text] order regardless of class */
     text-align: center;
-    gap: 1.5rem;
+    gap: 0.5rem;
     padding: 3rem 1.5rem;
     min-height: 100vh;
     display: flex !important;
     align-items: center;
     justify-content: center;
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
   }
 
   .showcase-text {
     flex: 0 0 auto;
     width: 100%;
-    margin-top: 1rem;
+    margin-top: 0.5rem;
     margin-bottom: 0;
   }
 
@@ -1258,6 +1246,9 @@ footer {
   }
 
   .nav-actions {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
     gap: 0.5rem;
     align-items: center;
@@ -1318,11 +1309,14 @@ footer {
     grid-template-columns: 1fr;
     text-align: center;
   }
+
+  .footer-logo {
+    justify-content: center;
+  }
 }
 
 /* Bottom Snap Wrapper */
 .bottom-snap-section {
-  scroll-snap-align: start;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -1336,7 +1330,6 @@ footer {
   position: relative;
   overflow: hidden;
   min-height: auto !important;
-  scroll-snap-align: none !important;
   flex: 1;
 }
 
@@ -1473,7 +1466,7 @@ footer {
   min-height: 100vh;
   display: flex;
   align-items: center;
-  scroll-snap-align: start;
+  scroll-margin-top: 92px;
 }
 
 .code-box {

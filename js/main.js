@@ -77,25 +77,50 @@ function initMobileMenu() {
   });
 }
 
+// ========== Scroll Configuration ==========
+// Bu değerleri değiştirerek navbarda tıklandığında ekranın duracağı yeri ayarlayabilirsiniz.
+// Navbar yüksekliği (headerOffset) varsayılan olarak 92px'dir.
+const SECTION_OFFSETS = {
+  '#features': 10,      // Özellikler bölümü için offset
+  '#showcase-row-1': 33, // Keşfet bölümü için offset
+  '#university': 40,     // Kampüs bölümü için offset
+  'default': 50          // Diğer tüm bölümler için varsayılan offset
+};
+
 // ========== Smooth Scroll ==========
 function initSmoothScroll() {
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  // Hem site içi (#hash) hem de sayfalar arası (index.html#hash) linkleri yakalar
+  document.querySelectorAll('a[href*="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
       const href = this.getAttribute('href');
+
+      // Sadece # olanlara dokunma
       if (href === '#' || href === '') return;
 
-      e.preventDefault();
-      const target = document.querySelector(href);
+      // Eğer link mevcut sayfada bir yere gidiyorsa veya ana sayfadaki bir bölüme işaret ediyorsa
+      const isInternal = href.startsWith('#');
+      const isHomeHash = href.includes('index.html#');
+      const currentPath = window.location.pathname;
+      const isOnHomePage = currentPath === '/' || currentPath.endsWith('index.html');
 
-      if (target) {
-        const headerOffset = 92;
-        const elementPosition = target.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+      if (isInternal || (isHomeHash && isOnHomePage)) {
+        const targetId = isInternal ? href : '#' + href.split('#')[1];
+        const target = document.querySelector(targetId);
 
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: 'smooth'
-        });
+        if (target) {
+          e.preventDefault();
+
+          // Bölüme özel offset değerini al, yoksa varsayılanı kullan
+          const headerOffset = SECTION_OFFSETS[targetId] || SECTION_OFFSETS['default'];
+
+          const elementPosition = target.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
       }
     });
   });

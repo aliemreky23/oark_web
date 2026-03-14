@@ -36,6 +36,7 @@
         .app-icon-large {
             width: 120px;
             height: 120px;
+            margin-top: 80px;
             margin-bottom: 2rem;
             animation: float 6s ease-in-out infinite;
         }
@@ -147,6 +148,40 @@
             transform: scale(1.05);
         }
 
+        .success-message {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            animation: fadeInScale 0.5s ease-out;
+        }
+
+        .success-icon-box {
+            width: 60px;
+            height: 60px;
+            background: #eaffee;
+            color: #10b981;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+        }
+
+        @keyframes fadeInScale {
+            0% {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
         .back-home {
             position: absolute;
             top: 2rem;
@@ -198,14 +233,15 @@
                 <img src="assets/logo-new.png" alt="OARK">
             </a>
 
-      <div class="nav-links">
-        <a href="index.html#features">Özellikler</a>
-        <a href="index.html#showcase">Keşfet</a>
-        <a href="index.html#university">Kampüs</a>
-        <a href="privacy.html">Gizlilik</a>
-        <a href="sartlar.html">Sözleşme</a>
-        <a href="hakkinda.html">Hakkında</a>
-      </div>
+            <div class="nav-links">
+                <a href="index.html#hero">Ana Sayfa</a>
+                <a href="index.html#features">Özellikler</a>
+                <a href="index.html#showcase-row-1">Keşfet</a>
+                <a href="index.html#university">Kampüs</a>
+                <a href="privacy.html">Gizlilik</a>
+                <a href="sartlar.html">Sözleşme</a>
+                <a href="hakkinda.html">Hakkında</a>
+            </div>
 
             <button class="hamburger" id="hamburger-menu" aria-label="Menü">
                 <span></span>
@@ -219,12 +255,13 @@
     <div class="mobile-menu-overlay" id="mobile-menu-overlay">
         <div class="mobile-menu-content">
             <div class="mobile-menu-links">
+                <a href="index.html#hero" class="mobile-link">Ana Sayfa</a>
                 <a href="index.html#features" class="mobile-link">Özellikler</a>
-        <a href="index.html#showcase" class="mobile-link">Keşfet</a>
-        <a href="index.html#university" class="mobile-link">Kampüs</a>
-        <a href="privacy.html" class="mobile-link">Gizlilik</a>
-        <a href="sartlar.html" class="mobile-link">Sözleşme</a>
-        <a href="hakkinda.html" class="mobile-link">Hakkında</a>
+                <a href="index.html#showcase-row-1" class="mobile-link">Keşfet</a>
+                <a href="index.html#university" class="mobile-link">Kampüs</a>
+                <a href="privacy.html" class="mobile-link">Gizlilik</a>
+                <a href="sartlar.html" class="mobile-link">Sözleşme</a>
+                <a href="hakkinda.html" class="mobile-link">Hakkında</a>
             </div>
             <div class="mobile-menu-actions">
                 <a href="login.html" class="btn btn-secondary auth-login-btn">Giriş Yap</a>
@@ -256,18 +293,59 @@
             </div>
         </div>
 
-        <div class="notify-box">
-            <h3 style="margin-bottom: 0.5rem;"><i class="fas fa-bell"></i> Haberdar Ol</h3>
-            <p style="font-size: 0.9rem; color: #5a4d6e;">Yayınlandığı an sana haber verelim.</p>
+        <div class="notify-box" id="newsletter-box">
+            <div id="newsletter-form-container">
+                <h3 style="margin-bottom: 0.5rem;"><i class="fas fa-bell"></i> Haberdar Ol</h3>
+                <p style="font-size: 0.9rem; color: #5a4d6e;">Yayınlandığı an sana haber verelim.</p>
 
-            <form class="notify-input-group"
-                onsubmit="event.preventDefault(); alert('Teşekkürler! Listeye eklendin.');">
-                <input type="email" placeholder="E-posta adresin" class="notify-input" required>
-                <button type="submit" class="btn-notify">Kaydet</button>
-            </form>
+                <form class="notify-input-group" onsubmit="handleNewsletterSubscription(event)">
+                    <input type="email" placeholder="E-posta adresin" class="notify-input" id="newsletter-email"
+                        required>
+                    <button type="submit" class="btn-notify">Kaydet</button>
+                </form>
+            </div>
+
+            <div id="newsletter-success" class="success-message">
+                <div class="success-icon-box">
+                    <i class="fas fa-check"></i>
+                </div>
+                <h3 style="color: #2d2640;">Teşekkürler!</h3>
+                <p style="font-size: 0.95rem; color: #5a4d6e; line-height: 1.5;">
+                    Listenin en başındasın. Uygulama yayınlandığında sana <br>
+                    özel bir bildirim ve güncel haberleri göndereceğiz.
+                </p>
+            </div>
         </div>
     </div>
-    <script src="js/main.js?v=27"></script>
+    <script src="js/main.js?v=28"></script>
+    <script>
+        function handleNewsletterSubscription(event) {
+            event.preventDefault();
+            const email = document.getElementById('newsletter-email').value;
+
+            // Here you would typically call your API
+            console.log('Newsletter subscription for:', email);
+
+            // Switch UI
+            document.getElementById('newsletter-form-container').style.display = 'none';
+            document.getElementById('newsletter-success').style.display = 'flex';
+
+            // Store subscription state locally to prevent re-entry
+            localStorage.setItem('oark_newsletter_subscribed', 'true');
+        }
+
+        // Check if already subscribed on load
+        document.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('oark_newsletter_subscribed') === 'true') {
+                const formContainer = document.getElementById('newsletter-form-container');
+                const successContainer = document.getElementById('newsletter-success');
+                if (formContainer && successContainer) {
+                    formContainer.style.display = 'none';
+                    successContainer.style.display = 'flex';
+                }
+            }
+        });
+    </script>
 </body>
 
 </html>
