@@ -2,14 +2,17 @@
 // OARK - Main JavaScript (Cleaned v19)
 // ========================================
 
-console.log('Main.js v19 loaded cleanly');
 
 document.addEventListener('DOMContentLoaded', () => {
   initNavbar();
   initMobileMenu();
+  initDropdown();
   initSmoothScroll();
   initScrollReveal();
   initStatsCounter();
+  
+  // Handle hash on initial load
+  handleInitialHash();
 });
 
 // ========== Navbar Scroll Effect ==========
@@ -32,7 +35,6 @@ function initMobileMenu() {
   const overlay = document.getElementById('mobile-menu-overlay');
   const mobileLinks = document.querySelectorAll('.mobile-link');
 
-  console.log('initMobileMenu called');
 
   if (!hamburger || !overlay) {
     console.error('Mobile menu elements not found in DOM');
@@ -40,7 +42,6 @@ function initMobileMenu() {
   }
 
   function toggleMenu() {
-    console.log('Toggling mobile menu active state');
     hamburger.classList.toggle('active');
     overlay.classList.toggle('active');
     document.body.classList.toggle('no-scroll');
@@ -54,8 +55,10 @@ function initMobileMenu() {
 
   // Close menu when clicking on a link
   mobileLinks.forEach(link => {
-    link.addEventListener('click', () => {
-      console.log('Mobile link clicked');
+    link.addEventListener('click', (e) => {
+      // Don't close menu if it's the accordion toggle
+      if (link.classList.contains('accordion-toggle')) return;
+      
       hamburger.classList.remove('active');
       overlay.classList.remove('active');
       document.body.classList.remove('no-scroll');
@@ -75,6 +78,40 @@ function initMobileMenu() {
       toggleMenu();
     }
   });
+
+  // Mobile Accordion Logic
+  const accordionToggle = document.querySelector('.accordion-toggle');
+  const mobileAccordion = document.querySelector('.mobile-accordion');
+  if (accordionToggle && mobileAccordion) {
+    accordionToggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      mobileAccordion.classList.toggle('active');
+    });
+  }
+}
+
+// ========== Dropdown Logic (Desktop) ==========
+function initDropdown() {
+  const dropdown = document.querySelector('.nav-item.dropdown');
+  const toggle = document.querySelector('.dropdown-toggle');
+  
+  if (!dropdown || !toggle) return;
+
+  // Toggle on click for desktop (in addition to hover via CSS)
+  toggle.addEventListener('click', (e) => {
+    if (window.innerWidth > 991) {
+      e.preventDefault();
+      e.stopPropagation();
+      dropdown.classList.toggle('active');
+    }
+  });
+
+  // Close when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!dropdown.contains(e.target)) {
+      dropdown.classList.remove('active');
+    }
+  });
 }
 
 // ========== Scroll Configuration ==========
@@ -89,40 +126,49 @@ const SECTION_OFFSETS = {
 
 // ========== Smooth Scroll ==========
 function initSmoothScroll() {
-  // Hem site içi (#hash) hem de sayfalar arası (index.html#hash) linkleri yakalar
   document.querySelectorAll('a[href*="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
       const href = this.getAttribute('href');
-
-      // Sadece # olanlara dokunma
       if (href === '#' || href === '') return;
 
-      // Eğer link mevcut sayfada bir yere gidiyorsa veya ana sayfadaki bir bölüme işaret ediyorsa
-      const isInternal = href.startsWith('#');
-      const isHomeHash = href.includes('index.html#');
-      const currentPath = window.location.pathname;
-      const isOnHomePage = currentPath === '/' || currentPath.endsWith('index.html');
+      const url = new URL(href, window.location.origin);
+      const isInternal = url.pathname === window.location.pathname || url.pathname === '/' + window.location.pathname.split('/').pop();
+      const hasHash = url.hash !== '';
 
-      if (isInternal || (isHomeHash && isOnHomePage)) {
-        const targetId = isInternal ? href : '#' + href.split('#')[1];
+      if (isInternal && hasHash) {
+        const targetId = url.hash;
         const target = document.querySelector(targetId);
 
         if (target) {
           e.preventDefault();
-
-          // Bölüme özel offset değerini al, yoksa varsayılanı kullan
-          const headerOffset = SECTION_OFFSETS[targetId] || SECTION_OFFSETS['default'];
-
-          const elementPosition = target.getBoundingClientRect().top;
-          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: 'smooth'
-          });
+          scrollToTarget(target, targetId);
         }
       }
     });
+  });
+}
+
+function handleInitialHash() {
+  if (window.location.hash) {
+    const targetId = window.location.hash;
+    const target = document.querySelector(targetId);
+    if (target) {
+      // Small delay to ensure all layouts/images are ready
+      setTimeout(() => {
+        scrollToTarget(target, targetId);
+      }, 300);
+    }
+  }
+}
+
+function scrollToTarget(target, targetId) {
+  const headerOffset = SECTION_OFFSETS[targetId] || SECTION_OFFSETS['default'];
+  const elementPosition = target.getBoundingClientRect().top;
+  const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+  window.scrollTo({
+    top: offsetPosition,
+    behavior: 'smooth'
   });
 }
 
@@ -184,8 +230,8 @@ function initScrollReveal() {
 
 class DeleteAccountForm {
   constructor() {
-    this.SUPABASE_URL = 'https://hxwlwnlfnnsflbkkbbea.supabase.co';
-    this.SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh4d2x3bmxmbm5zZmxia2tiYmVhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI2ODg0NTgsImV4cCI6MjA3ODI2NDQ1OH0.h2HbS9OIQLgh7M0DpwtUfKhgAMYXryv9H9tjK4brzaI';
+    this.SUPABASE_URL = window.CONFIG?.SUPABASE_URL;
+    this.SUPABASE_ANON_KEY = window.CONFIG?.SUPABASE_ANON_KEY;
     this.currentStep = 1;
     this.email = '';
     this.verificationCode = '';

@@ -27,58 +27,101 @@
     <nav class="navbar">
         <div class="container nav-container">
             <a href="index.html" class="logo">
-                <img src="assets/logo-new.png" alt="OARK" >
+                <img src="assets/logo-new.png" alt="OARK">
             </a>
 
-      <div class="nav-links">
-        <a href="index.html#hero">Ana Sayfa</a>
-        <a href="index.html#features">Özellikler</a>
-        <a href="index.html#showcase-row-1">Keşfet</a>
-        <a href="index.html#university">Kampüs</a>
-        <a href="privacy.html">Gizlilik</a>
-        <a href="sartlar.html">Sözleşme</a>
-        <a href="hakkinda.html">Hakkında</a>
-      </div>
+            <div class="nav-links">
+                <a href="index.html#hero">Ana Sayfa</a>
+                <a href="index.html#features">Özellikler</a>
+                <a href="index.html#showcase-row-1">Keşfet</a>
+                <a href="index.html#university">Kampüs</a>
+                <div class="nav-item dropdown">
+                    <a href="#" class="dropdown-toggle">Politikalar <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="privacy.html" class="dropdown-item"><i class="fas fa-user-shield"></i> Gizlilik
+                            Politikası</a>
+                        <a href="privacy.html#kvkk" class="dropdown-item"><i class="fas fa-shield-halved"></i> KVKK Politikası</a>
+                        <a href="sartlar.html" class="dropdown-item"><i class="fas fa-file-contract"></i> Kullanım
+                            Koşulları</a>
+                        <a href="acik-riza.html" class="dropdown-item"><i class="fas fa-check-double"></i> Açık Rıza
+                            Metni</a>
+                        <a href="kampus-sozlesmesi.html" class="dropdown-item"><i class="fas fa-university"></i> Kampüs Sözleşmesi</a>
+                        <a href="kampus-acik-riza.html" class="dropdown-item"><i class="fas fa-file-signature"></i> Kampüs Açık Rıza</a>
+                    </div>
+                </div>
+                <a href="hakkinda.html">Hakkında</a>
+            </div>
 
-      <button class="hamburger" id="hamburger-menu" aria-label="Menü">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-    </div>
-  </nav>
 
-  <!-- Mobile Menu Overlay -->
-  <div class="mobile-menu-overlay" id="mobile-menu-overlay">
-    <div class="mobile-menu-content">
-      <div class="mobile-menu-links">
-        <a href="index.html#hero" class="mobile-link">Ana Sayfa</a>
-        <a href="index.html#features" class="mobile-link">Özellikler</a>
-        <a href="index.html#showcase-row-1" class="mobile-link">Keşfet</a>
-        <a href="index.html#university" class="mobile-link">Kampüs</a>
-        <a href="privacy.html" class="mobile-link">Gizlilik</a>
-        <a href="sartlar.html" class="mobile-link">Sözleşme</a>
-        <a href="hakkinda.html" class="mobile-link">Hakkında</a>
-      </div>
-      <div class="mobile-menu-actions">
-        <a href="login.html" class="btn btn-secondary auth-login-btn">Giriş Yap</a>
-        <a href="download.html" class="btn btn-primary">İndir</a>
-      </div>
+            <div class="nav-actions">
+                <!-- Auth Buttons -->
+                <a href="login.html" class="btn btn-secondary auth-login-btn">Giriş Yap</a>
+
+                <!-- User Profile Widget (Logged In) -->
+                <a href="profile.html" class="nav-user-profile" style="display: none;">
+                    <div class="nav-user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <span class="nav-user-name">Yükleniyor...</span>
+                </a>
+
+                <a href="download.html" class="btn btn-primary">
+                    İndir <i class="fas fa-download" style="font-size: 0.8em;"></i>
+                </a>
+            </div>
+        </div>
+
+        <button class="hamburger" id="hamburger-menu" aria-label="Menü">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobile-menu-overlay">
+        <div class="mobile-menu-content">
+            <div class="mobile-menu-links">
+                <a href="index.html#hero" class="mobile-link">Ana Sayfa</a>
+                <a href="index.html#features" class="mobile-link">Özellikler</a>
+                <a href="index.html#showcase-row-1" class="mobile-link">Keşfet</a>
+                <a href="index.html#university" class="mobile-link">Kampüs</a>
+
+                <div class="mobile-accordion">
+                    <a href="#" class="mobile-link accordion-toggle">Politikalar <i class="fas fa-chevron-down"></i></a>
+                    <div class="accordion-content">
+                        <a href="privacy.html" class="mobile-link accordion-link">Gizlilik</a>
+            <a href="privacy.html#kvkk" class="mobile-link accordion-link">KVKK</a>
+            <a href="sartlar.html" class="mobile-link accordion-link">Sözleşme</a>
+            <a href="acik-riza.html" class="mobile-link accordion-link">Açık Rıza</a>
+            <a href="kampus-sozlesmesi.html" class="mobile-link accordion-link">Kampüs Sözleşme</a>
+            <a href="kampus-acik-riza.html" class="mobile-link accordion-link">Kampüs Açık Rıza</a>
+                    </div>
+                </div>
+
+                <a href="hakkinda.html" class="mobile-link">Hakkında</a>
+            </div>
+            <div class="mobile-menu-actions">
+                <a href="login.html" class="btn btn-secondary auth-login-btn">Giriş Yap</a>
+                <a href="download.html" class="btn btn-primary">İndir</a>
+            </div>
+        </div>
     </div>
-  </div>
 
     <!-- Delete Account Content -->
     <main class="delete-account-page">
         <div class="container delete-container">
             <div class="premium-delete-card" id="deleteAccountForm">
-                
+
                 <!-- Card Header -->
                 <div class="delete-header">
                     <div class="delete-icon-bg">
                         <i class="fas fa-shield-alt"></i>
                     </div>
                     <h1>Hesap Yönetimi</h1>
-                    <p>O ARK platformu üzerindeki üyeliğinizi sonlandırmak için güvenli doğrulama sürecini tamamlayın.</p>
+                    <p>O ARK platformu üzerindeki üyeliğinizi sonlandırmak için güvenli doğrulama sürecini tamamlayın.
+                    </p>
                 </div>
 
                 <!-- Step Indicators (Simplified) -->
@@ -91,7 +134,7 @@
 
                 <!-- Form Content Wrapper -->
                 <div class="delete-form-content">
-                    
+
                     <!-- Step 1: Email -->
                     <div class="form-step active" id="step1">
                         <div class="danger-zone-box">
@@ -113,7 +156,8 @@
                                 <label for="email">Kayıtlı E-posta Adresiniz</label>
                                 <div class="input-wrapper">
                                     <i class="fas fa-at"></i>
-                                    <input type="email" id="email" name="email" placeholder="ornek@email.com" required autocomplete="email">
+                                    <input type="email" id="email" name="email" placeholder="ornek@email.com" required
+                                        autocomplete="email">
                                 </div>
                             </div>
 
@@ -130,14 +174,16 @@
                     <div class="form-step" id="step2" style="display:none;">
                         <div class="info-notice">
                             <i class="fas fa-paper-plane"></i>
-                            <p>E-posta adresinize 6 haneli bir doğrulama kodu gönderdik. Lütfen kutunuzu (ve spam klasörünü) kontrol edin.</p>
+                            <p>E-posta adresinize 6 haneli bir doğrulama kodu gönderdik. Lütfen kutunuzu (ve spam
+                                klasörünü) kontrol edin.</p>
                         </div>
 
                         <form id="verifyForm">
                             <div class="input-field">
                                 <label for="verificationCode">Doğrulama Kodu</label>
                                 <div class="input-wrapper code-input">
-                                    <input type="text" id="verificationCode" name="verificationCode" placeholder="000 000" maxlength="8" required autocomplete="one-time-code">
+                                    <input type="text" id="verificationCode" name="verificationCode"
+                                        placeholder="000 000" maxlength="8" required autocomplete="one-time-code">
                                 </div>
                             </div>
 
@@ -157,7 +203,8 @@
                                 <i class="fas fa-user-minus"></i>
                             </div>
                             <h3>Son Kararınız mı?</h3>
-                            <p>Tüm oyun geçmişiniz, arkadaş listeniz ve profil verileriniz sistemden tamamen temizlenecektir.</p>
+                            <p>Tüm oyun geçmişiniz, arkadaş listeniz ve profil verileriniz sistemden tamamen
+                                temizlenecektir.</p>
                         </div>
 
                         <div class="form-actions vertical">
@@ -175,7 +222,8 @@
                                 <i class="fas fa-check-circle"></i>
                             </div>
                             <h3>İşlem Başarılı</h3>
-                            <p>Hesabınız silinme sırasına alındı. 30 gün içerisinde tüm verileriniz kalıcı olarak kaldırılacaktır.</p>
+                            <p>Hesabınız silinme sırasına alındı. 30 gün içerisinde tüm verileriniz kalıcı olarak
+                                kaldırılacaktır.</p>
                             <a href="index.html" class="btn-home">Ana Sayfaya Dön</a>
                         </div>
                     </div>
@@ -183,7 +231,8 @@
             </div>
 
             <div class="support-footer">
-                <i class="fas fa-headset"></i> Sorun mu yaşıyorsunuz? <a href="mailto:destek.oark@gmail.com">Müşteri Hizmetleri</a>
+                <i class="fas fa-headset"></i> Sorun mu yaşıyorsunuz? <a href="mailto:destek.oark@gmail.com">Müşteri
+                    Hizmetleri</a>
             </div>
         </div>
     </main>
@@ -208,7 +257,7 @@
                     <ul>
                         <li><a href="index.html#hero">Ana Sayfa</a></li>
                         <li><a href="index.html#features">Özellikler</a></li>
-                        <li><a href="index.html#showcase">Ekranlar</a></li>
+                        <li><a href="index.html#showcase-row-1">Keşfet</a></li>
                         <li><a href="hakkinda.html">Hakkında</a></li>
                         <li><a href="download.html">İndir</a></li>
                     </ul>
@@ -218,8 +267,11 @@
                     <h4>Yasal</h4>
                     <ul>
                         <li><a href="privacy.html">Gizlilik Politikası</a></li>
+                        <li><a href="privacy.html#kvkk">KVKK Politikası</a></li>
                         <li><a href="sartlar.html">Kullanım Koşulları</a></li>
                         <li><a href="acik-riza.html">Açık Rıza Metni</a></li>
+                        <li><a href="kampus-sozlesmesi.html">Kampüs Sözleşmesi</a></li>
+                        <li><a href="kampus-acik-riza.html">Kampüs Açık Rıza</a></li>
                         <li><a href="delete-account.html">Hesap Silme</a></li>
                     </ul>
                 </div>
@@ -229,7 +281,7 @@
                     <ul>
                         <li><a href="mailto:destek.oark@gmail.com">Destek</a></li>
                         <li><a href="https://www.instagram.com/oark.official/" target="_blank">Instagram</a></li>
-                        <li><a href="#">Discord</a></li>
+
                     </ul>
                 </div>
             </div>
@@ -243,12 +295,14 @@
     <!-- Scripts -->
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <script src="js/api.js"></script>
+    <script src="js/config.js"></script>
     <script src="js/auth.js"></script>
+
     <script src="js/main.js?v=28"></script>
     <style>
         :root {
             --delete-bg: #0c0816;
-            --card-shadow-3d: 0 20px 50px rgba(0,0,0,0.5);
+            --card-shadow-3d: 0 20px 50px rgba(0, 0, 0, 0.5);
             --danger: #ff4d4d;
             --danger-glow: rgba(255, 77, 77, 0.3);
             --success: #00e676;
@@ -609,8 +663,15 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* Mobile Adjustments */
@@ -618,9 +679,11 @@
             .premium-delete-card {
                 padding: 2rem 1.5rem;
             }
+
             .delete-header h1 {
                 font-size: 1.5rem;
             }
+
             .btn-continue {
                 padding: 0.8rem 1.25rem;
                 font-size: 0.85rem;

@@ -15,6 +15,8 @@
     <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="assets/logo.png">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
@@ -26,42 +28,83 @@
                 <img src="assets/logo-new.png" alt="OARK">
             </a>
 
-      <div class="nav-links">
-        <a href="index.html#hero">Ana Sayfa</a>
-        <a href="index.html#features">Özellikler</a>
-        <a href="index.html#showcase-row-1">Keşfet</a>
-        <a href="index.html#university">Kampüs</a>
-        <a href="privacy.html">Gizlilik</a>
-        <a href="sartlar.html">Sözleşme</a>
-        <a href="hakkinda.html">Hakkında</a>
-      </div>
+            <div class="nav-links">
+                <a href="index.html#hero">Ana Sayfa</a>
+                <a href="index.html#features">Özellikler</a>
+                <a href="index.html#showcase-row-1">Keşfet</a>
+                <a href="index.html#university">Kampüs</a>
+                <div class="nav-item dropdown">
+                    <a href="#" class="dropdown-toggle">Politikalar <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="privacy.html" class="dropdown-item"><i class="fas fa-user-shield"></i> Gizlilik
+                            Politikası</a>
+                        <a href="privacy.html#kvkk" class="dropdown-item"><i class="fas fa-shield-halved"></i> KVKK Politikası</a>
+                        <a href="sartlar.html" class="dropdown-item"><i class="fas fa-file-contract"></i> Kullanım
+                            Koşulları</a>
+                        <a href="acik-riza.html" class="dropdown-item"><i class="fas fa-check-double"></i> Açık Rıza
+                            Metni</a>
+                        <a href="kampus-sozlesmesi.html" class="dropdown-item"><i class="fas fa-university"></i> Kampüs Sözleşmesi</a>
+                        <a href="kampus-acik-riza.html" class="dropdown-item"><i class="fas fa-file-signature"></i> Kampüs Açık Rıza</a>
+                    </div>
+                </div>
+                <a href="hakkinda.html">Hakkında</a>
+            </div>
 
-      <button class="hamburger" id="hamburger-menu" aria-label="Menü">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-    </div>
-  </nav>
 
-  <!-- Mobile Menu Overlay -->
-  <div class="mobile-menu-overlay" id="mobile-menu-overlay">
-    <div class="mobile-menu-content">
-      <div class="mobile-menu-links">
-        <a href="index.html#hero" class="mobile-link">Ana Sayfa</a>
-        <a href="index.html#features" class="mobile-link">Özellikler</a>
-        <a href="index.html#showcase-row-1" class="mobile-link">Keşfet</a>
-        <a href="index.html#university" class="mobile-link">Kampüs</a>
-        <a href="privacy.html" class="mobile-link">Gizlilik</a>
-        <a href="sartlar.html" class="mobile-link">Sözleşme</a>
-        <a href="hakkinda.html" class="mobile-link">Hakkında</a>
-      </div>
-      <div class="mobile-menu-actions">
-        <a href="login.html" class="btn btn-secondary auth-login-btn">Giriş Yap</a>
-        <a href="download.html" class="btn btn-primary">İndir</a>
-      </div>
+            <div class="nav-actions">
+                <!-- Auth Buttons -->
+                <a href="login.html" class="btn btn-secondary auth-login-btn">Giriş Yap</a>
+
+                <!-- User Profile Widget (Logged In) -->
+                <a href="profile.html" class="nav-user-profile" style="display: none;">
+                    <div class="nav-user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <span class="nav-user-name">Yükleniyor...</span>
+                </a>
+
+                <a href="download.html" class="btn btn-primary">
+                    İndir <i class="fas fa-download" style="font-size: 0.8em;"></i>
+                </a>
+            </div>
+
+            <button class="hamburger" id="hamburger-menu" aria-label="Menü">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobile-menu-overlay">
+        <div class="mobile-menu-content">
+            <div class="mobile-menu-links">
+                <a href="index.html#hero" class="mobile-link">Ana Sayfa</a>
+                <a href="index.html#features" class="mobile-link">Özellikler</a>
+                <a href="index.html#showcase-row-1" class="mobile-link">Keşfet</a>
+                <a href="index.html#university" class="mobile-link">Kampüs</a>
+
+                <div class="mobile-accordion">
+                    <a href="#" class="mobile-link accordion-toggle">Politikalar <i class="fas fa-chevron-down"></i></a>
+                    <div class="accordion-content">
+                        <a href="privacy.html" class="mobile-link accordion-link">Gizlilik</a>
+            <a href="privacy.html#kvkk" class="mobile-link accordion-link">KVKK</a>
+            <a href="sartlar.html" class="mobile-link accordion-link">Sözleşme</a>
+            <a href="acik-riza.html" class="mobile-link accordion-link">Açık Rıza</a>
+            <a href="kampus-sozlesmesi.html" class="mobile-link accordion-link">Kampüs Sözleşme</a>
+            <a href="kampus-acik-riza.html" class="mobile-link accordion-link">Kampüs Açık Rıza</a>
+                    </div>
+                </div>
+
+                <a href="hakkinda.html" class="mobile-link">Hakkında</a>
+            </div>
+            <div class="mobile-menu-actions">
+                <a href="login.html" class="btn btn-secondary auth-login-btn">Giriş Yap</a>
+                <a href="download.html" class="btn btn-primary">İndir</a>
+            </div>
+        </div>
     </div>
-  </div>
 
     <!-- Content -->
     <main class="legal-page">
@@ -74,14 +117,22 @@
                     "Kampüs" modunu aktif hale getirerek;
                 </p>
                 <ul style="font-size: 1.05rem; line-height: 2;">
-                    <li>Harita ve fiziksel etkinlik özelliklerini kullanabilmem için <strong>anlık konum verimin</strong> (kaydedilmemek ve takip edilmemek şartıyla) işlenmesine,</li>
-                    <li>Öğrenci statümün doğrulanması amacıyla sunduğum <strong>e-Devlet Öğrenci Belgesi ve üniversite mailimin</strong> anlık olarak incelenmesine ve onay işleminin hemen ardından sistemden <strong>kalıcı olarak silinmesi</strong> şartıyla kullanılmasına,</li>
-                    <li>Özgür irademle rıza gösteriyorum ve fiziksel buluşmalara dair OARK'ın <a href="kampus-sozlesme.html" style="color: var(--color-primary); text-decoration: underline;">sorumluluk reddi beyanını</a> kabul ediyorum.</li>
+                    <li>Harita ve fiziksel etkinlik özelliklerini kullanabilmem için <strong>anlık konum
+                            verimin</strong> (kaydedilmemek ve takip edilmemek şartıyla) işlenmesine,</li>
+                    <li>Öğrenci statümün doğrulanması amacıyla sunduğum <strong>e-Devlet Öğrenci Belgesi ve üniversite
+                            mailimin</strong> anlık olarak incelenmesine ve onay işleminin hemen ardından sistemden
+                        <strong>kalıcı olarak silinmesi</strong> şartıyla kullanılmasına,</li>
+                    <li>Özgür irademle rıza gösteriyorum ve fiziksel buluşmalara dair OARK'ın <a
+                            href="kampus-sozlesme.html"
+                            style="color: var(--color-primary); text-decoration: underline;">sorumluluk reddi
+                            beyanını</a> kabul ediyorum.</li>
                 </ul>
 
-                <div style="margin-top: 3rem; padding: 1.5rem; background: rgba(16, 185, 129, 0.1); border-radius: 12px; border: 1px solid rgba(16, 185, 129, 0.2);">
+                <div
+                    style="margin-top: 3rem; padding: 1.5rem; background: rgba(16, 185, 129, 0.1); border-radius: 12px; border: 1px solid rgba(16, 185, 129, 0.2);">
                     <p style="margin-bottom: 0; font-size: 0.9rem;">
-                        <strong>Güvenlik Garantisi:</strong> Öğrenci belgeniz doğrulama tamamlandığı saniye sunucularımızdan imha edilir. Konumunuz asla loglanmaz.
+                        <strong>Güvenlik Garantisi:</strong> Öğrenci belgeniz doğrulama tamamlandığı saniye
+                        sunucularımızdan imha edilir. Konumunuz asla loglanmaz.
                     </p>
                 </div>
             </div>
@@ -108,7 +159,7 @@
                     <ul>
                         <li><a href="index.html#hero">Ana Sayfa</a></li>
                         <li><a href="index.html#features">Özellikler</a></li>
-                        <li><a href="index.html#showcase">Ekranlar</a></li>
+                        <li><a href="index.html#showcase-row-1">Keşfet</a></li>
                         <li><a href="hakkinda.html">Hakkında</a></li>
                         <li><a href="download.html">İndir</a></li>
                     </ul>
@@ -118,8 +169,11 @@
                     <h4>Yasal</h4>
                     <ul>
                         <li><a href="privacy.html">Gizlilik Politikası</a></li>
+                        <li><a href="privacy.html#kvkk">KVKK Politikası</a></li>
                         <li><a href="sartlar.html">Kullanım Koşulları</a></li>
                         <li><a href="acik-riza.html">Açık Rıza Metni</a></li>
+                        <li><a href="kampus-sozlesmesi.html">Kampüs Sözleşmesi</a></li>
+                        <li><a href="kampus-acik-riza.html">Kampüs Açık Rıza</a></li>
                         <li><a href="delete-account.html">Hesap Silme</a></li>
                     </ul>
                 </div>
@@ -129,7 +183,7 @@
                     <ul>
                         <li><a href="mailto:destek.oark@gmail.com">Destek</a></li>
                         <li><a href="https://www.instagram.com/oark.official/" target="_blank">Instagram</a></li>
-                        <li><a href="#">Discord</a></li>
+
                     </ul>
                 </div>
             </div>
@@ -141,6 +195,10 @@
     </footer>
 
     <!-- Scripts -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="js/api.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/auth.js?v=5"></script>
     <script src="js/main.js?v=28"></script>
 </body>
 

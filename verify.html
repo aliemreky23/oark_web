@@ -14,7 +14,8 @@
     <!-- Supabase & Auth -->
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <script src="js/api.js" defer></script>
-    <script src="js/auth.js" defer></script>
+    <script src="js/config.js"></script>
+  <script src="js/auth.js" defer></script>
     <script src="js/verify.js" defer></script>
 
     <style>
@@ -206,6 +207,8 @@
             color: #94a3b8;
         }
     </style>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
@@ -216,15 +219,39 @@
                 <img src="assets/logo-new.png" alt="OARK">
             </a>
 
-      <div class="nav-links">
+            <div class="nav-links">
         <a href="index.html#hero">Ana Sayfa</a>
         <a href="index.html#features">Özellikler</a>
         <a href="index.html#showcase-row-1">Keşfet</a>
         <a href="index.html#university">Kampüs</a>
-        <a href="privacy.html">Gizlilik</a>
-        <a href="sartlar.html">Sözleşme</a>
+        <div class="nav-item dropdown">
+          <a href="#" class="dropdown-toggle">Politikalar <i class="fas fa-chevron-down"></i></a>
+          <div class="dropdown-menu">
+            <a href="privacy.html" class="dropdown-item"><i class="fas fa-user-shield"></i> Gizlilik Politikası</a>
+            <a href="sartlar.html" class="dropdown-item"><i class="fas fa-file-contract"></i> Kullanım Koşulları</a>
+            <a href="acik-riza.html" class="dropdown-item"><i class="fas fa-check-double"></i> Açık Rıza Metni</a>
+          </div>
+        </div>
         <a href="hakkinda.html">Hakkında</a>
       </div>
+
+            
+            <div class="nav-actions">
+                <!-- Auth Buttons -->
+                <a href="login.html" class="btn btn-secondary auth-login-btn">Giriş Yap</a>
+
+                <!-- User Profile Widget (Logged In) -->
+                <a href="profile.html" class="nav-user-profile" style="display: none;">
+                    <div class="nav-user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <span class="nav-user-name">Yükleniyor...</span>
+                </a>
+
+                <a href="download.html" class="btn btn-primary">
+                    İndir <i class="fas fa-download" style="font-size: 0.8em;"></i>
+                </a>
+            </div></div>
 
             <button class="hamburger" id="hamburger-menu" aria-label="Menü">
                 <span></span>
@@ -237,15 +264,23 @@
     <!-- Mobile Menu Overlay -->
     <div class="mobile-menu-overlay" id="mobile-menu-overlay">
         <div class="mobile-menu-content">
-            <div class="mobile-menu-links">
-                <a href="index.html#hero" class="mobile-link">Ana Sayfa</a>
-                <a href="index.html#features" class="mobile-link">Özellikler</a>
-                <a href="index.html#showcase-row-1" class="mobile-link">Keşfet</a>
-                <a href="index.html#university" class="mobile-link">Kampüs</a>
-                <a href="privacy.html" class="mobile-link">Gizlilik</a>
-                <a href="sartlar.html" class="mobile-link">Sözleşme</a>
-                <a href="hakkinda.html" class="mobile-link">Hakkında</a>
-            </div>
+                  <div class="mobile-menu-links">
+        <a href="index.html#hero" class="mobile-link">Ana Sayfa</a>
+        <a href="index.html#features" class="mobile-link">Özellikler</a>
+        <a href="index.html#showcase-row-1" class="mobile-link">Keşfet</a>
+        <a href="index.html#university" class="mobile-link">Kampüs</a>
+        
+        <div class="mobile-accordion">
+          <a href="#" class="mobile-link accordion-toggle">Politikalar <i class="fas fa-chevron-down"></i></a>
+          <div class="accordion-content">
+            <a href="privacy.html" class="mobile-link accordion-link">Gizlilik</a>
+            <a href="sartlar.html" class="mobile-link accordion-link">Sözleşme</a>
+            <a href="acik-riza.html" class="mobile-link accordion-link">Açık Rıza</a>
+          </div>
+        </div>
+
+        <a href="hakkinda.html" class="mobile-link">Hakkında</a>
+      </div>
             <div class="mobile-menu-actions">
                 <a href="login.html" class="btn btn-secondary auth-login-btn">Giriş Yap</a>
                 <a href="download.html" class="btn btn-primary">İndir</a>
@@ -359,7 +394,7 @@
                     <ul>
                         <li><a href="index.html#hero">Ana Sayfa</a></li>
                         <li><a href="index.html#features">Özellikler</a></li>
-                        <li><a href="index.html#showcase">Ekranlar</a></li>
+                        <li><a href="index.html#showcase-row-1">Keşfet</a></li>
                         <li><a href="hakkinda.html">Hakkında</a></li>
                         <li><a href="download.html">İndir</a></li>
                     </ul>
@@ -380,7 +415,7 @@
                     <ul>
                         <li><a href="mailto:destek.oark@gmail.com">Destek</a></li>
                         <li><a href="https://www.instagram.com/oark.official/" target="_blank">Instagram</a></li>
-                        <li><a href="#">Discord</a></li>
+
                     </ul>
                 </div>
             </div>
@@ -391,7 +426,8 @@
         </div>
     </footer>
 
-    <script src="js/main.js?v=28"></script>
+    
+  <script src="js/main.js?v=28"></script>
 </body>
 
 </html>

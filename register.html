@@ -82,6 +82,9 @@
             color: #2d2640;
             font-size: 0.95rem;
             transition: all 0.3s ease;
+            height: 52px;
+            /* Fixed height for consistency */
+            box-sizing: border-box;
         }
 
         .form-input::placeholder {
@@ -107,6 +110,7 @@
             align-items: center;
             justify-content: center;
             gap: 0.6rem;
+            height: 52px;
         }
 
         .btn-primary-auth {
@@ -142,31 +146,107 @@
             color: #7c5fd6;
         }
 
-        .navbar-minimal {
-            position: absolute;
-            top: 2rem;
-            left: 2rem;
-            z-index: 20;
+        /* Slim Gender Selector to match Text Boxes */
+        .gender-selector {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
         }
 
-        .back-link {
+        .gender-option {
+            flex: 1;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            color: #5a4d6e;
-            font-weight: 500;
-            padding: 0.5rem 1rem;
-            border-radius: 99px;
+            justify-content: center;
+            gap: 0.6rem;
+            height: 52px;
             background: #ffffff;
             border: 1px solid #e0d4f0;
+            border-radius: 12px;
+            cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(157, 123, 232, 0.1);
+            position: relative;
+            box-sizing: border-box;
         }
 
-        .back-link:hover {
-            background: #ffffff;
+        .gender-option i {
+            font-size: 1.1rem;
+        }
+
+        .gender-option span {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #5a4d6e;
+        }
+
+        .gender-option.male i {
+            color: #5c9eff;
+        }
+
+        .gender-option.female i {
+            color: #ff7eb3;
+        }
+
+        .gender-option:hover {
             border-color: #bea1f7;
-            color: #9d7be8;
+            background: #f8f4ff;
+        }
+
+        .gender-option.selected {
+            border-color: #bea1f7;
+            background: #f8f4ff;
+            box-shadow: 0 0 0 4px rgba(190, 161, 247, 0.1);
+        }
+
+        .gender-option.selected.male {
+            border-color: #5c9eff;
+            background: #f0f7ff;
+        }
+
+        .gender-option.selected.female {
+            border-color: #ff7eb3;
+            background: #fff0f5;
+        }
+
+        .gender-option input {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        /* Checkbox Styles */
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .auth-checkbox {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            cursor: pointer;
+            font-size: 0.85rem;
+            color: #5a4d6e;
+            line-height: 1.4;
+        }
+
+        .auth-checkbox input {
+            margin-top: 0.2rem;
+            accent-color: #bea1f7;
+            width: 1.1rem;
+            height: 1.1rem;
+            cursor: pointer;
+        }
+
+        .auth-checkbox .auth-link {
+            display: inline;
+            margin: 0;
+            font-size: inherit;
         }
 
         /* Mobile Adjustments */
@@ -174,11 +254,6 @@
             .auth-card {
                 padding: 2rem 1.5rem;
                 margin: 1rem;
-            }
-
-            .navbar-minimal {
-                top: 1rem;
-                left: 1rem;
             }
         }
     </style>
@@ -196,8 +271,20 @@
                 <a href="index.html#features">Özellikler</a>
                 <a href="index.html#showcase-row-1">Keşfet</a>
                 <a href="index.html#university">Kampüs</a>
-                <a href="privacy.html">Gizlilik</a>
-                <a href="sartlar.html">Sözleşme</a>
+                <div class="nav-item dropdown">
+                    <a href="#" class="dropdown-toggle">Politikalar <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="privacy.html" class="dropdown-item"><i class="fas fa-user-shield"></i> Gizlilik
+                            Politikası</a>
+                        <a href="privacy.html#kvkk" class="dropdown-item"><i class="fas fa-shield-halved"></i> KVKK Politikası</a>
+                        <a href="sartlar.html" class="dropdown-item"><i class="fas fa-file-contract"></i> Kullanım
+                            Koşulları</a>
+                        <a href="acik-riza.html" class="dropdown-item"><i class="fas fa-check-double"></i> Açık Rıza
+                            Metni</a>
+                        <a href="kampus-sozlesmesi.html" class="dropdown-item"><i class="fas fa-university"></i> Kampüs Sözleşmesi</a>
+                        <a href="kampus-acik-riza.html" class="dropdown-item"><i class="fas fa-file-signature"></i> Kampüs Açık Rıza</a>
+                    </div>
+                </div>
                 <a href="hakkinda.html">Hakkında</a>
             </div>
 
@@ -224,8 +311,19 @@
                 <a href="index.html#features" class="mobile-link">Özellikler</a>
                 <a href="index.html#showcase-row-1" class="mobile-link">Keşfet</a>
                 <a href="index.html#university" class="mobile-link">Kampüs</a>
-                <a href="privacy.html" class="mobile-link">Gizlilik</a>
-                <a href="sartlar.html" class="mobile-link">Sözleşme</a>
+
+                <div class="mobile-accordion">
+                    <a href="#" class="mobile-link accordion-toggle">Politikalar <i class="fas fa-chevron-down"></i></a>
+                    <div class="accordion-content">
+                        <a href="privacy.html" class="mobile-link accordion-link">Gizlilik</a>
+            <a href="privacy.html#kvkk" class="mobile-link accordion-link">KVKK</a>
+            <a href="sartlar.html" class="mobile-link accordion-link">Sözleşme</a>
+            <a href="acik-riza.html" class="mobile-link accordion-link">Açık Rıza</a>
+            <a href="kampus-sozlesmesi.html" class="mobile-link accordion-link">Kampüs Sözleşme</a>
+            <a href="kampus-acik-riza.html" class="mobile-link accordion-link">Kampüs Açık Rıza</a>
+                    </div>
+                </div>
+
                 <a href="hakkinda.html" class="mobile-link">Hakkında</a>
             </div>
             <div class="mobile-menu-actions">
@@ -240,14 +338,10 @@
             <div class="auth-header">
                 <img src="assets/logo-white.png" alt="OARK" class="auth-logo">
                 <h1 class="auth-title">Oark'a Katıl</h1>
-                <p class="auth-subtitle">Oyun arkadaşını bulmaya hemen başla.</p>
+                <p class="auth-subtitle">Hemen hesabını oluştur ve arkadaş bul.</p>
             </div>
 
             <form onsubmit="window.handleRegister(event)">
-                <div class="form-group">
-                    <input type="text" id="fullname" class="form-input" placeholder="Ad Soyad" required>
-                </div>
-
                 <div class="form-group">
                     <input type="text" id="username" class="form-input" placeholder="Kullanıcı Adı" required>
                 </div>
@@ -257,20 +351,41 @@
                 </div>
 
                 <div class="form-group">
-                    <select id="gender" class="form-input" required>
-                        <option value="" disabled selected>Cinsiyet Seçin</option>
-                        <option value="male">Erkek</option>
-                        <option value="female">Kadın</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
                     <input type="password" id="password" class="form-input" placeholder="Şifre" required minlength="6">
                 </div>
 
-                <button type="submit" class="btn-auth btn-primary-auth">
-                    Kayıt Ol
-                </button>
+                <div class="gender-selector">
+                    <label class="gender-option male" id="gender-male">
+                        <input type="radio" name="gender-selection" value="male" required>
+                        <i class="fas fa-mars"></i>
+                        <span>Erkek</span>
+                    </label>
+                    <label class="gender-option female" id="gender-female">
+                        <input type="radio" name="gender-selection" value="female" required>
+                        <i class="fas fa-venus"></i>
+                        <span>Kadın</span>
+                    </label>
+                    <div class="checkbox-group">
+                        <label class="auth-checkbox">
+                            <input type="checkbox" id="consent-privacy" required>
+                            <span><a href="privacy.html" class="auth-link" target="_blank">Gizlilik Politikası</a>'nı
+                                okudum ve kabul ediyorum.</span>
+                        </label>
+                        <label class="auth-checkbox">
+                            <input type="checkbox" id="consent-terms" required>
+                            <span><a href="sartlar.html" class="auth-link" target="_blank">Kullanım Koşulları</a>'nı
+                                okudum ve kabul ediyorum.</span>
+                        </label>
+                        <label class="auth-checkbox">
+                            <input type="checkbox" id="consent-explicit" required>
+                            <span><a href="acik-riza.html" class="auth-link" target="_blank">Açık Rıza Metni</a>'ni
+                                okudum ve onaylıyorum.</span>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn-auth btn-primary-auth">
+                        Kayıt Ol
+                    </button>
             </form>
 
             <div class="auth-footer">
@@ -299,7 +414,7 @@
                     <ul>
                         <li><a href="index.html#hero">Ana Sayfa</a></li>
                         <li><a href="index.html#features">Özellikler</a></li>
-                        <li><a href="index.html#showcase">Ekranlar</a></li>
+                        <li><a href="index.html#showcase-row-1">Keşfet</a></li>
                         <li><a href="hakkinda.html">Hakkında</a></li>
                         <li><a href="download.html">İndir</a></li>
                     </ul>
@@ -309,8 +424,11 @@
                     <h4>Yasal</h4>
                     <ul>
                         <li><a href="privacy.html">Gizlilik Politikası</a></li>
+                        <li><a href="privacy.html#kvkk">KVKK Politikası</a></li>
                         <li><a href="sartlar.html">Kullanım Koşulları</a></li>
                         <li><a href="acik-riza.html">Açık Rıza Metni</a></li>
+                        <li><a href="kampus-sozlesmesi.html">Kampüs Sözleşmesi</a></li>
+                        <li><a href="kampus-acik-riza.html">Kampüs Açık Rıza</a></li>
                         <li><a href="delete-account.html">Hesap Silme</a></li>
                     </ul>
                 </div>
@@ -320,7 +438,7 @@
                     <ul>
                         <li><a href="mailto:destek.oark@gmail.com">Destek</a></li>
                         <li><a href="https://www.instagram.com/oark.official/" target="_blank">Instagram</a></li>
-                        <li><a href="#">Discord</a></li>
+
                     </ul>
                 </div>
             </div>
@@ -331,6 +449,7 @@
         </div>
     </footer>
 
+    <script src="js/config.js"></script>
     <script src="js/main.js?v=28"></script>
     <script src="js/api.js"></script>
     <script src="js/auth.js"></script>

@@ -2,7 +2,7 @@
 // OARK - API Service Layer
 // ========================================
 
-const API_BASE_URL = 'https://oark-api.vercel.app';
+const API_BASE_URL = window.CONFIG?.API_BASE_URL || 'https://oark-api.vercel.app';
 
 class OarkAPI {
     constructor() {

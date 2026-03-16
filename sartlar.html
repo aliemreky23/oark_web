@@ -15,6 +15,8 @@
     <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="assets/logo.png">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
@@ -26,54 +28,97 @@
                 <img src="assets/logo-new.png" alt="OARK">
             </a>
 
-      <div class="nav-links">
-        <a href="index.html#hero">Ana Sayfa</a>
-        <a href="index.html#features">Özellikler</a>
-        <a href="index.html#showcase-row-1">Keşfet</a>
-        <a href="index.html#university">Kampüs</a>
-        <a href="privacy.html">Gizlilik</a>
-        <a href="sartlar.html">Sözleşme</a>
-        <a href="hakkinda.html">Hakkında</a>
-      </div>
+            <div class="nav-links">
+                <a href="index.html#hero">Ana Sayfa</a>
+                <a href="index.html#features">Özellikler</a>
+                <a href="index.html#showcase-row-1">Keşfet</a>
+                <a href="index.html#university">Kampüs</a>
+                <div class="nav-item dropdown">
+                    <a href="#" class="dropdown-toggle">Politikalar <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="privacy.html" class="dropdown-item"><i class="fas fa-user-shield"></i> Gizlilik
+                            Politikası</a>
+                        <a href="privacy.html#kvkk" class="dropdown-item"><i class="fas fa-shield-halved"></i> KVKK Politikası</a>
+                        <a href="sartlar.html" class="dropdown-item"><i class="fas fa-file-contract"></i> Kullanım
+                            Koşulları</a>
+                        <a href="acik-riza.html" class="dropdown-item"><i class="fas fa-check-double"></i> Açık Rıza
+                            Metni</a>
+                        <a href="kampus-sozlesmesi.html" class="dropdown-item"><i class="fas fa-university"></i> Kampüs Sözleşmesi</a>
+                        <a href="kampus-acik-riza.html" class="dropdown-item"><i class="fas fa-file-signature"></i> Kampüs Açık Rıza</a>
+                    </div>
+                </div>
+                <a href="hakkinda.html">Hakkında</a>
+            </div>
 
-      <button class="hamburger" id="hamburger-menu" aria-label="Menü">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-    </div>
-  </nav>
 
-  <!-- Mobile Menu Overlay -->
-  <div class="mobile-menu-overlay" id="mobile-menu-overlay">
-    <div class="mobile-menu-content">
-      <div class="mobile-menu-links">
-        <a href="index.html#hero" class="mobile-link">Ana Sayfa</a>
-        <a href="index.html#features" class="mobile-link">Özellikler</a>
-        <a href="index.html#showcase-row-1" class="mobile-link">Keşfet</a>
-        <a href="index.html#university" class="mobile-link">Kampüs</a>
-        <a href="privacy.html" class="mobile-link">Gizlilik</a>
-        <a href="sartlar.html" class="mobile-link">Sözleşme</a>
-        <a href="hakkinda.html" class="mobile-link">Hakkında</a>
-      </div>
-      <div class="mobile-menu-actions">
-        <a href="login.html" class="btn btn-secondary auth-login-btn">Giriş Yap</a>
-        <a href="download.html" class="btn btn-primary">İndir</a>
-      </div>
+            <div class="nav-actions">
+                <!-- Auth Buttons -->
+                <a href="login.html" class="btn btn-secondary auth-login-btn">Giriş Yap</a>
+
+                <!-- User Profile Widget (Logged In) -->
+                <a href="profile.html" class="nav-user-profile" style="display: none;">
+                    <div class="nav-user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <span class="nav-user-name">Yükleniyor...</span>
+                </a>
+
+                <a href="download.html" class="btn btn-primary">
+                    İndir <i class="fas fa-download" style="font-size: 0.8em;"></i>
+                </a>
+            </div>
+
+            <button class="hamburger" id="hamburger-menu" aria-label="Menü">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobile-menu-overlay">
+        <div class="mobile-menu-content">
+            <div class="mobile-menu-links">
+                <a href="index.html#hero" class="mobile-link">Ana Sayfa</a>
+                <a href="index.html#features" class="mobile-link">Özellikler</a>
+                <a href="index.html#showcase-row-1" class="mobile-link">Keşfet</a>
+                <a href="index.html#university" class="mobile-link">Kampüs</a>
+
+                <div class="mobile-accordion">
+                    <a href="#" class="mobile-link accordion-toggle">Politikalar <i class="fas fa-chevron-down"></i></a>
+                    <div class="accordion-content">
+                        <a href="privacy.html" class="mobile-link accordion-link">Gizlilik</a>
+            <a href="privacy.html#kvkk" class="mobile-link accordion-link">KVKK</a>
+            <a href="sartlar.html" class="mobile-link accordion-link">Sözleşme</a>
+            <a href="acik-riza.html" class="mobile-link accordion-link">Açık Rıza</a>
+            <a href="kampus-sozlesmesi.html" class="mobile-link accordion-link">Kampüs Sözleşme</a>
+            <a href="kampus-acik-riza.html" class="mobile-link accordion-link">Kampüs Açık Rıza</a>
+                    </div>
+                </div>
+
+                <a href="hakkinda.html" class="mobile-link">Hakkında</a>
+            </div>
+            <div class="mobile-menu-actions">
+                <a href="login.html" class="btn btn-secondary auth-login-btn">Giriş Yap</a>
+                <a href="download.html" class="btn btn-primary">İndir</a>
+            </div>
+        </div>
     </div>
-  </div>
 
     <!-- Content -->
     <main class="legal-page">
         <div class="container legal-content">
             <div class="glass-card">
                 <h1>OARK GİZLİLİK POLİTİKASI VE KULLANIM KOŞULLARI</h1>
-                <p class="text-muted" style="font-size: 0.9rem; margin-bottom: 2rem;">Veri Sorumlusu: OARK Platformu | Son Güncelleme: 13 Mart 2026</p>
+                <p class="text-muted" style="font-size: 0.9rem; margin-bottom: 2rem;">Veri Sorumlusu: OARK Platformu |
+                    Son Güncelleme: 13 Mart 2026</p>
 
                 <h2 class="text-gradient">A. GİZLİLİK POLİTİKASI</h2>
-                
+
                 <h3>1. İşlenen Veriler ve Amaçları</h3>
-                <p>OARK, oyuncuları bir araya getiren bir sosyal ağdır. Profil oluşturmak, eşleşme sağlamak ve "Keşfet" (Gamers) forumunda etkileşime girmeniz için aşağıdaki verileriniz işlenir:</p>
+                <p>OARK, oyuncuları bir araya getiren bir sosyal ağdır. Profil oluşturmak, eşleşme sağlamak ve "Keşfet"
+                    (Gamers) forumunda etkileşime girmeniz için aşağıdaki verileriniz işlenir:</p>
                 <ul>
                     <li>E-posta, Kullanıcı Adı</li>
                     <li>Şifre (Tek yönlü şifrelenir/hashlenir, tarafımızca görülemez)</li>
@@ -82,32 +127,45 @@
                     <li>IP adresi ve cihaz bildirim (FCM) belirteçleri</li>
                     <li>Profil ve forum paylaşımları için fotoğraf galerisi izni</li>
                 </ul>
-                <p><strong>Önemli:</strong> Temel kullanımda konum bilginiz ve öğrenci belgeleriniz KESİNLİKLE talep edilmez.</p>
+                <p><strong>Önemli:</strong> Temel kullanımda konum bilginiz ve öğrenci belgeleriniz KESİNLİKLE talep
+                    edilmez.</p>
 
                 <h3>2. Yaş Sınırı</h3>
-                <p>Platformumuzu kullanabilmek için en az <strong>13 yaşında</strong> olmanız gerekmektedir. 13 yaşından küçüklerin kayıtları tespit edildiği an sorgusuz silinir.</p>
+                <p>Platformumuzu kullanabilmek için en az <strong>13 yaşında</strong> olmanız gerekmektedir. 13 yaşından
+                    küçüklerin kayıtları tespit edildiği an sorgusuz silinir.</p>
 
                 <h3>3. Mesajlaşma Güvenliği (E2EE)</h3>
-                <p>Kullanıcılar arası özel mesajlar <strong>Uçtan Uca Şifreleme (E2EE)</strong> ile korunur ve OARK yönetimi tarafından okunamaz. Ancak bir ihlal bildirimi (Raporlama) durumunda, şikayet eden kullanıcının cihazında şifresi çözülmüş olan <strong>son 10 mesaj</strong>, inceleme için güvenli moderasyon panelimize iletilir.</p>
+                <p>Kullanıcılar arası özel mesajlar <strong>Uçtan Uca Şifreleme (E2EE)</strong> ile korunur ve OARK
+                    yönetimi tarafından okunamaz. Ancak bir ihlal bildirimi (Raporlama) durumunda, şikayet eden
+                    kullanıcının cihazında şifresi çözülmüş olan <strong>son 10 mesaj</strong>, inceleme için güvenli
+                    moderasyon panelimize iletilir.</p>
 
                 <h3>4. OARK Coin ve Finansal İşlemler</h3>
-                <p>Platform içi sanal ekonomi (OARK Coin) satın alımları Google Play ve ilgili uygulama mağazaları üzerinden yapılır. OARK, hiçbir kredi kartı bilginizi sistemlerinde tutmaz.</p>
+                <p>Platform içi sanal ekonomi (OARK Coin) satın alımları Google Play ve ilgili uygulama mağazaları
+                    üzerinden yapılır. OARK, hiçbir kredi kartı bilginizi sistemlerinde tutmaz.</p>
 
                 <h3>5. Veri Aktarımı ve Hesap Silme</h3>
-                <p>Altyapı hizmetleri (örn. Supabase) nedeniyle verileriniz uluslararası güvenlik standartlarına sahip yurt dışı sunucularında güvenle saklanır. Verilerinizin ve hesabınızın kalıcı olarak silinmesi için <strong>destek.oark@gmail.com</strong> adresine "Hesap Silme Talebi" iletmeniz yeterlidir.</p>
+                <p>Altyapı hizmetleri (örn. Supabase) nedeniyle verileriniz uluslararası güvenlik standartlarına sahip
+                    yurt dışı sunucularında güvenle saklanır. Verilerinizin ve hesabınızın kalıcı olarak silinmesi için
+                    <strong>destek.oark@gmail.com</strong> adresine "Hesap Silme Talebi" iletmeniz yeterlidir.</p>
 
                 <hr style="margin: 2rem 0; opacity: 0.1;">
 
                 <h2 class="text-gradient">B. KULLANIM KOŞULLARI</h2>
 
                 <h3>1. Topluluk Kuralları ve Ban</h3>
-                <p>Platform içi görünürlük filtrelerini (Örn: Sadece Kadınlar / Sadece Erkekler) suistimal eden, cinsiyet veya yaş beyanında sahtecilik yapan, hakaret ve spam içeren eylemlerde bulunan kullanıcılar <strong>kalıcı olarak uzaklaştırılır (Ban).</strong></p>
+                <p>Platform içi görünürlük filtrelerini (Örn: Sadece Kadınlar / Sadece Erkekler) suistimal eden,
+                    cinsiyet veya yaş beyanında sahtecilik yapan, hakaret ve spam içeren eylemlerde bulunan kullanıcılar
+                    <strong>kalıcı olarak uzaklaştırılır (Ban).</strong></p>
 
                 <h3>2. Misafir Davet Sistemi</h3>
-                <p>Platforma "Misafir (Guest)" davet eden kullanıcı, davet ettiği kişilerin temel bilgilerini sisteme girerken o kişilerin açık rızasını almış kabul edilir. Doğacak hukuki anlaşmazlıklarda tüm sorumluluk davet eden kullanıcıya aittir.</p>
+                <p>Platforma "Misafir (Guest)" davet eden kullanıcı, davet ettiği kişilerin temel bilgilerini sisteme
+                    girerken o kişilerin açık rızasını almış kabul edilir. Doğacak hukuki anlaşmazlıklarda tüm
+                    sorumluluk davet eden kullanıcıya aittir.</p>
 
                 <h3>3. OARK'ın Rolü</h3>
-                <p>OARK dijital bir aracı platformdur. Kullanıcılar arasındaki etkileşimlerden ve paylaşımlardan doğan sorumluluk bizzat kullanıcılara aittir.</p>
+                <p>OARK dijital bir aracı platformdur. Kullanıcılar arasındaki etkileşimlerden ve paylaşımlardan doğan
+                    sorumluluk bizzat kullanıcılara aittir.</p>
             </div>
         </div>
     </main>
@@ -132,7 +190,7 @@
                     <ul>
                         <li><a href="index.html#hero">Ana Sayfa</a></li>
                         <li><a href="index.html#features">Özellikler</a></li>
-                        <li><a href="index.html#showcase">Ekranlar</a></li>
+                        <li><a href="index.html#showcase-row-1">Keşfet</a></li>
                         <li><a href="hakkinda.html">Hakkında</a></li>
                         <li><a href="download.html">İndir</a></li>
                     </ul>
@@ -142,8 +200,11 @@
                     <h4>Yasal</h4>
                     <ul>
                         <li><a href="privacy.html">Gizlilik Politikası</a></li>
+                        <li><a href="privacy.html#kvkk">KVKK Politikası</a></li>
                         <li><a href="sartlar.html">Kullanım Koşulları</a></li>
                         <li><a href="acik-riza.html">Açık Rıza Metni</a></li>
+                        <li><a href="kampus-sozlesmesi.html">Kampüs Sözleşmesi</a></li>
+                        <li><a href="kampus-acik-riza.html">Kampüs Açık Rıza</a></li>
                         <li><a href="delete-account.html">Hesap Silme</a></li>
                     </ul>
                 </div>
@@ -153,7 +214,7 @@
                     <ul>
                         <li><a href="mailto:destek.oark@gmail.com">Destek</a></li>
                         <li><a href="https://www.instagram.com/oark.official/" target="_blank">Instagram</a></li>
-                        <li><a href="#">Discord</a></li>
+
                     </ul>
                 </div>
             </div>
@@ -165,6 +226,10 @@
     </footer>
 
     <!-- Scripts -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="js/api.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/auth.js?v=5"></script>
     <script src="js/main.js?v=28"></script>
 </body>
 

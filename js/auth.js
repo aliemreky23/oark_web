@@ -1,10 +1,6 @@
-// ========================================
-// OARK - Authentication Logic (API Version)
-// ========================================
-
-// Supabase is still needed for OAuth and Realtime
-const SUPABASE_URL = 'https://hxwlwnlfnnsflbkkbbea.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh4d2x3bmxmbm5zZmxia2tiYmVhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI2ODg0NTgsImV4cCI6MjA3ODI2NDQ1OH0.h2HbS9OIQLgh7M0DpwtUfKhgAMYXryv9H9tjK4brzaI';
+// Configuration is managed via js/config.js
+const SUPABASE_URL = window.CONFIG?.SUPABASE_URL;
+const SUPABASE_ANON_KEY = window.CONFIG?.SUPABASE_ANON_KEY;
 
 class AuthManager {
   constructor() {
@@ -16,12 +12,60 @@ class AuthManager {
 
   init() {
     // Initialize Supabase
-    if (typeof supabase !== 'undefined' && supabase.createClient) {
+    if (typeof supabase !== 'undefined' && supabase.createClient && SUPABASE_URL && SUPABASE_ANON_KEY) {
       this.supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      
+      // OPTIMIZATION: Check sync session before async getSession to prevent flickering
+      this.checkSyncSession();
+      
       this.initSupabaseSession();
     } else {
       console.error("Supabase client not loaded!");
       this.updateUI();
+    }
+  }
+
+  checkSyncSession() {
+    try {
+      const storageKey = `sb-${new URL(SUPABASE_URL).hostname.split('.')[0]}-auth-token`;
+      const sessionData = localStorage.getItem(storageKey);
+      
+      if (sessionData) {
+        const session = JSON.parse(sessionData);
+        // CRITICAL: Check if session exists AND is not expired
+        const now = Math.floor(Date.now() / 1000);
+        if (session && session.user && session.expires_at > now) {
+          this.user = session.user;
+          this.syncUpdateUI();
+        } else {
+          // Explicitly clear if expired
+          this.user = null;
+          this.syncUpdateUI();
+        }
+      } else {
+        this.user = null;
+        this.syncUpdateUI();
+      }
+    } catch (e) {
+      this.user = null;
+      this.syncUpdateUI();
+    }
+  }
+
+  syncUpdateUI() {
+    const loginBtns = document.querySelectorAll('.auth-login-btn');
+    const userProfileNavs = document.querySelectorAll('.nav-user-profile');
+    
+    if (this.user) {
+      loginBtns.forEach(btn => btn.style.display = 'none');
+      userProfileNavs.forEach(nav => nav.style.display = 'inline-flex');
+      
+      const displayName = this.user.user_metadata?.username || this.user.email?.split('@')[0] || '...';
+      document.querySelectorAll('.nav-user-name').forEach(el => el.textContent = displayName);
+    } else {
+      // CLEAR UI if user is null (fixes logout / stale data issue)
+      loginBtns.forEach(btn => btn.style.display = 'inline-flex');
+      userProfileNavs.forEach(nav => nav.style.display = 'none');
     }
   }
 
@@ -34,10 +78,14 @@ class AuthManager {
         this.updateUI();
         this.handleRedirects();
       } else {
+        // MUST clear user if session is null
+        this.user = null;
         this.updateUI();
+        this.handleRedirects();
       }
     } catch (err) {
       console.error('Supabase session check failed:', err);
+      this.user = null;
       this.updateUI();
     }
 
@@ -290,13 +338,41 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+// Gender selection visual logic
+document.addEventListener('click', (e) => {
+  if (e.target.closest('.gender-option')) {
+    const option = e.target.closest('.gender-option');
+    document.querySelectorAll('.gender-option').forEach(opt => opt.classList.remove('selected'));
+    option.classList.add('selected');
+    const radio = option.querySelector('input[type="radio"]');
+    if (radio) radio.checked = true;
+  }
+});
+
 window.handleRegister = async (e) => {
   e.preventDefault();
-  const fullName = document.getElementById('fullname')?.value || '';
   const username = document.getElementById('username')?.value;
   const email = document.getElementById('email')?.value;
   const password = document.getElementById('password')?.value;
-  const gender = document.getElementById('gender')?.value;
+  const genderRadio = document.querySelector('input[name="gender-selection"]:checked');
+  const gender = genderRadio ? genderRadio.value : null;
+  
+  const fullName = username; // Use username as default full name
+
+  if (!gender) {
+    alert('Lütfen cinsiyet seçimi yapın.');
+    return;
+  }
+
+  const consentPrivacy = document.getElementById('consent-privacy')?.checked;
+  const consentTerms = document.getElementById('consent-terms')?.checked;
+  const consentExplicit = document.getElementById('consent-explicit')?.checked;
+
+  if (!consentPrivacy || !consentTerms || !consentExplicit) {
+    alert('Devam etmek için lütfen tüm yasal metinleri onaylayın.');
+    return;
+  }
+
   const btn = e.target.querySelector('button');
   const originalText = btn.innerHTML;
 
@@ -309,7 +385,7 @@ window.handleRegister = async (e) => {
     if (error) {
       alert('Kayıt başarısız: ' + error.message);
     } else {
-      alert('Kayıt başarılı! Lütfen e-posta adresini onayla.');
+      alert('Kayıt başarılı! Lütfen e-postanı onayla ve Oark dünyasına merhaba de.');
       window.location.href = 'login.html';
     }
   } catch (err) {

@@ -232,8 +232,20 @@
                 <a href="index.html#features">Özellikler</a>
                 <a href="index.html#showcase-row-1">Keşfet</a>
                 <a href="index.html#university">Kampüs</a>
-                <a href="privacy.html">Gizlilik</a>
-                <a href="sartlar.html">Sözleşme</a>
+                <div class="nav-item dropdown">
+                    <a href="#" class="dropdown-toggle">Politikalar <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="privacy.html" class="dropdown-item"><i class="fas fa-user-shield"></i> Gizlilik
+                            Politikası</a>
+                        <a href="privacy.html#kvkk" class="dropdown-item"><i class="fas fa-shield-halved"></i> KVKK Politikası</a>
+                        <a href="sartlar.html" class="dropdown-item"><i class="fas fa-file-contract"></i> Kullanım
+                            Koşulları</a>
+                        <a href="acik-riza.html" class="dropdown-item"><i class="fas fa-check-double"></i> Açık Rıza
+                            Metni</a>
+                        <a href="kampus-sozlesmesi.html" class="dropdown-item"><i class="fas fa-university"></i> Kampüs Sözleşmesi</a>
+                        <a href="kampus-acik-riza.html" class="dropdown-item"><i class="fas fa-file-signature"></i> Kampüs Açık Rıza</a>
+                    </div>
+                </div>
                 <a href="hakkinda.html">Hakkında</a>
             </div>
 
@@ -260,8 +272,19 @@
                 <a href="index.html#features" class="mobile-link">Özellikler</a>
                 <a href="index.html#showcase-row-1" class="mobile-link">Keşfet</a>
                 <a href="index.html#university" class="mobile-link">Kampüs</a>
-                <a href="privacy.html" class="mobile-link">Gizlilik</a>
-                <a href="sartlar.html" class="mobile-link">Sözleşme</a>
+
+                <div class="mobile-accordion">
+                    <a href="#" class="mobile-link accordion-toggle">Politikalar <i class="fas fa-chevron-down"></i></a>
+                    <div class="accordion-content">
+                        <a href="privacy.html" class="mobile-link accordion-link">Gizlilik</a>
+                        <a href="privacy.html#kvkk" class="mobile-link accordion-link">KVKK</a>
+                        <a href="sartlar.html" class="mobile-link accordion-link">Sözleşme</a>
+                        <a href="acik-riza.html" class="mobile-link accordion-link">Açık Rıza</a>
+                        <a href="kampus-sozlesmesi.html" class="mobile-link accordion-link">Kampüs Sözleşme</a>
+                        <a href="kampus-acik-riza.html" class="mobile-link accordion-link">Kampüs Açık Rıza</a>
+                    </div>
+                </div>
+
                 <a href="hakkinda.html" class="mobile-link">Hakkında</a>
             </div>
             <div class="mobile-menu-actions">
@@ -331,7 +354,7 @@
                     <ul>
                         <li><a href="index.html#hero">Ana Sayfa</a></li>
                         <li><a href="index.html#features">Özellikler</a></li>
-                        <li><a href="index.html#showcase">Ekranlar</a></li>
+                        <li><a href="index.html#showcase-row-1">Keşfet</a></li>
                         <li><a href="hakkinda.html">Hakkında</a></li>
                         <li><a href="download.html">İndir</a></li>
                     </ul>
@@ -341,8 +364,11 @@
                     <h4>Yasal</h4>
                     <ul>
                         <li><a href="privacy.html">Gizlilik Politikası</a></li>
+                        <li><a href="privacy.html#kvkk">KVKK Politikası</a></li>
                         <li><a href="sartlar.html">Kullanım Koşulları</a></li>
                         <li><a href="acik-riza.html">Açık Rıza Metni</a></li>
+                        <li><a href="kampus-sozlesmesi.html">Kampüs Sözleşmesi</a></li>
+                        <li><a href="kampus-acik-riza.html">Kampüs Açık Rıza</a></li>
                         <li><a href="delete-account.html">Hesap Silme</a></li>
                     </ul>
                 </div>
@@ -352,7 +378,7 @@
                     <ul>
                         <li><a href="mailto:destek.oark@gmail.com">Destek</a></li>
                         <li><a href="https://www.instagram.com/oark.official/" target="_blank">Instagram</a></li>
-                        <li><a href="#">Discord</a></li>
+
                     </ul>
                 </div>
             </div>
@@ -363,8 +389,10 @@
         </div>
     </footer>
 
+    <script src="js/config.js"></script>
     <script src="js/main.js?v=28"></script>
     <script src="js/api.js"></script>
+
     <script src="js/auth.js"></script>
     <script>
         // Simple globe animation simulation to match main site feel
