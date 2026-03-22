@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profilim - OARK</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/logo-new.png">
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <link rel="stylesheet" href="css/profile.css">
+    <script>
+        (function() {
+            try {
+                const session = localStorage.getItem('sb-hxwlwnlfnnsflbkkbbea-auth-token');
+                if (session) {
+                    const data = JSON.parse(session);
+                    if (data && data.user && data.expires_at > (Date.now() / 1000)) {
+                        document.documentElement.classList.add('is-logged-in');
+                    }
+                }
+            } catch (e) {}
+        })();
+    </script>
+</head>
+
+<body>
+    <nav class="navbar scanned">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <img src="assets/logo-new.png" alt="OARK">
+            </a>
+
+                  <div class="nav-links">
+        <a href="index.html#hero">Ana Sayfa</a>
+        <a href="index.html#features">Özellikler</a>
+        <a href="index.html#showcase-row-1">Keşfet</a>
+        <a href="index.html#university">Kampüs</a>
+        <div class="nav-item dropdown">
+          <a href="#" class="dropdown-toggle">Politikalar <i class="fas fa-chevron-down"></i></a>
+          <div class="dropdown-menu">
+            <a href="privacy.html" class="dropdown-item"><i class="fas fa-user-shield"></i> Gizlilik Politikası</a>
+            <a href="kvkk.html" class="dropdown-item"><i class="fas fa-shield-halved"></i> KVKK Politikası</a>
+            <a href="sartlar.html" class="dropdown-item"><i class="fas fa-file-contract"></i> Kullanıcı Sözleşmesi ve Kullanım Koşulları</a>
+            <a href="acik-riza.html" class="dropdown-item"><i class="fas fa-check-double"></i> Açık Rıza Metni</a>
+            <a href="kampus-sozlesmesi.html" class="dropdown-item"><i class="fas fa-university"></i> Kampüs Sözleşmesi</a>
+            <a href="kampus-acik-riza.html" class="dropdown-item"><i class="fas fa-file-signature"></i> Kampüs Açık Rıza</a>
+          </div>
+        </div>
+        <a href="hakkinda.html">Hakkında</a>
+      </div>
+
+            <div class="nav-actions">
+                <!-- User Profile Widget -->
+                <div class="nav-user-profile" style="display: inline-flex; pointer-events: none;">
+                    <div class="nav-user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <span class="nav-user-name">...</span>
+                </div>
+
+                <button onclick="window.handleLogout()" class="btn btn-secondary auth-logout-btn-nav">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+
+            <button class="hamburger" id="hamburger-menu" aria-label="Menü">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobile-menu-overlay">
+        <div class="mobile-menu-content">
+                  <div class="mobile-menu-links">
+        <a href="index.html#hero" class="mobile-link">Ana Sayfa</a>
+        <a href="index.html#features" class="mobile-link">Özellikler</a>
+        <a href="index.html#showcase-row-1" class="mobile-link">Keşfet</a>
+        <a href="index.html#university" class="mobile-link">Kampüs</a>
+        
+        <div class="mobile-accordion">
+          <a href="#" class="mobile-link accordion-toggle">Politikalar <i class="fas fa-chevron-down"></i></a>
+          <div class="accordion-content">
+            <a href="privacy.html" class="mobile-link accordion-link">Gizlilik</a>
+            <a href="kvkk.html" class="mobile-link accordion-link">KVKK</a>
+            <a href="sartlar.html" class="mobile-link accordion-link">Sözleşme</a>
+            <a href="acik-riza.html" class="mobile-link accordion-link">Açık Rıza</a>
+            <a href="kampus-sozlesmesi.html" class="mobile-link accordion-link">Kampüs Sözleşme</a>
+            <a href="kampus-acik-riza.html" class="mobile-link accordion-link">Kampüs Açık Rıza</a>
+          </div>
+        </div>
+
+        <a href="hakkinda.html" class="mobile-link">Hakkında</a>
+      </div>
+            <div class="mobile-menu-actions">
+                <a href="login.html" class="btn btn-secondary auth-login-btn">Giriş Yap</a>
+                <!-- User Profile Widget (Mobile) -->
+                <a href="profile.html" class="nav-user-profile" style="display: none; align-items: center; gap: 0.75rem; text-decoration: none; background: rgba(255,255,255,0.1); padding: 0.5rem 1rem; border-radius: 99px;">
+                    <div class="nav-user-avatar" style="width: 32px; height: 32px; font-size: 0.9rem;">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <span class="nav-user-name" style="color: white; font-weight: 500;">Profilim</span>
+                </a>
+                <a href="download.html" class="btn btn-primary">İndir</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container profile-page">
+        <div class="profile-header-card">
+            <div class="profile-avatar">
+                <i class="fas fa-user"></i>
+            </div>
+            <div class="profile-info">
+                <h1 id="user-name">...</h1>
+                <p id="user-email"></p>
+                <div class="profile-tag">
+                    <i class="fas fa-check-circle"></i> Doğrulanmış Hesap
+                </div>
+            </div>
+        </div>
+
+        <!-- Student Verification Section -->
+        <div class="profile-header-card verification-highlight">
+            <div class="verification-header">
+                <div class="action-icon-box campus-icon-box">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <div class="verification-title">
+                    <h2>Öğrenci Durumu</h2>
+                    <p class="verification-subtitle">Üniversite ve kampüs doğrulama bilgileriniz.</p>
+                </div>
+            </div>
+
+            <!-- Status Container (Dynamically updated via JS) -->
+            <div id="student-status-container" class="status-container-full">
+                <!-- Code is injected here by auth.js -->
+            </div>
+        </div>
+
+
+
+        <!-- Scripts for Verification -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+        <script src="js/profile.js"></script>
+
+    </div>
+
+    <div class="container">
+        <div class="section-title">Hesap Ayarları</div>
+
+        <div class="action-grid">
+            <a href="change-password.html" class="action-card">
+                <div class="action-icon-box security-icon-box">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <div class="card-content">
+                    <div class="action-title">Şifre & Güvenlik</div>
+                    <div class="action-desc">Şifrenizi güncelleyin ve hesap güvenliğinizi sağlayın.</div>
+                </div>
+            </a>
+
+            <a href="delete-account.html" class="action-card danger-card">
+                <div class="action-icon-box danger-icon">
+                    <i class="fas fa-trash-alt"></i>
+                </div>
+                <div class="card-content">
+                    <div class="action-title danger-text">Hesabı Sil</div>
+                    <div class="action-desc danger-desc">Hesabınızı ve tüm verilerinizi kalıcı olarak silin.</div>
+                </div>
+            </a>
+        </div>
+
+        <div class="bottom-actions">
+            <button onclick="window.handleLogout()" class="btn-logout">
+                <i class="fas fa-sign-out-alt"></i>
+                Oturumu Kapat
+            </button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <a href="index.html" class="footer-logo">
+                        <img src="assets/logo-white.png" alt="OARK">
+                    </a>
+                    <p style="font-size: 0.9rem;">
+                        Oyun arkadaşı bulmanın en kolay ve güvenli yolu. <br>
+                        Tüm oyuncular ve üniversite öğrencileri için oluşturulmuş, <br>
+                        güvenli sosyal ağ platformu.
+                    </p>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Keşfet</h4>
+                    <ul>
+                        <li><a href="index.html#hero">Ana Sayfa</a></li>
+                        <li><a href="index.html#features">Özellikler</a></li>
+                        <li><a href="index.html#showcase-row-1">Keşfet</a></li>
+                        <li><a href="hakkinda.html">Hakkında</a></li>
+                        <li><a href="download.html">İndir</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Yasal</h4>
+                    <ul>
+                        <li><a href="privacy.html">Gizlilik Politikası</a></li>
+                        <li><a href="kvkk.html">KVKK Politikası</a></li>
+                        <li><a href="sartlar.html">Kullanıcı Sözleşmesi ve Kullanım Koşulları</a></li>
+                        <li><a href="acik-riza.html">Açık Rıza Metni</a></li>
+                        <li><a href="kampus-sozlesmesi.html">Kampüs Sözleşmesi</a></li>
+                        <li><a href="kampus-acik-riza.html">Kampüs Açık Rıza</a></li>
+                        <li><a href="delete-account.html">Hesap Silme</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>İletişim</h4>
+                    <ul>
+                        <li><a href="mailto:destek.oark@gmail.com">Destek</a></li>
+                        <li><a href="https://www.instagram.com/oark.official/" target="_blank">Instagram</a></li>
+
+                    </ul>
+                </div>
+            </div>
+
+            <div class="copyright">
+                &copy; 2026 OARK Inc. Tüm hakları saklıdır.
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/api.js"></script>
+    <script src="js/config.js"></script>
+  <script src="js/auth.js"></script>
+    
+  <script src="js/main.js?v=28"></script>
+
+</body>
+
+</html>
