@@ -75,6 +75,19 @@
     }
   ]
   </script>
+  <script>
+    (function() {
+      try {
+        const session = localStorage.getItem('sb-hxwlwnlfnnsflbkkbbea-auth-token');
+        if (session) {
+          const data = JSON.parse(session);
+          if (data && data.user && data.expires_at > (Date.now() / 1000)) {
+            document.documentElement.classList.add('is-logged-in');
+          }
+        }
+      } catch (e) {}
+    })();
+  </script>
 </head>
 
 <body>
@@ -90,8 +103,17 @@
         <a href="#features">Özellikler</a>
         <a href="#showcase-row-1">Keşfet</a>
         <a href="#university">Kampüs</a>
-        <a href="privacy.html">Gizlilik</a>
-        <a href="sartlar.html">Sözleşme</a>
+        <div class="nav-item dropdown">
+          <a href="#" class="dropdown-toggle">Politikalar <i class="fas fa-chevron-down"></i></a>
+          <div class="dropdown-menu">
+            <a href="privacy.html" class="dropdown-item"><i class="fas fa-user-shield"></i> Gizlilik Politikası</a>
+            <a href="kvkk.html" class="dropdown-item"><i class="fas fa-shield-halved"></i> KVKK Politikası</a>
+            <a href="sartlar.html" class="dropdown-item"><i class="fas fa-file-contract"></i> Kullanıcı Sözleşmesi ve Kullanım Koşulları</a>
+            <a href="acik-riza.html" class="dropdown-item"><i class="fas fa-check-double"></i> Açık Rıza Metni</a>
+            <a href="kampus-sozlesmesi.html" class="dropdown-item"><i class="fas fa-university"></i> Kampüs Sözleşmesi</a>
+            <a href="kampus-acik-riza.html" class="dropdown-item"><i class="fas fa-file-signature"></i> Kampüs Açık Rıza</a>
+          </div>
+        </div>
         <a href="hakkinda.html">Hakkında</a>
       </div>
 
@@ -128,12 +150,30 @@
         <a href="#features" class="mobile-link">Özellikler</a>
         <a href="#showcase-row-1" class="mobile-link">Keşfet</a>
         <a href="#university" class="mobile-link">Kampüs</a>
-        <a href="privacy.html" class="mobile-link">Gizlilik</a>
-        <a href="sartlar.html" class="mobile-link">Sözleşme</a>
+        
+        <div class="mobile-accordion">
+          <a href="#" class="mobile-link accordion-toggle">Politikalar <i class="fas fa-chevron-down"></i></a>
+          <div class="accordion-content">
+            <a href="privacy.html" class="mobile-link accordion-link">Gizlilik</a>
+            <a href="kvkk.html" class="mobile-link accordion-link">KVKK</a>
+            <a href="sartlar.html" class="mobile-link accordion-link">Sözleşme</a>
+            <a href="acik-riza.html" class="mobile-link accordion-link">Açık Rıza</a>
+            <a href="kampus-sozlesmesi.html" class="mobile-link accordion-link">Kampüs Sözleşme</a>
+            <a href="kampus-acik-riza.html" class="mobile-link accordion-link">Kampüs Açık Rıza</a>
+          </div>
+        </div>
+
         <a href="hakkinda.html" class="mobile-link">Hakkında</a>
       </div>
       <div class="mobile-menu-actions">
         <a href="login.html" class="btn btn-secondary auth-login-btn">Giriş Yap</a>
+        <!-- User Profile Widget (Mobile) -->
+        <a href="profile.html" class="nav-user-profile" style="display: none; align-items: center; gap: 0.75rem; text-decoration: none; background: rgba(255,255,255,0.1); padding: 0.5rem 1rem; border-radius: 99px;">
+          <div class="nav-user-avatar" style="width: 32px; height: 32px; font-size: 0.9rem;">
+            <i class="fas fa-user"></i>
+          </div>
+          <span class="nav-user-name" style="color: white; font-weight: 500;">Profilim</span>
+        </a>
         <a href="download.html" class="btn btn-primary">İndir</a>
       </div>
     </div>
@@ -205,7 +245,7 @@
             </svg>
           </div>
           <h3>Kampüs: Sadece Öğrenciler</h3>
-          <p>e-Devlet entegrasyonu ile sadece %100 doğrulanmış üniversite öğrencilerine özel "Kampüs" modu. Tam bir
+          <p>Üniversite maili (.edu.tr) doğrulaması ile sadece %100 gerçek üniversite öğrencilerine özel "Kampüs" modu. Tam bir
             güven ortamında şehrindeki insanlarla tanışıp etkinlik düzenle.</p>
         </div>
 
@@ -441,9 +481,9 @@
             <div class="step-item">
               <div class="step-number">2</div>
               <div class="step-content">
-                <h4>Öğrenci Belgenle Doğrulan</h4>
-                <p style="font-size: 0.9rem; margin-bottom: 0;">Uygulama içinden e-Devlet öğrenci belgeni yükle,
-                  üniversite mailini gir ve öğrenci kimliğini doğrula.</p>
+                <h4>Üniversite Mailinle Doğrulan</h4>
+                <p style="font-size: 0.9rem; margin-bottom: 0;">Uygulama içinden .edu.tr uzantılı e-posta adresini doğrula,
+                  kampüs özelliklerini anında kullanmaya başla.</p>
               </div>
             </div>
 
@@ -615,7 +655,8 @@
             <h4>Yasal</h4>
             <ul>
               <li><a href="privacy.html">Gizlilik Politikası</a></li>
-              <li><a href="sartlar.html">Kullanım Koşulları</a></li>
+              <li><a href="kvkk.html">KVKK Politikası</a></li>
+              <li><a href="sartlar.html">Kullanıcı Sözleşmesi ve Kullanım Koşulları</a></li>
               <li><a href="acik-riza.html">Açık Rıza Metni</a></li>
               <li><a href="delete-account.html">Hesap Silme</a></li>
             </ul>
@@ -640,6 +681,7 @@
 
   <!-- Scripts -->
   <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script src="js/config.js"></script>
   <script src="js/api.js"></script>
   <script src="js/auth.js"></script>
   <!-- <script src="js/premium-scroll.js"></script> -->

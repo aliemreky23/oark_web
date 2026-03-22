@@ -644,6 +644,11 @@ a {
   cursor: pointer;
 }
 
+/* Instant Auth Toggle */
+.is-logged-in .auth-login-btn { display: none !important; }
+.is-logged-in .nav-user-profile { display: flex !important; }
+.is-logged-in .nav-user-profile[style*="none"] { display: flex !important; }
+
 .nav-user-profile:hover {
   background: rgba(255, 255, 255, 0.2);
   border-color: rgba(255, 255, 255, 0.4);

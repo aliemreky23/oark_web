@@ -17,6 +17,19 @@
     <link rel="apple-touch-icon" sizes="180x180" href="assets/logo.png">
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        (function() {
+            try {
+                const session = localStorage.getItem('sb-hxwlwnlfnnsflbkkbbea-auth-token');
+                if (session) {
+                    const data = JSON.parse(session);
+                    if (data && data.user && data.expires_at > (Date.now() / 1000)) {
+                        document.documentElement.classList.add('is-logged-in');
+                    }
+                }
+            } catch (e) {}
+        })();
+    </script>
 </head>
 
 <body>
@@ -37,8 +50,8 @@
           <a href="#" class="dropdown-toggle">Politikalar <i class="fas fa-chevron-down"></i></a>
           <div class="dropdown-menu">
             <a href="privacy.html" class="dropdown-item"><i class="fas fa-user-shield"></i> Gizlilik Politikası</a>
-            <a href="privacy.html#kvkk" class="dropdown-item"><i class="fas fa-shield-halved"></i> KVKK Politikası</a>
-            <a href="sartlar.html" class="dropdown-item"><i class="fas fa-file-contract"></i> Kullanım Koşulları</a>
+            <a href="kvkk.html" class="dropdown-item"><i class="fas fa-shield-halved"></i> KVKK Politikası</a>
+            <a href="sartlar.html" class="dropdown-item"><i class="fas fa-file-contract"></i> Kullanıcı Sözleşmesi ve Kullanım Koşulları</a>
             <a href="acik-riza.html" class="dropdown-item"><i class="fas fa-check-double"></i> Açık Rıza Metni</a>
             <a href="kampus-sozlesmesi.html" class="dropdown-item"><i class="fas fa-university"></i> Kampüs Sözleşmesi</a>
             <a href="kampus-acik-riza.html" class="dropdown-item"><i class="fas fa-file-signature"></i> Kampüs Açık Rıza</a>
@@ -86,7 +99,7 @@
           <a href="#" class="mobile-link accordion-toggle">Politikalar <i class="fas fa-chevron-down"></i></a>
           <div class="accordion-content">
             <a href="privacy.html" class="mobile-link accordion-link">Gizlilik</a>
-            <a href="privacy.html#kvkk" class="mobile-link accordion-link">KVKK</a>
+            <a href="kvkk.html" class="mobile-link accordion-link">KVKK</a>
             <a href="sartlar.html" class="mobile-link accordion-link">Sözleşme</a>
             <a href="acik-riza.html" class="mobile-link accordion-link">Açık Rıza</a>
             <a href="kampus-sozlesmesi.html" class="mobile-link accordion-link">Kampüs Sözleşme</a>
@@ -98,6 +111,13 @@
       </div>
       <div class="mobile-menu-actions">
         <a href="login.html" class="btn btn-secondary auth-login-btn">Giriş Yap</a>
+        <!-- User Profile Widget (Mobile) -->
+        <a href="profile.html" class="nav-user-profile" style="display: none; align-items: center; gap: 0.75rem; text-decoration: none; background: rgba(255,255,255,0.1); padding: 0.5rem 1rem; border-radius: 99px;">
+          <div class="nav-user-avatar" style="width: 32px; height: 32px; font-size: 0.9rem;">
+            <i class="fas fa-user"></i>
+          </div>
+          <span class="nav-user-name" style="color: white; font-weight: 500;">Profilim</span>
+        </a>
         <a href="download.html" class="btn btn-primary">İndir</a>
       </div>
     </div>
@@ -108,37 +128,20 @@
         <div class="container legal-content">
             <div class="glass-card">
                 <h1>OARK KAMPÜS MODU EK SÖZLEŞMESİ</h1>
-                <p class="text-muted" style="font-size: 0.9rem; margin-bottom: 2rem;">Son Güncelleme: 13 Mart 2026</p>
+                <p class="text-muted" style="font-size: 0.9rem; margin-bottom: 2rem;">Son Güncelleme: 22 Mart 2026</p>
 
-                <p>Bu sözleşme, OARK temel üyelik sözleşmesine ek olarak, sadece "Kampüs Modu"nu aktif hale getiren kullanıcılar için geçerlidir.</p>
+                <p>İşbu metin, Oark Genel Kullanıcı Sözleşmesi'nin ayrılmaz bir parçasıdır ve yalnızca Kampüs Modu'na giriş yapmak isteyen kullanıcılar için geçerlidir.</p>
 
-                <h2 class="text-gradient">1. Ek İşlenen Veriler</h2>
-                
-                <h3>A. Konum Verisi (Anlık)</h3>
-                <p>Kampüs modunda harita üzerinden fiziksel etkinlikleri ve ilanları görebilmeniz için <strong>Anlık Konum Veriniz</strong> talep edilir. OARK veri minimizasyonu ilkesi gereği;</p>
-                <ul>
-                    <li>Konumunuzu arka planda takip etmez.</li>
-                    <li>Rota kaydı tutmaz.</li>
-                    <li>Geçmiş konum verilerinizi sunucularında saklamaz.</li>
-                </ul>
+                <h2 class="text-gradient">1. KAMPÜS MODUNA KATILIM ŞARTLARI</h2>
+                <p>1.1. Kampüs Modu, yalnızca Türkiye'deki üniversitelere ait, aktif ve geçerli bir ".edu.tr" uzantılı e-posta adresi doğrulamasını başarıyla tamamlayan öğrencilerin kullanımına açık, izole bir sosyalleşme alanıdır.</p>
+                <p>1.2. Kullanıcı, Kampüs Modu'na giriş yaparken beyan ettiği üniversite, bölüm ve sınıf bilgilerinin gerçeği yansıttığını kabul ve taahhüt eder.</p>
 
-                <h3>B. Öğrenci Doğrulaması</h3>
-                <p>Kampüs moduna erişim için istenen <strong>Öğrenci Belgesi (e-Devlet)</strong> ve <strong>Üniversite E-posta adresi</strong>, yalnızca anlık statü onayı için kullanılır. Belgeniz sistem tarafından onaylandığı saniye sunucularımızdan <strong>kalıcı olarak silinir (Anlık İmha).</strong> Sistemde sadece "Doğrulandı" ibaresi (Boolean) saklanır.</p>
+                <h2 class="text-gradient">2. KAMPÜS İÇİ GÜVENLİK VE ETKİLEŞİM</h2>
+                <p>2.1. Kampüs Modu içindeki forumlar, ilanlar (listings) ve etkinlik eşleşmeleri yalnızca o üniversitenin veya belirlenmiş kampüs ağının doğrulanmış öğrencilerine gösterilir.</p>
+                <p>2.2. Kampüs Modu kullanıcısı, platform üzerindeki "Öğrenci" statüsünü kötüye kullanamaz; kampüs içi etkinlik adı altında ticari satış, yasadışı toplanma veya üniversite kurallarına aykırı eylemler organize edemez.</p>
 
-                <hr style="margin: 2rem 0; opacity: 0.1;">
-
-                <h2 class="text-gradient">2. Fiziksel Buluşmalar ve Sorumluluk Reddi</h2>
-                <div style="padding: 1.5rem; background: rgba(239, 68, 68, 0.1); border-radius: 12px; border: 1px solid rgba(239, 68, 68, 0.2); margin-bottom: 2rem;">
-                    <p style="color: #ef4444; font-weight: bold; margin-bottom: 1rem;">ÖNEMLİ UYARI:</p>
-                    <p style="margin-bottom: 0;">
-                        Kampüs modu; üniversiteler ve öğrenci kulüpleri için özel forum ve harita alanları sunan dijital bir platformdur. OARK, kullanıcıların harita üzerinden veya ilanlarla gerçek hayatta (fiziksel olarak) gerçekleştirdikleri buluşmaları <strong>organize etmez ve güvenliklerini garanti etmez.</strong>
-                    </p>
-                </div>
-                
-                <p>Fiziksel buluşmalarda yaşanabilecek her türlü adli vakadan, maddi/manevi zarardan veya anlaşmazlıktan <strong>kullanıcılar bizzat kendileri sorumludur.</strong> OARK, bu buluşmalarda yalnızca dijital bir aracı/yayıncı konumundadır ve hukuken sorumlu tutulamaz.</p>
-
-                <h2 class="text-gradient">3. Forum Kuralları</h2>
-                <p>Kampüsteki özel forumlarda (Üniversite ve Kulüp kategorileri) yapılacak paylaşımlarda topluluk kurallarına aykırı, yanıltıcı veya taciz edici içerik üreten kullanıcıların Kampüs Modu erişimi dondurulabilir veya hesapları kalıcı olarak banlanabilir.</p>
+                <h2 class="text-gradient">3. KAMPÜS STATÜSÜNÜN İPTALİ</h2>
+                <p>3.1. Oark Yönetimi; kullanıcının mezun olması, ".edu.tr" e-posta adresinin geçerliliğini yitirmesi, başkasına ait bir öğrenci e-postası kullandığının tespit edilmesi veya kampüs içi topluluk kurallarını ihlal etmesi durumunda, kullanıcının Kampüs Modu erişimini derhal iptal etme veya hesabı tamamen standart kullanıcı moduna düşürme hakkına sahiptir.</p>
             </div>
         </div>
     </main>
@@ -173,8 +176,8 @@
                     <h4>Yasal</h4>
                     <ul>
                         <li><a href="privacy.html">Gizlilik Politikası</a></li>
-                        <li><a href="privacy.html#kvkk">KVKK Politikası</a></li>
-                        <li><a href="sartlar.html">Kullanım Koşulları</a></li>
+                        <li><a href="kvkk.html">KVKK Politikası</a></li>
+                        <li><a href="sartlar.html">Kullanıcı Sözleşmesi ve Kullanım Koşulları</a></li>
                         <li><a href="acik-riza.html">Açık Rıza Metni</a></li>
                         <li><a href="kampus-sozlesmesi.html">Kampüs Sözleşmesi</a></li>
                         <li><a href="kampus-acik-riza.html">Kampüs Açık Rıza</a></li>

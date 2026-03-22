@@ -10,50 +10,21 @@ let profileState = {
     uniName: ''
 };
 
-// Handle PDF Upload (Simulation)
-window.handleStudentUpload = async (event) => {
-    const file = event.target.files[0];
-    if (!file) return;
-
-    if (file.type !== 'application/pdf') {
-        alert('Lütfen geçerli bir PDF dosyası yükleyin.');
-        return;
-    }
-
-    if (file.size > 5 * 1024 * 1024) { // 5MB
-        alert('Dosya boyutu 5MB\'dan küçük olmalıdır.');
-        return;
-    }
-
-    // UI Feedback
-    const label = event.target.parentElement.querySelector('label');
-    const originalContent = label.innerHTML;
-
-    label.style.pointerEvents = 'none';
-    label.innerHTML = `
-        <div class="spinner" style="margin-bottom: 0.5rem;"></div>
-        <span style="color: var(--color-secondary);">Belge Analiz Ediliyor...</span>
-    `;
-
-    // Simulate Processing (2 seconds)
-    await new Promise(r => setTimeout(r, 2000));
-
-    // Show Success & Move to Email Step
-    // In a real app, we would upload to storage here.
-    // For now, we trust the PDF is valid and proceed to Email Verification which is the real check.
-
-    document.getElementById('upload-step').style.display = 'none';
+// Handle Student Verification (Skip document upload, go to email directly)
+document.addEventListener('DOMContentLoaded', () => {
+    const uploadStep = document.getElementById('upload-step');
     const emailStep = document.getElementById('email-step');
-    emailStep.style.display = 'block';
-    // Animation removed to prevent visibility issues
-    // emailStep.classList.add('fade-up');
-
-    // Auto-fill email if it's an edu mail
-    const userEmail = window.authManager?.user?.email;
-    if (userEmail && userEmail.endsWith('.edu.tr')) {
-        document.getElementById('edu-email').value = userEmail;
+    if (uploadStep && emailStep) {
+        uploadStep.style.display = 'none';
+        emailStep.style.display = 'block';
+        
+        // Auto-fill email if it's an edu mail
+        const userEmail = window.authManager?.user?.email;
+        if (userEmail && userEmail.endsWith('.edu.tr')) {
+            document.getElementById('edu-email').value = userEmail;
+        }
     }
-};
+});
 
 // Handle Edu Email Submit
 window.handleEduEmailSubmit = async () => {

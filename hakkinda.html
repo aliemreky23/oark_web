@@ -18,6 +18,19 @@
 
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        (function() {
+            try {
+                const session = localStorage.getItem('sb-hxwlwnlfnnsflbkkbbea-auth-token');
+                if (session) {
+                    const data = JSON.parse(session);
+                    if (data && data.user && data.expires_at > (Date.now() / 1000)) {
+                        document.documentElement.classList.add('is-logged-in');
+                    }
+                }
+            } catch (e) {}
+        })();
+    </script>
 </head>
 
 <body>
@@ -39,9 +52,9 @@
                     <div class="dropdown-menu">
                         <a href="privacy.html" class="dropdown-item"><i class="fas fa-user-shield"></i> Gizlilik
                             Politikası</a>
-                        <a href="privacy.html#kvkk" class="dropdown-item"><i class="fas fa-shield-halved"></i> KVKK Politikası</a>
-                        <a href="sartlar.html" class="dropdown-item"><i class="fas fa-file-contract"></i> Kullanım
-                            Koşulları</a>
+                        <a href="kvkk.html" class="dropdown-item"><i class="fas fa-shield-halved"></i> KVKK Politikası</a>
+                        <a href="sartlar.html" class="dropdown-item"><i class="fas fa-file-contract"></i> Kullanıcı
+                            Sözleşmesi ve Kullanım Koşulları</a>
                         <a href="acik-riza.html" class="dropdown-item"><i class="fas fa-check-double"></i> Açık Rıza
                             Metni</a>
                         <a href="kampus-sozlesmesi.html" class="dropdown-item"><i class="fas fa-university"></i> Kampüs Sözleşmesi</a>
@@ -88,7 +101,7 @@
                     <a href="#" class="mobile-link accordion-toggle">Politikalar <i class="fas fa-chevron-down"></i></a>
                     <div class="accordion-content">
                         <a href="privacy.html" class="mobile-link accordion-link">Gizlilik</a>
-            <a href="privacy.html#kvkk" class="mobile-link accordion-link">KVKK</a>
+            <a href="kvkk.html" class="mobile-link accordion-link">KVKK</a>
             <a href="sartlar.html" class="mobile-link accordion-link">Sözleşme</a>
             <a href="acik-riza.html" class="mobile-link accordion-link">Açık Rıza</a>
             <a href="kampus-sozlesmesi.html" class="mobile-link accordion-link">Kampüs Sözleşme</a>
@@ -100,6 +113,13 @@
             </div>
             <div class="mobile-menu-actions">
                 <a href="login.html" class="btn btn-secondary auth-login-btn">Giriş Yap</a>
+                <!-- User Profile Widget (Mobile) -->
+                <a href="profile.html" class="nav-user-profile" style="display: none; align-items: center; gap: 0.75rem; text-decoration: none; background: rgba(255,255,255,0.1); padding: 0.5rem 1rem; border-radius: 99px;">
+                    <div class="nav-user-avatar" style="width: 32px; height: 32px; font-size: 0.9rem;">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <span class="nav-user-name" style="color: white; font-weight: 500;">Profilim</span>
+                </a>
                 <a href="download.html" class="btn btn-primary">İndir</a>
             </div>
         </div>
@@ -156,8 +176,8 @@
                     <h4>Yasal</h4>
                     <ul>
                         <li><a href="privacy.html">Gizlilik Politikası</a></li>
-                        <li><a href="privacy.html#kvkk">KVKK Politikası</a></li>
-                        <li><a href="sartlar.html">Kullanım Koşulları</a></li>
+                        <li><a href="kvkk.html">KVKK Politikası</a></li>
+                        <li><a href="sartlar.html">Kullanıcı Sözleşmesi ve Kullanım Koşulları</a></li>
                         <li><a href="acik-riza.html">Açık Rıza Metni</a></li>
                         <li><a href="kampus-sozlesmesi.html">Kampüs Sözleşmesi</a></li>
                         <li><a href="kampus-acik-riza.html">Kampüs Açık Rıza</a></li>

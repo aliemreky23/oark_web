@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sözleşmeler ve Kullanım Koşulları - OARK</title>
-    <meta name="description" content="OARK Gizlilik Politikası ve Kullanım Koşulları">
+    <title>Kullanıcı Sözleşmesi ve Kullanım Koşulları - OARK</title>
+    <meta name="description" content="OARK Kullanıcı Sözleşmesi ve Kullanım Koşulları">
 
     <!-- CSS -->
     <link rel="stylesheet" href="css/styles.css">
@@ -17,6 +17,19 @@
     <link rel="apple-touch-icon" sizes="180x180" href="assets/logo.png">
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        (function() {
+            try {
+                const session = localStorage.getItem('sb-hxwlwnlfnnsflbkkbbea-auth-token');
+                if (session) {
+                    const data = JSON.parse(session);
+                    if (data && data.user && data.expires_at > (Date.now() / 1000)) {
+                        document.documentElement.classList.add('is-logged-in');
+                    }
+                }
+            } catch (e) {}
+        })();
+    </script>
 </head>
 
 <body>
@@ -38,9 +51,9 @@
                     <div class="dropdown-menu">
                         <a href="privacy.html" class="dropdown-item"><i class="fas fa-user-shield"></i> Gizlilik
                             Politikası</a>
-                        <a href="privacy.html#kvkk" class="dropdown-item"><i class="fas fa-shield-halved"></i> KVKK Politikası</a>
-                        <a href="sartlar.html" class="dropdown-item"><i class="fas fa-file-contract"></i> Kullanım
-                            Koşulları</a>
+                        <a href="kvkk.html" class="dropdown-item"><i class="fas fa-shield-halved"></i> KVKK Politikası</a>
+                        <a href="sartlar.html" class="dropdown-item"><i class="fas fa-file-contract"></i> Kullanıcı
+                            Sözleşmesi ve Kullanım Koşulları</a>
                         <a href="acik-riza.html" class="dropdown-item"><i class="fas fa-check-double"></i> Açık Rıza
                             Metni</a>
                         <a href="kampus-sozlesmesi.html" class="dropdown-item"><i class="fas fa-university"></i> Kampüs Sözleşmesi</a>
@@ -89,7 +102,7 @@
                     <a href="#" class="mobile-link accordion-toggle">Politikalar <i class="fas fa-chevron-down"></i></a>
                     <div class="accordion-content">
                         <a href="privacy.html" class="mobile-link accordion-link">Gizlilik</a>
-            <a href="privacy.html#kvkk" class="mobile-link accordion-link">KVKK</a>
+            <a href="kvkk.html" class="mobile-link accordion-link">KVKK</a>
             <a href="sartlar.html" class="mobile-link accordion-link">Sözleşme</a>
             <a href="acik-riza.html" class="mobile-link accordion-link">Açık Rıza</a>
             <a href="kampus-sozlesmesi.html" class="mobile-link accordion-link">Kampüs Sözleşme</a>
@@ -101,6 +114,13 @@
             </div>
             <div class="mobile-menu-actions">
                 <a href="login.html" class="btn btn-secondary auth-login-btn">Giriş Yap</a>
+                <!-- User Profile Widget (Mobile) -->
+                <a href="profile.html" class="nav-user-profile" style="display: none; align-items: center; gap: 0.75rem; text-decoration: none; background: rgba(255,255,255,0.1); padding: 0.5rem 1rem; border-radius: 99px;">
+                    <div class="nav-user-avatar" style="width: 32px; height: 32px; font-size: 0.9rem;">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <span class="nav-user-name" style="color: white; font-weight: 500;">Profilim</span>
+                </a>
                 <a href="download.html" class="btn btn-primary">İndir</a>
             </div>
         </div>
@@ -110,62 +130,38 @@
     <main class="legal-page">
         <div class="container legal-content">
             <div class="glass-card">
-                <h1>OARK GİZLİLİK POLİTİKASI VE KULLANIM KOŞULLARI</h1>
+                <h1>OARK KULLANICI SÖZLEŞMESİ VE KULLANIM KOŞULLARI</h1>
                 <p class="text-muted" style="font-size: 0.9rem; margin-bottom: 2rem;">Veri Sorumlusu: OARK Platformu |
                     Son Güncelleme: 13 Mart 2026</p>
 
-                <h2 class="text-gradient">A. GİZLİLİK POLİTİKASI</h2>
+                <h2 class="text-gradient">KULLANICI SÖZLEŞMESİ VE KULLANIM KOŞULLARI</h2>
 
-                <h3>1. İşlenen Veriler ve Amaçları</h3>
-                <p>OARK, oyuncuları bir araya getiren bir sosyal ağdır. Profil oluşturmak, eşleşme sağlamak ve "Keşfet"
-                    (Gamers) forumunda etkileşime girmeniz için aşağıdaki verileriniz işlenir:</p>
+                <h3>1. HESAP KURALLARI VE GÜVENLİK</h3>
+                <p>1.1. Kullanıcı, Oark hesabı açabilmek için en az 18 yaşında olduğunu beyan eder.<br>
+                1.2. Hesaplar kişiye özeldir; devredilemez, satılamaz ve bir başkasının adına, kimliğine veya fotoğrafına bürünerek sahte hesap (fake account) açılamaz.<br>
+                1.3. Kullanıcı, uygulamanın genel alanlarında yaptığı tüm paylaşımlardan tek başına sorumludur.</p>
+
+                <h3>2. İÇERİK YÜKÜMLÜLÜKLERİ (UGC) VE SIFIR TOLERANS POLİTİKASI</h3>
+                <p>2.1. Kullanıcıların profil, forum, listing veya mesajlarda aşağıdaki içerikleri paylaşması kesinlikle yasaktır ve hesabın kalıcı olarak silinmesi sebebidir:</p>
                 <ul>
-                    <li>E-posta, Kullanıcı Adı</li>
-                    <li>Şifre (Tek yönlü şifrelenir/hashlenir, tarafımızca görülemez)</li>
-                    <li>Cinsiyet, Yaş/Doğum Tarihi</li>
-                    <li>Oyun İçi Nick/Rank bilgileri</li>
-                    <li>IP adresi ve cihaz bildirim (FCM) belirteçleri</li>
-                    <li>Profil ve forum paylaşımları için fotoğraf galerisi izni</li>
+                    <li>Hakaret, nefret söylemi, ırkçılık veya ayrımcılık içeren metin/görseller.</li>
+                    <li>Şiddet, tehdit, taciz (cyberbullying) ve yasadışı faaliyete teşvik eden içerikler.</li>
+                    <li>Müstehcen, pornografik veya cinsellik barındıran materyaller.</li>
+                    <li>Üçüncü şahısların telif haklarını veya gizliliğini ihlal eden paylaşımlar.</li>
                 </ul>
-                <p><strong>Önemli:</strong> Temel kullanımda konum bilginiz ve öğrenci belgeleriniz KESİNLİKLE talep
-                    edilmez.</p>
+                <p>2.2. Kullanıcılar, kural ihlali yapan hesapları Uygulama içindeki "Kullanıcıyı Engelle (Block)" ve "Şikayet Et (Report)" butonları vasıtasıyla bildirmekle yükümlüdür.</p>
 
-                <h3>2. Yaş Sınırı</h3>
-                <p>Platformumuzu kullanabilmek için en az <strong>13 yaşında</strong> olmanız gerekmektedir. 13 yaşından
-                    küçüklerin kayıtları tespit edildiği an sorgusuz silinir.</p>
+                <h3>3. OARK'IN HAKLARI VE MODERASYON</h3>
+                <p>3.1. Oark Yönetimi, platformun güvenliğini korumak amacıyla önceden haber vermeksizin; kuralları ihlal eden hesapları askıya alma veya silme, oluşturulan her türlü içeriği (UGC) veritabanından kalıcı olarak yok etme hakkını saklı tutar.<br>
+                3.2. Oark üzerinden tanışarak gerçekleştirilecek fiziksel buluşmalarda yaşanabilecek her türlü olumsuzluktan Oark sorumlu tutulamaz.</p>
 
-                <h3>3. Mesajlaşma Güvenliği (E2EE)</h3>
-                <p>Kullanıcılar arası özel mesajlar <strong>Uçtan Uca Şifreleme (E2EE)</strong> ile korunur ve OARK
-                    yönetimi tarafından okunamaz. Ancak bir ihlal bildirimi (Raporlama) durumunda, şikayet eden
-                    kullanıcının cihazında şifresi çözülmüş olan <strong>son 10 mesaj</strong>, inceleme için güvenli
-                    moderasyon panelimize iletilir.</p>
+                <h3>4. FİNANSAL KOŞULLAR</h3>
+                <p>4.1. Uygulama içi "Coin"ler gerçek para değeri taşımaz ve nakde çevrilemez.<br>
+                4.2. Satın alınan Premium üyelik ve dijital ürünlerde iptal ve para iadesi yapılmaz.</p>
 
-                <h3>4. OARK Coin ve Finansal İşlemler</h3>
-                <p>Platform içi sanal ekonomi (OARK Coin) satın alımları Google Play ve ilgili uygulama mağazaları
-                    üzerinden yapılır. OARK, hiçbir kredi kartı bilginizi sistemlerinde tutmaz.</p>
-
-                <h3>5. Veri Aktarımı ve Hesap Silme</h3>
-                <p>Altyapı hizmetleri (örn. Supabase) nedeniyle verileriniz uluslararası güvenlik standartlarına sahip
-                    yurt dışı sunucularında güvenle saklanır. Verilerinizin ve hesabınızın kalıcı olarak silinmesi için
-                    <strong>destek.oark@gmail.com</strong> adresine "Hesap Silme Talebi" iletmeniz yeterlidir.</p>
-
-                <hr style="margin: 2rem 0; opacity: 0.1;">
-
-                <h2 class="text-gradient">B. KULLANIM KOŞULLARI</h2>
-
-                <h3>1. Topluluk Kuralları ve Ban</h3>
-                <p>Platform içi görünürlük filtrelerini (Örn: Sadece Kadınlar / Sadece Erkekler) suistimal eden,
-                    cinsiyet veya yaş beyanında sahtecilik yapan, hakaret ve spam içeren eylemlerde bulunan kullanıcılar
-                    <strong>kalıcı olarak uzaklaştırılır (Ban).</strong></p>
-
-                <h3>2. Misafir Davet Sistemi</h3>
-                <p>Platforma "Misafir (Guest)" davet eden kullanıcı, davet ettiği kişilerin temel bilgilerini sisteme
-                    girerken o kişilerin açık rızasını almış kabul edilir. Doğacak hukuki anlaşmazlıklarda tüm
-                    sorumluluk davet eden kullanıcıya aittir.</p>
-
-                <h3>3. OARK'ın Rolü</h3>
-                <p>OARK dijital bir aracı platformdur. Kullanıcılar arasındaki etkileşimlerden ve paylaşımlardan doğan
-                    sorumluluk bizzat kullanıcılara aittir.</p>
+                <h3>5. FESİH VE UYUŞMAZLIK</h3>
+                <p>5.1. Kullanıcı dilediği zaman hesabını silebilir. Oark Yönetimi de tek taraflı olarak sözleşmeyi feshedebilir.<br>
+                5.2. Uyuşmazlıklarda Ankara Mahkemeleri ve İcra Daireleri yetkilidir.</p>
             </div>
         </div>
     </main>
@@ -200,8 +196,8 @@
                     <h4>Yasal</h4>
                     <ul>
                         <li><a href="privacy.html">Gizlilik Politikası</a></li>
-                        <li><a href="privacy.html#kvkk">KVKK Politikası</a></li>
-                        <li><a href="sartlar.html">Kullanım Koşulları</a></li>
+                        <li><a href="kvkk.html">KVKK Politikası</a></li>
+                        <li><a href="sartlar.html">Kullanıcı Sözleşmesi ve Kullanım Koşulları</a></li>
                         <li><a href="acik-riza.html">Açık Rıza Metni</a></li>
                         <li><a href="kampus-sozlesmesi.html">Kampüs Sözleşmesi</a></li>
                         <li><a href="kampus-acik-riza.html">Kampüs Açık Rıza</a></li>

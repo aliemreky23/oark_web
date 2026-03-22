@@ -227,7 +227,7 @@ class AuthManager {
             </div>
             <h3 style="color: var(--color-text, #2d2640); font-size: 1.3rem; margin-bottom: 0.75rem;">Öğrenci Doğrulaması Uygulamada</h3>
             <p style="font-size: 0.95rem; color: var(--color-text-muted, #5a4d6e); max-width: 80%; margin: 0 auto; line-height: 1.6;">
-                OARK'ın kampüs özelliklerini kullanabilmek için lütfen <a href="download.html" style="color: #8b5cf6; font-weight: bold; text-decoration: underline;">OARK Mobil Uygulamasını</a> indirerek öğrenci belgenizi onaylatın.
+                OARK'ın kampüs özelliklerini kullanabilmek için lütfen <a href="download.html" style="color: #8b5cf6; font-weight: bold; text-decoration: underline;">OARK Mobil Uygulamasını</a> indirerek üniversite e-postanızı doğrulayın.
             </p>
         </div>
       `;
@@ -329,10 +329,9 @@ class AuthManager {
 // Global instance
 let authManager;
 
-document.addEventListener('DOMContentLoaded', () => {
-  authManager = new AuthManager();
-  window.authManager = authManager;
-});
+// Immediate initialization for faster UI updates
+authManager = new AuthManager();
+window.authManager = authManager;
 
 // --- Helper Functions ---
 
