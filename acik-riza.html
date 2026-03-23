@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Açık Rıza Metni - OARK</title>
+    <meta name="description" content="OARK Temel Açık Rıza Metni">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/logo-new.png">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        (function() {
+            try {
+                const session = localStorage.getItem('sb-hxwlwnlfnnsflbkkbbea-auth-token');
+                if (session) {
+                    const data = JSON.parse(session);
+                    if (data && data.user && data.expires_at > (Date.now() / 1000)) {
+                        document.documentElement.classList.add('is-logged-in');
+                    }
+                }
+            } catch (e) {}
+        })();
+    </script>
+</head>
+
+<body>
+
+    <!-- Header / Navbar -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <img src="assets/logo-new.png" alt="OARK">
+            </a>
+
+            <div class="nav-links">
+        <a href="index.html#hero">Ana Sayfa</a>
+        <a href="index.html#features">Özellikler</a>
+        <a href="index.html#showcase-row-1">Keşfet</a>
+        <a href="index.html#university">Kampüs</a>
+        <div class="nav-item dropdown">
+          <a href="#" class="dropdown-toggle">Politikalar <i class="fas fa-chevron-down"></i></a>
+          <div class="dropdown-menu">
+            <a href="privacy.html" class="dropdown-item"><i class="fas fa-user-shield"></i> Gizlilik Politikası</a>
+            <a href="kvkk.html" class="dropdown-item"><i class="fas fa-shield-halved"></i> KVKK Politikası</a>
+            <a href="sartlar.html" class="dropdown-item"><i class="fas fa-file-contract"></i> Kullanıcı Sözleşmesi ve Kullanım Koşulları</a>
+            <a href="acik-riza.html" class="dropdown-item"><i class="fas fa-check-double"></i> Açık Rıza Metni</a>
+            <a href="kampus-sozlesmesi.html" class="dropdown-item"><i class="fas fa-university"></i> Kampüs Sözleşmesi</a>
+            <a href="kampus-acik-riza.html" class="dropdown-item"><i class="fas fa-file-signature"></i> Kampüs Açık Rıza</a>
+          </div>
+        </div>
+        <a href="hakkinda.html">Hakkında</a>
+      </div>
+
+      
+            <div class="nav-actions">
+                <!-- Auth Buttons -->
+                <a href="login.html" class="btn btn-secondary auth-login-btn">Giriş Yap</a>
+
+                <!-- User Profile Widget (Logged In) -->
+                <a href="profile.html" class="nav-user-profile" style="display: none;">
+                    <div class="nav-user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <span class="nav-user-name">Yükleniyor...</span>
+                </a>
+
+                <a href="download.html" class="btn btn-primary">
+                    İndir <i class="fas fa-download" style="font-size: 0.8em;"></i>
+                </a>
+            </div>
+
+            <button class="hamburger" id="hamburger-menu" aria-label="Menü">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-menu-overlay" id="mobile-menu-overlay">
+    <div class="mobile-menu-content">
+            <div class="mobile-menu-links">
+        <a href="index.html#hero" class="mobile-link">Ana Sayfa</a>
+        <a href="index.html#features" class="mobile-link">Özellikler</a>
+        <a href="index.html#showcase-row-1" class="mobile-link">Keşfet</a>
+        <a href="index.html#university" class="mobile-link">Kampüs</a>
+        
+        <div class="mobile-accordion">
+          <a href="#" class="mobile-link accordion-toggle">Politikalar <i class="fas fa-chevron-down"></i></a>
+          <div class="accordion-content">
+            <a href="privacy.html" class="mobile-link accordion-link">Gizlilik</a>
+            <a href="kvkk.html" class="mobile-link accordion-link">KVKK</a>
+            <a href="sartlar.html" class="mobile-link accordion-link">Sözleşme</a>
+            <a href="acik-riza.html" class="mobile-link accordion-link">Açık Rıza</a>
+            <a href="kampus-sozlesmesi.html" class="mobile-link accordion-link">Kampüs Sözleşme</a>
+            <a href="kampus-acik-riza.html" class="mobile-link accordion-link">Kampüs Açık Rıza</a>
+          </div>
+        </div>
+
+        <a href="hakkinda.html" class="mobile-link">Hakkında</a>
+      </div>
+      <div class="mobile-menu-actions">
+        <a href="login.html" class="btn btn-secondary auth-login-btn">Giriş Yap</a>
+        <!-- User Profile Widget (Mobile) -->
+        <a href="profile.html" class="nav-user-profile" style="display: none; align-items: center; gap: 0.75rem; text-decoration: none; background: rgba(255,255,255,0.1); padding: 0.5rem 1rem; border-radius: 99px;">
+          <div class="nav-user-avatar" style="width: 32px; height: 32px; font-size: 0.9rem;">
+            <i class="fas fa-user"></i>
+          </div>
+          <span class="nav-user-name" style="color: white; font-weight: 500;">Profilim</span>
+        </a>
+        <a href="download.html" class="btn btn-primary">İndir</a>
+      </div>
+    </div>
+  </div>
+
+    <!-- Content -->
+    <main class="legal-page">
+        <div class="container legal-content">
+            <div class="glass-card">
+                <h1>OARK TEMEL AÇIK RIZA METNİ</h1>
+                <p class="text-muted" style="font-size: 0.9rem; margin-bottom: 2rem;">Son Güncelleme: 13 Mart 2026</p>
+
+                <p style="font-size: 1.1rem; line-height: 1.8;">
+                    OARK platformuna kayıt bir hesap oluşturarak; 
+                    <a href="sartlar.html" style="color: var(--color-primary); text-decoration: underline;">Gizlilik Politikası</a>'nda belirtilen kişisel verilerimin, platformun temel işlevlerini (eşleşme, forum, mesajlaşma) yerine getirebilmesi amacıyla işlenmesine ve uygulamanın bulut veritabanı altyapısının (Supabase vb.) sağlanabilmesi için uluslararası güvenlik standartlarına sahip yurt dışında bulunan sunuculara aktarılmasına <strong>özgür irademle onay veriyorum.</strong>
+                </p>
+
+                <div style="margin-top: 3rem; padding: 1.5rem; background: rgba(59, 130, 246, 0.1); border-radius: 12px; border: 1px solid rgba(59, 130, 246, 0.2);">
+                    <p style="margin-bottom: 0; font-size: 0.9rem;">
+                        <strong>Not:</strong> Bu onay, OARK'ın temel özelliklerini kullanabilmeniz için gereklidir. Onayınızı dilediğiniz zaman hesabınızı silerek veya tarafımıza ulaşarak geri çekebilirsiniz.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <a href="index.html" class="footer-logo">
+                        <img src="assets/logo-white.png" alt="OARK">
+                    </a>
+                    <p style="font-size: 0.9rem;">
+                        Oyun arkadaşı bulmanın en kolay ve güvenli yolu. <br>
+                        Tüm oyuncular ve üniversite öğrencileri için oluşturulmuş, <br>
+                        güvenli sosyal ağ platformu.
+                    </p>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Keşfet</h4>
+                    <ul>
+                        <li><a href="index.html#hero">Ana Sayfa</a></li>
+                        <li><a href="index.html#features">Özellikler</a></li>
+                        <li><a href="index.html#showcase-row-1">Keşfet</a></li>
+                        <li><a href="hakkinda.html">Hakkında</a></li>
+                        <li><a href="download.html">İndir</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Yasal</h4>
+                    <ul>
+                        <li><a href="privacy.html">Gizlilik Politikası</a></li>
+                        <li><a href="kvkk.html">KVKK Politikası</a></li>
+                        <li><a href="sartlar.html">Kullanıcı Sözleşmesi ve Kullanım Koşulları</a></li>
+                        <li><a href="acik-riza.html">Açık Rıza Metni</a></li>
+                        <li><a href="kampus-sozlesmesi.html">Kampüs Sözleşmesi</a></li>
+                        <li><a href="kampus-acik-riza.html">Kampüs Açık Rıza</a></li>
+                        <li><a href="delete-account.html">Hesap Silme</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>İletişim</h4>
+                    <ul>
+                        <li><a href="mailto:destek.oark@gmail.com">Destek</a></li>
+                        <li><a href="https://www.instagram.com/oark.official/" target="_blank">Instagram</a></li>
+
+                    </ul>
+                </div>
+            </div>
+
+            <div class="copyright">
+                &copy; 2026 OARK Inc. Tüm hakları saklıdır.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="js/api.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/auth.js?v=5"></script>
+    <script src="js/main.js?v=28"></script>
+</body>
+
+</html>
