@@ -137,6 +137,10 @@ function initSmoothScroll() {
 
       if (isInternal && hasHash) {
         const targetId = url.hash;
+        
+        // Allow native CSS scroll-margin to handle the layout for this anchor
+        if (targetId === '#sorumluluk-reddi') return;
+
         const target = document.querySelector(targetId);
 
         if (target) {
@@ -151,6 +155,10 @@ function initSmoothScroll() {
 function handleInitialHash() {
   if (window.location.hash) {
     const targetId = window.location.hash;
+    
+    // Allow native CSS scroll-margin to handle the layout for this anchor
+    if (targetId === '#sorumluluk-reddi') return;
+
     const target = document.querySelector(targetId);
     if (target) {
       // Small delay to ensure all layouts/images are ready
