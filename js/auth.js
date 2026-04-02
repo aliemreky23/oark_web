@@ -166,7 +166,11 @@ class AuthManager {
         if (el.tagName === 'IMG') {
           el.src = avatarUrl;
         } else {
-          el.innerHTML = `<img src="${avatarUrl}" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">`;
+          el.innerHTML = '';
+          const img = document.createElement('img');
+          img.src = avatarUrl;
+          img.style.cssText = 'width:100%; height:100%; border-radius:50%; object-fit:cover;';
+          el.appendChild(img);
         }
       });
     } else {
@@ -183,10 +187,14 @@ class AuthManager {
     const mainAvatar = document.querySelector('.profile-avatar');
     if (mainAvatar) {
       if (avatarUrl) {
-        mainAvatar.innerHTML = `<img src="${avatarUrl}" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">`;
+        mainAvatar.innerHTML = '';
+        const img = document.createElement('img');
+        img.src = avatarUrl;
+        img.style.cssText = 'width:100%; height:100%; border-radius:50%; object-fit:cover;';
+        mainAvatar.appendChild(img);
         mainAvatar.style.background = 'transparent';
       } else {
-        mainAvatar.innerHTML = displayName.charAt(0).toUpperCase();
+        mainAvatar.textContent = displayName.charAt(0).toUpperCase();
       }
     }
 
