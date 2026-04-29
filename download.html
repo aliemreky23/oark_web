@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OARK İndir - Oyun Arkadaşı Bulma Uygulaması | App Store & Google Play</title>
     <meta name="description"
-        content="OARK mobil uygulaması çok yakında App Store ve Google Play'de! Dijital oyunlardan kutu oyunlarına, kampüslere ve kulüplere kadar her şey burada.">
+        content="OARK mobil uygulamasını App Store ve Google Play'den hemen indir! Dijital oyunlardan kutu oyunlarına, kampüslere ve kulüplere kadar her şey burada.">
     <meta name="keywords"
         content="oark indir, oark apk, oyun arkadaşı uygulaması, masa oyunları, kampüs, kulüpler, oark ios, oark android, game mate app">
     <meta name="robots" content="index, follow">
@@ -98,15 +98,74 @@
             gap: 1.5rem;
             justify-content: center;
             margin-bottom: 3rem;
-            opacity: 0.6;
-            filter: grayscale(0.5);
             transition: all 0.5s ease;
             flex-wrap: wrap;
         }
 
-        .stores-preview:hover {
-            opacity: 1;
-            filter: grayscale(0);
+        .store-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.85rem 1.8rem;
+            background: #2d2640;
+            color: #ffffff;
+            border-radius: 14px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 15px rgba(45, 38, 64, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .store-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .store-btn:hover::before {
+            left: 100%;
+        }
+
+        .store-btn:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 8px 25px rgba(45, 38, 64, 0.35);
+            background: #1a1528;
+        }
+
+        .store-btn:active {
+            transform: translateY(-1px) scale(1.01);
+        }
+
+        .store-btn i {
+            font-size: 1.6rem;
+        }
+
+        .store-btn-text {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            line-height: 1.2;
+        }
+
+        .store-btn-text small {
+            font-size: 0.65rem;
+            font-weight: 400;
+            opacity: 0.8;
+            letter-spacing: 0.03em;
+        }
+
+        .store-btn-text span {
+            font-size: 1.05rem;
+            font-weight: 700;
         }
 
         .notify-box {
@@ -439,29 +498,37 @@
         </h1>
 
         <p class="subtitle">
-            Üniversite öğrencilerine özel, güvenli ve %100 doğrulanmış sosyal ağ KAMPÜS+ mobil uygulaması App Store ve
-            Google Play'de yerini almak için gün sayıyor.
+            Üniversite öğrencilerine özel, güvenli ve %100 doğrulanmış sosyal ağ KAMPÜS+ artık App Store ve
+            Google Play'de!
             Dijital oyunlardan kutu oyunlarına, halı saha maçlarından kahve buluşmalarına kadar her etkinlik cebinde.
         </p>
 
         <div class="stores-preview">
-            <div class="btn btn-secondary" style="pointer-events: none;">
-                <i class="fab fa-apple" style="font-size: 1.5rem;"></i> App Store
-            </div>
-            <div class="btn btn-secondary" style="pointer-events: none;">
-                <i class="fab fa-google-play" style="font-size: 1.5rem;"></i> Google Play
-            </div>
+            <a href="https://apps.apple.com/tr/app/oark/id6760979110?l=tr" target="_blank" rel="noopener noreferrer" class="store-btn" id="btn-appstore">
+                <i class="fab fa-apple"></i>
+                <div class="store-btn-text">
+                    <small>İndir</small>
+                    <span>App Store</span>
+                </div>
+            </a>
+            <a href="https://play.google.com/store/apps/details?id=com.app.oark" target="_blank" rel="noopener noreferrer" class="store-btn" id="btn-playstore">
+                <i class="fab fa-google-play"></i>
+                <div class="store-btn-text">
+                    <small>İndir</small>
+                    <span>Google Play</span>
+                </div>
+            </a>
         </div>
 
         <div class="notify-box" id="newsletter-box">
             <div id="newsletter-form-container">
-                <h3 style="margin-bottom: 0.5rem;"><i class="fas fa-bell"></i> Haberdar Ol</h3>
-                <p style="font-size: 0.9rem; color: #5a4d6e;">Yayınlandığı an sana haber verelim.</p>
+                <h3 style="margin-bottom: 0.5rem;"><i class="fas fa-sparkles"></i> Yeniliklerden Haberdar Ol</h3>
+                <p style="font-size: 0.9rem; color: #5a4d6e;">Yeni özellikler, güncellemeler ve kampüs etkinliklerinden ilk sen haberdar ol.</p>
 
                 <form class="notify-input-group" onsubmit="handleNewsletterSubscription(event)">
                     <input type="email" placeholder="E-posta adresin" class="notify-input" id="newsletter-email"
                         required>
-                    <button type="submit" class="btn-notify">Kaydet</button>
+                    <button type="submit" class="btn-notify">Abone Ol</button>
                 </form>
             </div>
 
@@ -471,8 +538,8 @@
                 </div>
                 <h3 style="color: #2d2640;">Teşekkürler!</h3>
                 <p style="font-size: 0.95rem; color: #5a4d6e; line-height: 1.5;">
-                    Listenin en başındasın. Uygulama yayınlandığında sana <br>
-                    özel bir bildirim ve güncel haberleri göndereceğiz.
+                    Listeye eklendi! Yeni özellikler ve güncellemeler hakkında <br>
+                    seni bilgilendireceğiz.
                 </p>
             </div>
         </div>

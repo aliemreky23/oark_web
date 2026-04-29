@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initSmoothScroll();
   initScrollReveal();
   initStatsCounter();
-  
+
   // Handle hash on initial load
   handleInitialHash();
 });
@@ -58,7 +58,7 @@ function initMobileMenu() {
     link.addEventListener('click', (e) => {
       // Don't close menu if it's the accordion toggle
       if (link.classList.contains('accordion-toggle')) return;
-      
+
       hamburger.classList.remove('active');
       overlay.classList.remove('active');
       document.body.classList.remove('no-scroll');
@@ -94,7 +94,7 @@ function initMobileMenu() {
 function initDropdown() {
   const dropdown = document.querySelector('.nav-item.dropdown');
   const toggle = document.querySelector('.dropdown-toggle');
-  
+
   if (!dropdown || !toggle) return;
 
   // Toggle on click for desktop (in addition to hover via CSS)
@@ -137,7 +137,7 @@ function initSmoothScroll() {
 
       if (isInternal && hasHash) {
         const targetId = url.hash;
-        
+
         // Allow native CSS scroll-margin to handle the layout for this anchor
         if (targetId === '#sorumluluk-reddi') return;
 
@@ -155,7 +155,7 @@ function initSmoothScroll() {
 function handleInitialHash() {
   if (window.location.hash) {
     const targetId = window.location.hash;
-    
+
     // Allow native CSS scroll-margin to handle the layout for this anchor
     if (targetId === '#sorumluluk-reddi') return;
 
