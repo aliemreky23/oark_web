@@ -868,30 +868,31 @@ a {
   font-weight: 700;
 }
 
-/* CTA Section Store Buttons */
-.cta-section .hero-store-btn {
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-}
 
-.cta-section .hero-store-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
-  border-color: rgba(255, 255, 255, 0.4);
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
-}
 
-@media (max-width: 430px) {
+
+@media (max-width: 480px) {
+  .hero-buttons {
+    flex-wrap: nowrap;
+    gap: 0.75rem;
+  }
+
   .hero-store-btn {
-    padding: 0.85rem 1.6rem;
+    flex: 1;
+    padding: 0.75rem 0.5rem;
+    justify-content: center;
   }
 
   .hero-store-btn i {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
   }
 
   .hero-store-btn-text span {
-    font-size: 1.05rem;
+    font-size: 0.95rem;
+  }
+
+  .hero-store-btn-text small {
+    font-size: 0.65rem;
   }
 }
 
