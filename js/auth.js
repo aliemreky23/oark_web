@@ -97,7 +97,7 @@ class AuthManager {
         this.updateUI();
 
         // Redirect if on login page
-        if (window.location.pathname.includes('login.html') || window.location.pathname.includes('register.html')) {
+        if (window.location.pathname.includes('login.html')) {
           window.location.href = 'profile.html';
         }
       } else if (event === 'SIGNED_OUT') {
@@ -114,7 +114,7 @@ class AuthManager {
 
   handleRedirects() {
     const path = window.location.pathname;
-    const isLoginPage = path.includes('login.html') || path.includes('register.html');
+    const isLoginPage = path.includes('login.html');
     const isProfilePage = path.includes('profile.html');
     const hasAuthParams = window.location.hash.includes('access_token') ||
       window.location.search.includes('code');
@@ -246,25 +246,7 @@ class AuthManager {
   // Auth Methods (Now using API)
   // ========================================
 
-  async register(username, email, password, fullName, gender) {
-    try {
-      const { data, error } = await this.supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          data: {
-            username: username,
-            full_name: fullName,
-            gender: gender
-          }
-        }
-      });
-      if (error) throw error;
-      return { data, error: null };
-    } catch (err) {
-      return { data: null, error: { message: err.message } };
-    }
-  }
+
 
   async login(email, password) {
     try {
@@ -282,16 +264,7 @@ class AuthManager {
     }
   }
 
-  async loginWithGoogle() {
-    if (!this.supabase) return { error: { message: 'Supabase not initialized' } };
 
-    return await this.supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-        redirectTo: window.location.origin + '/profile.html'
-      }
-    });
-  }
 
   async resetPassword(email) {
     if (!this.supabase) return { error: { message: 'Supabase not initialized' } };
@@ -345,63 +318,7 @@ window.authManager = authManager;
 
 
 
-// Gender selection visual logic
-document.addEventListener('click', (e) => {
-  if (e.target.closest('.gender-option')) {
-    const option = e.target.closest('.gender-option');
-    document.querySelectorAll('.gender-option').forEach(opt => opt.classList.remove('selected'));
-    option.classList.add('selected');
-    const radio = option.querySelector('input[type="radio"]');
-    if (radio) radio.checked = true;
-  }
-});
 
-window.handleRegister = async (e) => {
-  e.preventDefault();
-  const username = document.getElementById('username')?.value;
-  const email = document.getElementById('email')?.value;
-  const password = document.getElementById('password')?.value;
-  const genderRadio = document.querySelector('input[name="gender-selection"]:checked');
-  const gender = genderRadio ? genderRadio.value : null;
-
-  const fullName = username; // Use username as default full name
-
-  if (!gender) {
-    alert('Lütfen cinsiyet seçimi yapın.');
-    return;
-  }
-
-  const consentPrivacy = document.getElementById('consent-privacy')?.checked;
-  const consentTerms = document.getElementById('consent-terms')?.checked;
-  const consentExplicit = document.getElementById('consent-explicit')?.checked;
-
-  if (!consentPrivacy || !consentTerms || !consentExplicit) {
-    alert('Devam etmek için lütfen tüm yasal metinleri onaylayın.');
-    return;
-  }
-
-  const btn = e.target.querySelector('button');
-  const originalText = btn.innerHTML;
-
-  try {
-    btn.disabled = true;
-    btn.innerHTML = '<span class="spinner"></span>';
-
-    const { data, error } = await authManager.register(username, email, password, fullName, gender);
-
-    if (error) {
-      alert('Kayıt başarısız: ' + error.message);
-    } else {
-      alert('Kayıt başarılı! Lütfen e-postanı onayla ve Oark dünyasına merhaba de.');
-      window.location.href = 'login.html';
-    }
-  } catch (err) {
-    alert('Bir hata oluştu: ' + err.message);
-  } finally {
-    btn.disabled = false;
-    btn.innerHTML = originalText;
-  }
-};
 
 window.handleResetPassword = async () => {
   const email = prompt("Şifre sıfırlama bağlantısı gönderilecek E-posta adresini girin:");
@@ -442,10 +359,7 @@ window.handleLogin = async (e) => {
   }
 };
 
-window.handleGoogleLogin = async () => {
-  const { error } = await authManager.loginWithGoogle();
-  if (error) alert('Google girişi hatası: ' + error.message);
-};
+
 
 window.handleLogout = async () => {
   await authManager.logout();
